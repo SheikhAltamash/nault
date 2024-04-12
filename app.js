@@ -21,9 +21,43 @@ const expressError = require("./utils/expressError.js");
 const routerClassroom = require("./routes/classroom.js");
 const routerSubject = require("./routes/subject.js");
 const routerFolder = require("./routes/folder.js");
+const mongoUrl = process.env.MONGO_URL;
+const mongoStore = require("connect-mongo");
+
+
+
+if (!mongoUrl) {
+  console.error("MongoDB connection URL is not provided.");
+  process.exit(1);
+}
+
+const store = mongoStore.create({
+  mongoUrl: mongoUrl,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+store.on("error", (e) => {
+  console.log("Error: " + e);
+});
+const sessionOption = {
+  store: store,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+
+
+
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/nault");
+  await mongoose.connect(mongoUrl,{serverSelectionTimeoutMS:3000});
 }
 
 main()
@@ -34,17 +68,7 @@ main()
     console.log(err);
   });
 
-const sessionOptions = {
-  secret:
-    "MyNameIsAltamashAndIAmInCSEEngineeringInAnjumanCollegeOfEngineeringAndTechnology",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
-    maxAge: 365 * 24 * 60 * 60 * 10000,
-    httpOnly: true,
-  },
-};
+
 
 app.use(session(sessionOptions)); //This middleware is for session management
 
