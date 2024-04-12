@@ -75,6 +75,9 @@ main()
   });
 
 
+app.get("/", (req, res, next) => {
+  res.redirect("/classroom");
+});
 
 
 app.use(session(sessionOption)); //This middleware is for session management
