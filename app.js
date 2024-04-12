@@ -70,7 +70,6 @@ main()
 
 
 
-app.use(session(sessionOptions)); //This middleware is for session management
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
@@ -78,6 +77,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
+app.use(session(sessionOption)); //This middleware is for session management
 
 //Authenntication Middlewares
 app.use(passport.initialize());
