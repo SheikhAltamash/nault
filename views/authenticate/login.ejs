@@ -1,0 +1,87 @@
+<% layout("./layouts/boilerplate.ejs")%>
+<style>
+    *{
+    margin: 0;
+    padding: 0%;
+     font-family: 'Poppins', sans-serif; 
+}
+.login{
+    background: #4070f4
+}
+a{
+    text-decoration: none;
+}
+.container{
+    background: white;
+    padding-bottom: 4%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px black;
+    width: 500px !important; 
+}
+.p{ position: relative;
+    top:10%;
+   left:20%;
+}
+#forgota{
+    position: relative;
+    left: 35%;
+}
+@media  (max-width: 768px) {
+   
+    .login{
+        font-size: 4px;
+         display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .container{position: absolute;
+        top:10%;
+       
+        width: 300px !important;
+        height: 350px !important;
+       
+    }
+    .button{
+        width: 50%!important;
+        margin-top: 3%;
+        font-size: 14px !important;
+    }
+    .p{ position: relative;
+        top:-1%;
+        left:15% !important;
+        font-size: 0.8rem !important;
+    }
+    #forgota{
+        font-size: 0.8rem !important;
+        left:30%;
+        top: -10%;
+    }
+
+}
+
+
+</style>
+<body class="login">
+      <%-include("../includes/flash.ejs")%>
+<div class="container col-9 mt-5"> <br>
+    <h4 class="mt-3 col-2  mx-auto">Login </h4><br>
+    <form action="/login/log" method="post" class="needs-validation">
+        <div class="row">
+                <div class="col-10 offset-1">
+            <div class=" mt-3">
+               
+                <input required type="text" class="form-control"name="username" placeholder="Username"><br><br>
+                  <div class="invalid-feedback">Please Enter a Title</div></div>
+            <div class="mb-2">
+               
+                <input required type="text"class="form-control" name="password" placeholder="Password">
+              <div class="invalid-feedback">Please Enter a Description</div></div><br>
+        </div>
+        </div><a href="/login/signup/forget" id="forgota">Forgot password ?</a><br><br>
+        <div class="d-grid"> <button class="btn btn-primary d-grid col-8 mx-auto button">Login</button></div>
+       
+    </form> <br>
+    <hr><br>
+    <p class="col 8 mx-auto p">Don't  have an account ? <a href="/login/signup">Create New</a></p>
+</div>
+</body>

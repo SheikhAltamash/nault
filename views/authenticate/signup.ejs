@@ -1,0 +1,101 @@
+<% layout("./layouts/boilerplate.ejs")%>
+<style>
+    *{
+    margin: 0;
+    padding: 0%;
+    font-family: 'Poppins', sans-serif; 
+}
+
+a{
+    text-decoration: none !important;
+}
+.login{
+    background: #4070f4
+}
+.container{
+    background: white;
+    padding-bottom: 4%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px black;
+    width: 500px !important; 
+}
+.p{ position: relative;
+    top:10%;
+   left:25%;
+}
+
+@media  (max-width: 768px) {
+   
+    .login{
+        font-size: 4px;
+         display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .container{position: absolute;
+        top:10%;
+       
+        width: 300px !important;
+        height: 370px !important;
+       
+    }
+    .button{
+        width: 50%!important;
+        margin-top: 3%;
+        font-size: 14px !important;
+    }
+    .p{ position: relative;
+        top:-1%;
+        left:15% !important;
+        font-size: 0.8rem !important;
+    }
+    #forgota{
+        font-size: 0.8rem !important;
+        left:30%;
+        top: -10%;
+    }
+
+}
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+
+
+h4{
+    font-family: 'Poppins', sans-serif;
+  
+}
+
+
+</style>
+<body class="login">
+      <%-include("../includes/flash.ejs")%>
+<div class="container col-9 mt-5"> <br>
+    <h4 class="mt-3 col-3  mx-auto">Signup</h4><br>
+    <form action="/login/signup" class="needs-validation" method="post">
+        <div class="row">
+                <div class="col-10 offset-1">
+            <div class=" mt-3">
+               
+                <input required type="text" class="form-control"name="username" placeholder="Username"><br><br>
+                  <div class="invalid-feedback">Enter Username</div></div>
+            <div class="mt-2">
+               
+                <input required type="Email"class="form-control" name="email" placeholder="Email">
+              <div class="invalid-feedback">Enter Email</div></div>
+                 <div class=" mt-3">
+               
+                <input required type="text" class="form-control"name="password" placeholder="Password"><br><br>
+                  <div class="invalid-feedback">Enter Password</div></div>
+        </div>
+        </div>
+        <div class="d-grid"> <button class="btn btn-primary d-grid col-8 mx-auto button">Signup</button></div>
+       
+    </form> <br>
+    <hr><br>
+    <p class="col 8 mx-auto p">Already have an account ? <a href="/login">Login</a></p>
+</div>
+<script>
+
+</script>
+</body>

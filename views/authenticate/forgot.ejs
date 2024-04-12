@@ -1,0 +1,26 @@
+<% layout("./layouts/boilerplate.ejs")%>
+<style>
+
+
+</style>
+<body class="login">
+    
+<div class="container col-9 mt-5"> <br>
+    <h4 class="mt-5 col-9 offset-3 ">Enter Registered Email</h4><br>
+    <form action="/login/forgot" method="get" class="needs-validation">
+        <div class="row">
+                <div class="col-10 offset-1">
+            <div class=" mt-3">
+               
+                <input required type="text" class="form-control"name="username" placeholder="Email"><br><br>
+                  <div class="invalid-feedback">Please Enter a Title</div></div>
+          
+        </div>
+        </div>
+        <div class="d-grid"> <button class="btn btn-primary d-grid col-8 mx-auto button">Send OTP</button></div>
+       
+    </form> <br>
+    <hr><br>
+    <p class="col 8 mx-auto p">Don't  have an account ? <a href="/login/signup">Create New</a></p>
+</div>
+</body>

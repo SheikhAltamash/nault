@@ -1,0 +1,113 @@
+<% layout("./layouts/boilerplate.ejs")%>
+
+<body>
+  <nav
+    class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom"
+  >
+    <div class="container-fluid">
+      <div class="subject_head">
+        <i class="fa-brands fa-neos"></i>
+        <h2>Nault</h2>
+      </div>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a
+            class="nav-link"
+            aria-current="page"
+            href="/classroom/enter/subject"
+            style="color: white;"
+            >Home</a
+          >
+          <a class="nav-link subject_enter create" href="#"  style="color: white;">Add Folder</a>
+          <a class="nav-link contacts" style="color: white;">Contacts</a>
+        <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
+          <% if(currUser.username=="altamash") {%>
+          <form
+            action="/subject/delete/<%=subject._id%>?_method=DELETE"
+            method="post"
+          >
+            <button class="btn btn-outline-dark" >Delete Subject</button>
+          </form>
+          <% } %>
+        </div>
+        <div class="navbar-nav ms-auto" style="display: none;">
+          <% if(!currUser){%>
+          <a class="nav-link" href="/signup">Signup</a>
+          <a class="nav-link" href="/login">Login</a>
+          <%}%> <%if(currUser){%>
+          <a class="nav-link" href="/logout">Logout</a>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="subject_form">
+    <form
+      action="/subject/folder/<% if(subject){ %><%=subject._id%><% } %>"
+      class="needs-validation"
+      novalidate
+      method="post"
+    >
+      <div class="container col-9 mt-5">
+        <br />
+        <input
+          required
+          type="text"
+          class="form-control subject_name"
+          name="name"
+          placeholder="Name"
+        />
+        <div class="invalid-feedback">Enter Valid Name</div>
+        <br />
+        <div class="d-grid">
+          <button class="btn btn-success d-grid col-8 mx-auto button">
+            Add
+          </button>
+        </div>
+      </div>
+      <br />
+    </form>
+  </div>
+
+  <% if(subject) {%>
+  <div class="folder">
+    <h2 class=" h2forfolder"><%=subject.username%></h2>
+
+    <% if(subject.folder.length>0){ %>
+        <h3 class="folderHeading">Folders</h3>
+        <% for(sub of subject.folder){ %>
+    <form action="/folder/enter/<%=sub._id%>"> <div class="folder1">  <button class="btn  btnF btn-success"> <%=sub.name%>  </button> </div></form>
+     <% } %>
+    <% }else{ %>
+      <br>
+    <h5 >There is no folder here. <br>Create a folder by clicking on the 'Add Folder' button in nav bar.  </h5>
+    <% } %>
+  </div>
+
+  <% }else{ %>
+  <h3>No Subject Found!</h3>
+  <p><a href="/classroom">Go to home</a></p>
+  <% } %>
+</body>
+<script src="/public/js/script.js"></script>
+
+<style>
+  .folder1{
+    width:fit-content;
+    margin: auto;
+    margin-top: 2%;
+ }
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap");
+</style>
