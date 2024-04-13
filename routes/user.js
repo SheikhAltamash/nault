@@ -44,10 +44,18 @@ router.get("/signup", (req, res) => {
 router.post("/signup", async (req, res, next) => {
   let { username, email, password } = req.body;
   const find = await User.findOne({ email: email });
-  if (find) {
+  const name = await User.findOne({ username: username });
+ 
+  if (name) {
+    req.flash("error", "The Username is already registered");
+    res.redirect("/login/signup");
+  }
+   else if (find) {
     req.flash("error", "The email address is already registered");
     res.redirect("/login/signup");
-  } else {
+  }
+  
+  else {
     try {
       const newUser = new User({ username, email });
       const registerUser = await User.register(newUser, password);
