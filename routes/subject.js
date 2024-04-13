@@ -15,6 +15,8 @@ router.post("/create/:id", async (req, res) => {
     let classData = insertIntoClassroom;
     let newSubject = new Subject({ username: subjectName, classroom: id });
     insertIntoClassroom.subject.push(newSubject._id);
+    newSubject.author = res.locals.currUser.username;
+
     await insertIntoClassroom.save();
     await newSubject.save();
     let updatedClassroom = await Classroom.findById(id).populate("subject");

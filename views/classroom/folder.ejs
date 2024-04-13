@@ -22,6 +22,10 @@
                   class="btn btn-outline-dark">Delete Folder</button>
               </form>
               <% } %>
+
+              <% if(folder.author){ %>
+            <a class="nav-link" style="color: white;">Created By ~<%=folder.author%></a>
+            <% } %>
           </div>
           <div class="navbar-nav ms-auto " style="display: none">
             <% if(!currUser){%>
@@ -31,6 +35,7 @@
                 <%if(currUser){%>
                   <a class="nav-link" href="/logout">Logout</a>
                   <%}%>
+            
           </div>
         </div>
       </div>
@@ -58,7 +63,7 @@
 
       <% } %>
         <div style="font-size: 0.8rem;">
-           <%-include("../includes/flash.ejs")%>
+          <%-include("../includes/flash.ejs")%>
         </div>
         <% if (folder.image) { %>
           <h3 class="h2forfolder">
@@ -72,15 +77,9 @@
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"
                     alt=""><br>
                   <p>
-                    <%= (i.filename) %>
+                    <%= (i.filename) %> <br>
+                    <span class="username" style="color: black;" >~<%=i.author %></span>
                   </p>
-                  <% if(currUser.username=="altamash"){ %>
-                  <a href="/file/<%=i.url%>/<%=folder._id%>"><button class="btn btn-danger"
-                      style="font-size: 0.8rem; padding: 3px; padding-left: 5px;padding-right: 5px;">Delete</button>
-                  </a>
-                  <% } %>
-                </a> <br><br>
-
                 </a>
               </div>
               <% } %>

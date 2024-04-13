@@ -29,7 +29,7 @@ router.post("/upload/:id",isLogggedIn, upload.single("image"),async (req, res) =
      
 
     let { id } = req.params
-    let author = res.locals.currUser;
+    let author = res.locals.currUser.username;
     let folder = await Folder.findById(id);
     console.log(req.file);
     console.log(author);
@@ -48,6 +48,7 @@ router.post("/subject/folder/:id", async (req, res) => {
   let newFolder = await new Folder({ name: name, subject: id });
   let subject = await Subject.findById(id).populate("folder");
   subject.folder.push(newFolder._id);
+  newFolder.author = res.locals.currUser.username;
   await newFolder.save();
   await subject.save();
 

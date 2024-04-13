@@ -25,6 +25,7 @@ const SubjectSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
   },
+  author:String,
 });
 SubjectSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("Subject", SubjectSchema);

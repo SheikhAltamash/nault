@@ -41,6 +41,9 @@
             <button class="btn btn-outline-dark" >Delete Subject</button>
           </form>
           <% } %>
+          <% if(subject.author){ %>
+            <a class="nav-link" style="color: white;">Created By ~<%=subject.author%></a>
+            <% } %>
         </div>
         <div class="navbar-nav ms-auto" style="display: none;">
           <% if(!currUser){%>

@@ -22,7 +22,9 @@ const folderSchema = new Schema({
     url: String,
     filename: String,
     author: String
-}]
+  }],
+  author:String,
+
 });
 const Folder = mongoose.model("Folders", folderSchema);
 module.exports = Folder;

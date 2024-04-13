@@ -48,7 +48,7 @@ store.on("error", (e) => {
 });
 
 const sessionOption = {
-  store: store,
+  // store: store,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -74,7 +74,6 @@ main()
 app.get("/", (req, res, next) => {
   res.redirect("/classroom/enter");
 });
-
 
 app.use(session(sessionOption)); //This middleware is for session management
 
