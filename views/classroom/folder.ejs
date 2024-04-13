@@ -1,184 +1,223 @@
 <% layout("./layouts/boilerplate.ejs")%>
 
-<body>
+  <body>
     <nav class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom">
-  <div class="container-fluid">
-    <div class="subject_head"><i class="fa-brands fa-neos"></i><h2>Nault</h2></div>
+      <div class="container-fluid">
+        <div class="subject_head"><i class="fa-brands fa-neos"></i>
+          <h2>Nault</h2>
+        </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/subject">Home</a>
-        <a class="nav-link subject_enter create" style="color: white;" href="#">Add file</a>  
-        <a class="nav-link contacts" style="color: white;">Contacts</a>
-        <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
-    <% if(currUser.username=="altamash"){ %>   <form action="folder/delete/<%=folder._id%>?/_method=DELETE"method="post"><button class="btn btn-outline-dark">Delete Folder</button>
-    </form> <% } %>
-      </div>
-      <div class="navbar-nav ms-auto "style="display: none">
-        <% if(!currUser){%>
-        <a  class="nav-link" href="/signup">Signup</a>
-        <a  class="nav-link" href="/login">Login</a>
-        <%}%>
-        <%if(currUser){%>
-        <a class="nav-link" href="/logout">Logout</a>
-        <%}%>
-      </div>
-    </div>
-  </div>
-
-</nav>
-<% if(folder) {%>
-<div class="subject_form">
-    <form
-    enctype="multipart/form-data"
-    action="/upload/<%=folder._id%>"
-    class="needs-validation"
-    method="post"
-    >
-      <div class="container col-9 mt-5">
-<p>Files with a size less than 10 Mb are preferred. <br> If your file is greater than 10 Mb, then <a href="https://www.ilovepdf.com/compress_pdf"> click here. </a></p>     <br />
-<input type="text" class="form-control mx-auto" name="name"placeholder="Name (Optional)"><br>        
-<input
-          required
-          type="file"
-          class="form-control subject_name"
-          name="image"
-        />
-        <div class="invalid-feedback">Enter Valid File</div>
-        <br />
-        <div class="d-grid">
-          <button class="btn btn-success mx-auto button">
-            Add
-          </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/subject">Home</a>
+            <a class="nav-link subject_enter create" style="color: white;" href="#">Add file</a>
+            <a class="nav-link contacts" style="color: white;">Contacts</a>
+            <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
+            <% if(currUser.username=="altamash" ){ %>
+              <form action="folder/delete/<%=folder._id%>?/_method=DELETE" method="post"><button
+                  class="btn btn-outline-dark">Delete Folder</button>
+              </form>
+              <% } %>
+          </div>
+          <div class="navbar-nav ms-auto " style="display: none">
+            <% if(!currUser){%>
+              <a class="nav-link" href="/signup">Signup</a>
+              <a class="nav-link" href="/login">Login</a>
+              <%}%>
+                <%if(currUser){%>
+                  <a class="nav-link" href="/logout">Logout</a>
+                  <%}%>
+          </div>
         </div>
       </div>
-      <br/>
-    </form>
-  </div>
 
-  <% } %>
-  <div style="font-size: 0.8rem;"> <%-include("../includes/flash.ejs")%>
- </div>
-<% if (folder.image) { %>
-    <h3 class="h2forfolder"><%= folder.name %></h3>
-    <div class="container">
-        <% for (i of folder.image) { %>
-            <a href="<%= i.url %>" class="data">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png" alt=""><br>
-                <p><%= (i.filename) %></p><br>
-            </a>
-        <% } %>
-    </div>
-<% } else { %>
-    <br>
-    <h5>There is no folder here.<br>Create a folder by clicking on the 'Add Folder' button in the nav bar.</h5>
-<% } %>
+    </nav>
+    <% if(folder) {%>
+      <div class="subject_form">
+        <form enctype="multipart/form-data" action="/upload/<%=folder._id%>" class="needs-validation" method="post">
+          <div class="container col-9 mt-5">
+            <p>Files with a size less than 10 Mb are preferred. <br> If your file is greater than 10 Mb, then <a
+                href="https://www.ilovepdf.com/compress_pdf"> click here. </a></p> <br />
+            <input type="text" class="form-control mx-auto" name="name" placeholder="Name (Optional)"><br>
+            <input required type="file" class="form-control subject_name" name="image" />
+            <div class="invalid-feedback">Enter Valid File</div>
+            <br />
+            <div class="d-grid">
+              <button class="btn btn-success mx-auto button">
+                Add
+              </button>
+            </div>
+          </div>
+          <br />
+        </form>
+      </div>
 
-    
-</body>
-</html>
+      <% } %>
+        <div style="font-size: 0.8rem;">
+           <%-include("../includes/flash.ejs")%>
+        </div>
+        <% if (folder.image) { %>
+          <h3 class="h2forfolder">
+            <%= folder.name %>
+          </h3>
+          <div class="box">
+            <% for (i of folder.image) { %>
+              <div class="data">
+                <a href="<%= i.url %>" class="data">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"
+                    alt=""><br>
+                  <p>
+                    <%= (i.filename) %>
+                  </p>
+                  <% if(currUser.username=="altamash"){ %>
+                  <a href="/file/<%=i.url%>/<%=folder._id%>"><button class="btn btn-danger"
+                      style="font-size: 0.8rem; padding: 3px; padding-left: 5px;padding-right: 5px;">Delete</button>
+                  </a>
+                  <% } %>
+                </a> <br><br>
 
-<style>
-  
-.container {
-    display: block;
-    width: fit-content;
-  
+                </a>
+              </div>
+              <% } %>
+          </div>
+          <% } else { %>
+            <br>
+            <h5>There is no folder here.<br>Create a folder by clicking on the 'Add Folder' button in the nav bar.</h5>
+            <% } %>
 
 
-  }
-  .container p{
-    margin: auto;
-    text-align: center;
-  }
-  
-    h4{
-        margin:10px 0 0 10px;
+  </body>
+
+  </html>
+
+  <style>
+    .container {
+      display: block;
+      width: fit-content;
+
+
+
     }
-.nav-link{
-    color: black;
-}
 
-i{
-    color: white;
-    font-size: 1.5rem;
-    margin-top: 2px;
-    margin-right: 10px;
-}
+    .box {
+      padding-top: 5%;
+      display: flex;
+      flex-wrap: wrap;
 
-body{
-     background: #efefef;
-}
-.navbar{
-    background: #4070f4;
-    color: white !important;
-}
-a{
-    text-decoration: none;
-}
-.p{ 
-    position: relative;
-    top:10%;
-    left:20%;
-}
-#forgota{
-    position: relative;
-    left: 35%;
-}
-img{
-  height: 200px;
-  width: 200px;
-}
-@media  (max-width: 768px) {
-  img{
-    height: 100px;
-    width: 100px;
-    margin: auto;
+    }
 
-  }
-  p{
-    font-size: 0.8rem;
-  }
-  .data{
-    font-size: 0.8rem;
-  }
- 
-  button{
-    font-size: 0.8rem;
-  }
-    .login{
+    .data {
+      margin: auto;
+      margin-left: 7%;
+      text-align: center;
+    }
+
+    .container p {
+      margin: auto;
+      text-align: center;
+    }
+
+    h4 {
+      margin: 10px 0 0 10px;
+    }
+
+    .nav-link {
+      color: black;
+    }
+
+    i {
+      color: white;
+      font-size: 1.5rem;
+      margin-top: 2px;
+      margin-right: 10px;
+    }
+
+    body {
+      background: #efefef;
+    }
+
+    .navbar {
+      background: #4070f4;
+      color: white !important;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .p {
+      position: relative;
+      top: 10%;
+      left: 20%;
+    }
+
+    #forgota {
+      position: relative;
+      left: 35%;
+    }
+
+    img {
+      height: 200px;
+      width: 200px;
+    }
+
+    @media (max-width: 768px) {
+      img {
+        height: 100px;
+        width: 100px;
+        margin: auto;
+
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+
+      .data {
+        font-size: 0.8rem;
+      }
+
+      button {
+        font-size: 0.8rem;
+      }
+
+      .login {
         font-size: 4px;
-         display: flex;
+        display: flex;
         justify-content: center !important;
         align-items: center !important;
-    }
-    /* .button{
+      }
+
+      /* .button{
         width: 50%!important;
         font-size: 14px !important;
     } */
-    .p{ 
+      .p {
         position: relative;
-        top:-1%;
-        left:15% !important;
+        top: -1%;
+        left: 15% !important;
         font-size: 0.8rem !important;
-    }
-    #forgota{
+      }
+
+      #forgota {
         font-size: 0.8rem !important;
-        left:30%;
+        left: 30%;
         top: -10%;
+      }
     }
-}
 
-a{
-    text-decoration: none !important;
-    color: #4070f4
-}
-</style>
-<script src="/public/js/script.js"></script>
+    a {
+      text-decoration: none !important;
+      color: #4070f4
+    }
+  </style>
+  <script src="/public/js/script.js"></script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
-</style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+  </style>

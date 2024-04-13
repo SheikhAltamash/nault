@@ -66,4 +66,13 @@ router.delete("folder/enter/folder/delete/:id", async (req, res) => {
   // // res.redirect(`/subject/${subject.id}`);
   res.send("hello");
 });
+router.get("/file/:url/:id",(req,res)=> {
+  let { url,id } = req.params;
+  let arrayUrl = url.split("/");
+  let urlArray = arrayUrl[arrayUrl.length - 1];
+  let imageName = urlArray.split(".")[0];
+  console.log(imageName);
+  res.send("Hello")
+})
+
 module.exports = router;

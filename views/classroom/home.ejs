@@ -12,13 +12,13 @@
       <div class="navbar-nav">
         <a class="nav-link enter create" style="color: white;" href="#">Create Subject</a>
         </div>
-      <div class="navbar-nav ms-auto " style="display: none;">
+      <div class="navbar-nav ms-auto ">
         <% if(!currUser){%>
         <a  class="nav-link" href="/signup">Signup</a>
-        <a  class="nav-link" href="/login">Login</a>
+        <a  class="nav-link" href="/login" style="color: white;">Login</a>
         <%}%>
         <%if(currUser){%>
-        <a class="nav-link" href="/user/logout">Logout</a>
+        <a class="nav-link" href="/login/logout" style="color: white;">Logout</a>
         <%}%>
       </div>
     </div>
