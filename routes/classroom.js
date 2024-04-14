@@ -37,10 +37,6 @@ router.post(
 router.post(
   "/enter",
   isLogggedIn,
-  passport.authenticate("local", {
-    failureRedirect: "/classroom",
-    failureFlash: true,
-  }),
   wrapasync(async (req, res) => {
     let { username, password } = req.body;
     let classData = await classroom
