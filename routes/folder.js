@@ -75,5 +75,11 @@ router.get("/file/:url/:id",(req,res)=> {
   console.log(imageName);
   res.send("Hello")
 })
+router.get("/folder/back/:id", async(req, res) => { 
+  let { id } = req.params;
+  let folder = await Folder.findById(id).populate("subject");
+  let subject = await Subject.findById(folder.subject._id);
+  res.redirect(`/subject/${subject._id}`);
+})
 
 module.exports = router;

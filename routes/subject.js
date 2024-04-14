@@ -62,4 +62,14 @@ router.delete("/delete/:id", async (req, res) => {
   // Redirect to another route
   res.redirect("/classroom/enter");
 });
+
+//Back route 
+router.get("/back/:id",async (req, res) => {
+  let { id } = req.params;
+  let subject = await Subject.findById(id).populate("classroom");
+  let classroom = await Classroom.findById(subject.classroom._id);
+    req.session.classData = req.session.home;
+
+    res.redirect("/classroom/enter");
+});
 module.exports = router;

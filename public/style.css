@@ -62,3 +62,18 @@ h4 {
     margin-left: 3%;
     margin-top: 1.6rem;
   }
+
+   .arrow{
+  background: rgb(94, 94, 255);
+  border-radius: 50%;
+  width:20px;
+  height: 20px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: -10px;
+ }
+ .fa-arrow-left{
+  position: relative;
+  top: -3px;
+  left:4px;
+ }
