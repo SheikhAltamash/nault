@@ -36,7 +36,6 @@ a{
         top:10%;
        
         width: 300px !important;
-        height: 370px !important;
        
     }
     .button{
@@ -54,6 +53,9 @@ a{
         left:30%;
         top: -10%;
     }
+    .invalid-feedback{
+        font-size: 0.8rem !important;
+    }
 
 }
 
@@ -68,25 +70,26 @@ h4{
 
 
 </style>
+
 <body class="login">
       <%-include("../includes/flash.ejs")%>
 <div class="container col-9 mt-5"> <br>
     <h4 class="mt-3 col-3  mx-auto">Signup</h4><br>
-    <form action="/login/signup" class="needs-validation" method="post">
+    <form action="/login/signup" class="needs-validation" method="post" novalidate>
         <div class="row">
                 <div class="col-10 offset-1">
             <div class=" mt-3">
                
-                <input required type="text" class="form-control"name="username" placeholder="Username"><br><br>
-                  <div class="invalid-feedback">Enter Username</div></div>
+                <input required type="text" class="form-control"name="username" placeholder="Username">
+                  <div class="invalid-feedback">Enter Username</div></div><br><br>
             <div class="mt-2">
                
                 <input required type="Email"class="form-control" name="email" placeholder="Email">
               <div class="invalid-feedback">Enter Email</div></div>
                  <div class=" mt-3">
                
-                <input required type="text" class="form-control"name="password" placeholder="Password"><br><br>
-                  <div class="invalid-feedback">Enter Password</div></div>
+                <input required type="text" class="form-control"name="password" placeholder="Password">
+                  <div class="invalid-feedback">Enter Password</div></div><br><br>
         </div>
         </div>
         <div class="d-grid"> <button class="btn btn-primary d-grid col-8 mx-auto button">Signup</button></div>
@@ -95,7 +98,7 @@ h4{
     <hr><br>
     <p class="col 8 mx-auto p">Already have an account ? <a href="/login">Login</a></p>
 </div>
-<script>
+<script src="/js/validate.js">
 
 </script>
 </body>

@@ -1,13 +1,14 @@
 <% layout("./layouts/boilerplate.ejs")%>
 
     <body class="login">
-
         <div class="head"><i class="fa-brands fa-neos"></i>
             <h2>Nault</h2>
-        </div><%-include("../includes/flash.ejs")%>
+        </div>
+        <%-include("../includes/flash.ejs")%>
 
             <div class="select">
-               <% if(currUser.username=="altamash") {%> <div class="bg b1"><a href="/classroom/create">
+               <% if(currUser.username=="altamash") {%>
+                 <div class="bg b1"><a href="/classroom/create">
                         <div class="create">Create Classroom</div>
                     </a></div><% } %>
                 <div class="bg">
@@ -33,7 +34,7 @@
 
                                         <div class=" mt-3">
 
-                                            <input type="text" class="form-control" name="password" placeholder="Password" >
+                                            <input type="text" class="form-control" name="password" placeholder="Password" required>
                                             <div class="invalid-feedback">Enter Password</div>
                                         </div><br>
                                     </div>

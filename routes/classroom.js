@@ -35,18 +35,21 @@ router.post(
 );
 
 router.post(
-  "/enter",isLogggedIn,
+  "/enter",
+  isLogggedIn,
+  passport.authenticate("local", {
+    failureRedirect: "/classroom",
+    failureFlash: true,
+  }),
   wrapasync(async (req, res) => {
-    let { username ,password } = req.body;
+    let { username, password } = req.body;
     let classData = await classroom
       .findOne({ username: username })
       .populate("subject");
     if (!password) {
       req.flash("error", "Enter password !!!");
       res.redirect("/classroom");
-
-    }
-    else if (!classData) {
+    } else if (!classData) {
       req.flash("error", "Classroom not found");
       res.redirect("/classroom");
     } else {
