@@ -64,16 +64,21 @@ h4 {
   }
 
    .arrow{
-  background: rgb(94, 94, 255);
+  background: #4070f4;
   border-radius: 50%;
   width:20px;
   height: 20px;
   margin-top: 5px;
-  margin-left: 5px;
+  margin-left: 6px;
   margin-bottom: -10px;
+ }
+ .arrow:hover {
+  background: green;
  }
  .fa-arrow-left{
   position: relative;
   top: -3px;
-  left:4px;
+  left:5px;
  }
+
+ 

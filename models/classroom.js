@@ -10,7 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const ejs = require("ejs");
 const port = 8088;
 const Schema = mongoose.Schema;
-const User = require("../models/user.js");
+const Users = require("../models/user.js");
 const Subject = require("../models/subject.js");
 
 
@@ -18,7 +18,7 @@ const ClasssroomSchema = new Schema({
     
     student: [{
         type: Schema.Types.ObjectId,
-        ref:"User",
+        ref:"Users",
     }],
     subject: [
         {
