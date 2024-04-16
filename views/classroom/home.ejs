@@ -11,6 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link enter create" style="color: white;" href="#">Create Subject</a>
+       
         </div>
       <div class="navbar-nav ms-auto ">
         <% if(!currUser){%>
@@ -51,7 +52,14 @@
         <%}%>
         <%}%>
  
-
+ <%if(currUser) {%>
+            <% if(currUser.username=="altamash") {%>
+                <br><br><h6>Students</h6>
+                <%for(let stu of classData.student) {%>
+                    <p class="name">~<%=stu.username %>  <br></p>
+                    <% } %>
+                <% } %>
+            <% } %>
    
 
 <script>
@@ -86,7 +94,10 @@
     font-size: 0.7rem;
     margin: 10px;
   }
- 
+  .name{
+    margin:auto !important;
+    margin-left: 15px !important;
+  } 
     .sub{
      padding: 5px;
     margin: auto;

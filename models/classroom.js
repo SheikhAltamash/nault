@@ -1,17 +1,7 @@
-const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
-const joi = require("joi");
-const ejsMate = require("ejs-mate");
-const methodOverride = require("method-override");
-const path = require("path");
-const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
-const ejs = require("ejs");
-const port = 8088;
 const Schema = mongoose.Schema;
-const Users = require("../models/user.js");
-const Subject = require("../models/subject.js");
+
 
 
 const ClasssroomSchema = new Schema({

@@ -21,7 +21,8 @@ const UserSchema = new Schema({
   classroom:{
     type: Schema.Types.ObjectId,
     ref: Classroom
-  }
+  },
+  deviceToken: String
   
 });
 UserSchema.plugin(passportLocalMongoose);

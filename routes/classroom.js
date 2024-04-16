@@ -8,6 +8,10 @@ router.get("/", isLogggedIn, function (req, res) {
   res.render("./classroom/create.ejs");
 });
 
+router.get("/email", (req, res) => {
+  res.send("email");
+});
+
 router.get("/create", isLogggedIn, (req, res) => {
   res.render("./classroom/class_create.ejs");
 });

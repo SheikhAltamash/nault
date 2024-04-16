@@ -48,7 +48,7 @@ store.on("error", (e) => {
 });
 
 const sessionOption = {
-  store: store,
+  // store: store,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -62,7 +62,7 @@ const sessionOption = {
 async function main() {
   await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 3000 });
 }
-
+                         
 // async function main() {
 //   await mongoose.connect("mongodb://localhost:27017/nault");
 // }
