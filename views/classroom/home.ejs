@@ -5,8 +5,8 @@
   <div class="container-fluid">
        <div class="head"><i class="fa-brands fa-neos"></i><h2>Nault</h2></div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fa-solid fa-bars-staggered" style="color:white;"></i>
+    <button class="navbar-toggler"   type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
@@ -57,6 +57,8 @@
 <script>
     let button = document.querySelector(".enter");
     let form= document.querySelector(".form");
+    let span=document.querySelector(".navbar-toggler-icon");
+
     let check=true;
     button.addEventListener("click",()=>{
         if(check){
