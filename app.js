@@ -36,19 +36,19 @@ if (!mongoUrl) {
   process.exit(1);
 }
 
-// const store = mongoStore.create({
-//   mongoUrl: mongoUrl,
-//   crypto: {
-//     secret: process.env.SESSION_SECRET,
-//   },
-//   touchAfter: 24 * 3600,
-// });
-// store.on("error", (e) => {
-//   console.log("Error: " + e);
-// });
+const store = mongoStore.create({
+  mongoUrl: mongoUrl,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+store.on("error", (e) => {
+  console.log("Error: " + e);
+});
 
 const sessionOption = {
-  // store: store,
+  store: store,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -59,13 +59,13 @@ const sessionOption = {
   },
 };
 
-// async function main() {
-//   await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 3000 });
-// }
-
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/nault");
+  await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 3000 });
 }
+
+// async function main() {
+//   await mongoose.connect("mongodb://localhost:27017/nault");
+// }
 main()
   .then((res) => {
     console.log("Connection Sucessfull !");
