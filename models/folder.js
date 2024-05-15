@@ -21,7 +21,8 @@ const folderSchema = new Schema({
   image: [{
     url: String,
     filename: String,
-    author: String
+    author: String,
+    originalName:String,
   }],
   author:String,
 

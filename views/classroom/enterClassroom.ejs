@@ -1,0 +1,62 @@
+<% layout("./layouts/boilerplate.ejs")%>
+<link rel="stylesheet" href="/CSS/enterClassroom.css">
+
+    <body class="login">
+        <div class="head"><i class="fa-brands fa-neos"></i>
+            <h2>Nault</h2>
+        </div>
+        <%-include("../includes/flash.ejs")%>
+    <div class="select">
+     <% if(currUser.username=="altamash") {%>
+        <div class="bg b1"><a href="/classroom/create"><div class="create">Create Classroom</div></a></div>
+     <% } %>
+        <div class="bg">
+            <div class="enter create" >Enter Classroom</div>
+        </div>
+        <div class="form">
+            <form action="/classroom/enter" class="needs-validation" novalidate method="post">
+                <div class="container col-9 mt-5"> <br>
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <div class=" mt-3">
+                                <input required type="text" class="form-control" name="username"
+                                            placeholder="Classroom ID">
+                                        <div class="invalid-feedback">Enter Classroom ID</div>
+                            </div><br>
+                            <div class="mb-2">
+                                <div class=" mt-3">
+                                    <input type="text" class="form-control" name="password" placeholder="Password" required>
+                                            <div class="invalid-feedback">Enter Password</div>
+                                </div><br>
+                            </div>
+                        </div>
+                                <div class="d-grid"> <button class="btn btn-success d-grid col-8 mx-auto button">Enter Classroom</button></div>
+                    </form>
+
+                </div>
+            </div>
+    </body>
+    <script>
+        let button = document.querySelector(".enter");
+        let form = document.querySelector(".form");
+        let check = true;
+        button.addEventListener("click", () => {
+            if (check) {
+                form.style.display = "inline";
+                check = false
+                button.style.color = "white";
+                button.style.background = "blue";
+
+            }
+            else if (check == false) {
+                form.style.display = "none";
+                check = true;
+                button.style.color = "blue";
+                button.style.background = "white";
+            }
+        });
+
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
+    </style>

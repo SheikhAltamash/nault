@@ -81,7 +81,7 @@ router.get("/logout", (req, res) => {
       if (err) {
         return next(err);
       }
-      req.flash("success", "You are logged out now !");
+      req.flash("success", "You have been logged out !");
       res.redirect("/login");
     });
   } else {

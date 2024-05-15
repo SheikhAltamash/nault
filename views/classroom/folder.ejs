@@ -1,5 +1,5 @@
 <% layout("./layouts/boilerplate.ejs")%>
-
+<link rel="stylesheet" href="/CSS/folder.css">
   <body>
     <nav class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom">
       <div class="container-fluid">
@@ -17,16 +17,17 @@
             <a class="nav-link subject_enter create" style="color: white;" href="#">Add file</a>
             <a class="nav-link contacts" style="color: white;">Contacts</a>
             <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
-            <% if(currUser.username=="altamash" ){ %>
-              <form action="folder/delete/<%=folder._id%>?/_method=DELETE" method="post"><button
-                  class="btn btn-outline-dark">Delete Folder</button>
-              </form>
-              <% } %>
+            
 
               <% if(folder.author){ %>
             <a class="nav-link" style="color: white;">Created By ~<%=folder.author%></a>
             <% } %>
           </div>
+          <% if(currUser.username==folder.author ){ %>
+              <button class="btn btn-danger FolderDelete">Delete Folder</button>
+            
+          <% } %>
+
           <div class="navbar-nav ms-auto " style="display: none">
             <% if(!currUser){%>
               <a class="nav-link" href="/signup">Signup</a>
@@ -41,6 +42,9 @@
       </div>
 
     </nav>
+
+
+
     <% if(folder) {%>
       <div class="subject_form">
         <form enctype="multipart/form-data" action="/upload/<%=folder._id%>" class="needs-validation" method="post">
@@ -52,39 +56,48 @@
             <div class="invalid-feedback">Enter Valid File</div>
             <br />
             <div class="d-grid">
-              <button class="btn btn-success mx-auto button">
-                Add
-              </button>
+              <button class="btn btn-success mx-auto button">Add</button>
             </div>
           </div>
-          <br />
+          <br/>
         </form>
       </div>
+      <div class="deleteFolderConform" style=" display: none; position: absolute;">
+        <p class="warning-p"><span style="color: red; font-size: 1rem !important;">Warning </span> <br>Deleting this folder will also delete all files. <br> This action is irreversible. <br>Proceed ?</p>
+         <form action="/folder/delete/<%=folder._id%>?_method=DELETE" method="post" style="display: inline;">
 
+        <input type="text" class="form-control mx w auto "name="name" placeholder="Enter folder name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
+         <button class="btn btn-danger" style="margin-left: 20px;">delete</button> </form>
+        <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
+       
+       
+      </div>
       <% } %>
-        <div style="font-size: 0.8rem;">
-          <%-include("../includes/flash.ejs")%>
-        </div>
-        <% if (folder.image) { %>
-       <div class="arrow"> <a href="/folder/back/<%=folder._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
-
-          <h3 class="h2forfolder">
+        <%-include("../includes/flash.ejs")%>
+      <% if (folder.image){%>
+        <div class="arrow"> <a href="/folder/back/<%=folder._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
+          <h3 class="h2forfolder" style="color: blue;">
             <%= folder.name %>
           </h3>
+         
+        <div class="del-mes" style="display: none;margin: auto !important;">
+        <h6>Are you sure you want to delete ?</h6>
+          <button class="btn btn-primary del-folder cancel">cancle</button> 
+          <a id="deleteLink" href=""><button class="btn btn-danger del-folder">delete</button></a>
+        </div>
           <div class="box">
             <% for (i of folder.image) { %>
               <div class="data">
                 <a href="<%= i.url %>" class="data">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"
-                    alt=""><br>
+                    alt=""></a>
                   <p>
-                    <%= (i.filename) %> <br>
-                    <span class="username" style="color: black;" >~<%=i.author %></span>
+                  <span style="color: blue;"> <%= (i.filename) %></span> <br>
+                  <span class="username" style="color: black;" >~<%=i.author %></span>   &nbsp;<%if(i.author==currUser.username) {%> <i class="fa-solid fa-trash-can" onclick="deleteimage('<%= i.originalName %>')"></i><% } %>
                   </p>
-                </a>
               </div>
-              <% } %>
+            <% } %>
           </div>
           <% } else { %>
             <br>
@@ -94,135 +107,58 @@
 
   </body>
 
-  </html>
+ 
+<script>
+  let delteIlcon=document.querySelectorAll(".fa-trash-can");
+  let delMes=document.querySelector(".del-mes"); 
 
-  <style>
-    .container {
-      display: block;
-      width: fit-content;
+  let cancelButton=document.querySelector(".cancel")
+  let folderDeleteButton=document.querySelector(".FolderDelete");
+  let folderDeleteForm = document.querySelector(".deleteFolderConform");
+ let folderDeleteCancel=document.querySelector(".deleteFolderCancel");
+  folderDeleteButton.addEventListener("click",()=>{
+  folderDeleteForm.style.display="inline-block";
+  });
+
+  folderDeleteCancel.addEventListener("click",()=>{
+    folderDeleteForm.style.display="none";
+  });
 
 
 
+  delteIlcon.forEach(icon=>{
+  icon.addEventListener("click",()=>{
+    if(delMes.style.display="none"){
+      delMes.style.display="inline-block";
+      delMes.style.margin="auto";
+     
     }
-
-    .box {
-      padding-top: 5%;
-      display: flex;
-      flex-wrap: wrap;
-
+    else if(delMes.style.display="inline-block"){
+      delMes.style.display="none";
+    
     }
+  });});
 
-    .data {
-      margin: auto;
-      margin-left: 7%;
-      text-align: center;
-    }
+cancelButton.addEventListener("click",()=>{
+  deleteID="";
+  delMes.style.display="none";
+  console.log(deleteID);
+})
+function deleteimage(data){
+deleteID=data;
+console.log(deleteID);
+let deleteLink = document.getElementById("deleteLink");
+let folderId = "<%= folder._id %>";
 
-    .container p {
-      margin: auto;
-      text-align: center;
-    }
+// Assuming delID is defined elsewhere in your code
 
-    h4 {
-      margin: 10px 0 0 10px;
-    }
-
-    .nav-link {
-      color: black;
-    }
-
-    i {
-      color: white;
-      font-size: 1.5rem;
-      margin-top: 2px;
-      margin-right: 10px;
-    }
-
-    body {
-      background: #efefef;
-    }
-
-    .navbar {
-      background: #4070f4;
-      color: white !important;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    .p {
-      position: relative;
-      top: 10%;
-      left: 20%;
-    }
-
-    #forgota {
-      position: relative;
-      left: 35%;
-    }
-
-    img {
-      height: 200px;
-      width: 200px;
-
-    }
-
-    img:hover{
-      opacity: 0.4;
-    }
+deleteLink.href = `/folder/delete/${deleteID}/${folderId}`;
+}
 
 
-    @media (max-width: 768px) {
-      img {
-        height: 100px;
-        width: 100px;
-        margin: auto;
 
-      }
 
-      p {
-        font-size: 0.8rem;
-      }
-
-      .data {
-        font-size: 0.8rem;
-      }
-
-      button {
-        font-size: 0.8rem;
-      }
-
-      .login {
-        font-size: 4px;
-        display: flex;
-        justify-content: center !important;
-        align-items: center !important;
-      }
-
-      /* .button{
-        width: 50%!important;
-        font-size: 14px !important;
-    } */
-      .p {
-        position: relative;
-        top: -1%;
-        left: 15% !important;
-        font-size: 0.8rem !important;
-      }
-
-      #forgota {
-        font-size: 0.8rem !important;
-        left: 30%;
-        top: -10%;
-      }
-    }
-
-    a {
-      text-decoration: none !important;
-      color: #4070f4
-    }
-  </style>
+</script> </html>
   <script src="/public/js/script.js"></script>
 
   <style>

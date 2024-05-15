@@ -5,7 +5,7 @@ const classroom = require("../models/classroom.js");
 const passport = require("passport");
 const { isLogggedIn, saveRedirectUrl } = require("../middleware.js");
 router.get("/", isLogggedIn, function (req, res) {
-  res.render("./classroom/create.ejs");
+  res.render("./classroom/enterClassroom.ejs");
 });
 
 router.get("/email", (req, res) => {
@@ -13,7 +13,7 @@ router.get("/email", (req, res) => {
 });
 
 router.get("/create", isLogggedIn, (req, res) => {
-  res.render("./classroom/class_create.ejs");
+  res.render("./classroom/createClassroom.ejs");
 });
 
 router.post(
@@ -32,7 +32,7 @@ router.post(
 
       res.render("./classroom/home.ejs", { classData: sub });
     } catch (err) {
-      req.flash("error", "The classroom name has already been registered !!!");
+      req.flash("error", "The classroom name has already registered !!!");
       res.redirect("/classroom/create/");
     }
     console.log(username, password);
@@ -67,13 +67,12 @@ router.post(
           (student) => student._id.toString() === req.user._id.toString()
         )
       ) {
- classData.student.push(res.locals.currUser);
+        classData.student.push(res.locals.currUser);
         await classData.save();
         console.log("added namein the class room");
       }
-      
-      
-      // for (let data of classData.student) { 
+
+      // for (let data of classData.student) {
       //   console.log(data);
       // }
       res.locals.classData = classData;

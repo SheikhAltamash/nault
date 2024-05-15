@@ -1,5 +1,5 @@
 <% layout("./layouts/boilerplate.ejs")%>
-
+<link rel="stylesheet" href="/CSS/subject.css">
 <body>
   <nav
     class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom"
@@ -33,26 +33,16 @@
           <a class="nav-link subject_enter create" href="#"  style="color: white;">Add Folder</a>
           <a class="nav-link contacts" style="color: white;">Contacts</a>
         <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
-          <% if(currUser.username=="altamash") {%>
-          <form
-            action="/subject/delete/<%=subject._id%>?_method=DELETE"
-            method="post"
-          >
-            <button class="btn btn-outline-dark" >Delete Subject</button>
-          </form>
-          <% } %>
+          
           <% if(subject.author){ %>
             <a class="nav-link" style="color: white;">Created By ~<%=subject.author%></a>
             <% } %>
+            <% if(currUser.username==subject.author ){ %>
+              <button class="btn btn-danger FolderDelete" style="width:fit-content !important;">Delete Subject</button>
+            <% } %>
+
         </div>
-        <div class="navbar-nav ms-auto" style="display: none;">
-          <% if(!currUser){%>
-          <a class="nav-link" href="/signup">Signup</a>
-          <a class="nav-link" href="/login">Login</a>
-          <%}%> <%if(currUser){%>
-          <a class="nav-link" href="/logout">Logout</a>
-          <%}%>
-        </div>
+       
       </div>
     </div>
   </nav>
@@ -83,11 +73,22 @@
       <br />
     </form>
   </div>
+  <div class="deleteFolderConform" style=" display: none; position: absolute;">
+        <p class="warning-p"><span style="color: red; font-size: 1rem !important;">  Warning </span>  <br>Deleting this subject will also delete all its folders <br> and files. <br> This action is irreversible. <br> Proceed ?</p>
+        <form action="/subject/delete/<%=subject._id%>?_method=DELETE" method="post" style="display: inline;">
+
+        <input type="text" class="form-control mx auto "name="name" placeholder="Enter subject name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
+         <button class="btn btn-danger" style="margin-left: 20px;">delete</button> </form>
+        <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
+       
+       
+      </div>
+                                  
 
   <% if(subject) {%>
   <div class="folder">
          <div class="arrow"> <a href="/subject/back/<%=subject._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
-
+      <br>
     <h2 class=" h2forfolder"><%=subject.username%></h2>
     <% if(subject.folder.length>0){ %>
         <h3 class="folderHeading">Folders</h3>
@@ -96,7 +97,7 @@
      <% } %>
     <% }else{ %>
       <br>
-    <h5 >There is no folder here. <br>Create a folder by clicking on the 'Add Folder' button in nav bar.  </h5>
+    <h6 >There is no folder here. <br>Create a folder by clicking on the 'Add Folder' button in nav bar.  </h6>
     <% } %>
   </div>
 
@@ -106,13 +107,20 @@
   <% } %>
 </body>
 <script src="/public/js/script.js"></script>
+<script>
+  let folderDeleteButton=document.querySelector(".FolderDelete");
+  let folderDeleteForm = document.querySelector(".deleteFolderConform");
+ let folderDeleteCancel=document.querySelector(".deleteFolderCancel");
+  folderDeleteButton.addEventListener("click",()=>{
+  folderDeleteForm.style.display="inline-block";
+  });
 
+  folderDeleteCancel.addEventListener("click",()=>{
+    folderDeleteForm.style.display="none";
+  });
+</script> 
 <style>
-  .folder1{
-    width:fit-content;
-    margin: auto;
-    margin-top: 2%;
- }
+ 
 
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap");
 </style>

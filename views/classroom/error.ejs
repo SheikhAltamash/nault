@@ -1,0 +1,10 @@
+<% layout("./layouts/boilerplate.ejs")%>
+
+<body>
+   <br><br><br> <h1 >An Error Occur </h1><br>
+   <form action="/classroom" method="get">
+   <button class="btn btn-outline-success" style="margin-left: 20px;">Home</button></form>
+   <br>
+   <br><p style="margin-left: 20px;"><%=e.message%></p>
+</body>
+</html>

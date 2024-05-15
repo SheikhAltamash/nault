@@ -1,6 +1,6 @@
 <%if(success&&success.length){%>
-    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center success col-6 offset-3 mt-4 " role="alert" style="font-size: 0.8rem;">
- <h6> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center success col-6 offset-3 mt-4 " role="alert" style="font-size: 0.8rem;width: fit-content;margin: auto;">
+ <h6 class="headFlash"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
  &nbsp;&nbsp;&nbsp;
   <%=success%> </h6>
  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -9,8 +9,8 @@
 
 
 <%if(error&&error.length){%>
-    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center success  mt-4 " role="alert" style="font-size: 0.8rem;">
- <p> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center success  mt-4 " role="alert" style="font-size: 0.8rem;width: fit-content; margin: auto;padding-top: 0px;">
+ <p style="color: rgb(200, 0, 0) !important;"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
  &nbsp;&nbsp;&nbsp;
   <%=error%> </p>
  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -18,13 +18,10 @@
 <%}%>
 
 <style>
-    .success{
-        font-size: 1rem !important;
-     
-    }
+    
     @media  (max-width: 768px) {
-        .success{
-            font-size: 0.8rem !important;
+        .headFlash{
+            font-size: 1rem !important;
         }
     }
 

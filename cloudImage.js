@@ -10,7 +10,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "nault_dev",
-    allowedFormat: ["png", "jpg", "jpeg","pdf","doc","word","zip"],
+    allowedFormat: ["png", "jpg", "jpeg","pdf","doc","word","zip","svg","txt","pptx","docx"],
   },
 });
 module.exports = { cloudinary, storage };

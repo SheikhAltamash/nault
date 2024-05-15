@@ -1,0 +1,191 @@
+ 
+ .container {
+      display: block;
+      width: fit-content;
+
+
+
+    }
+
+    .box {
+      padding-top: 5%;
+      display: flex;
+      flex-wrap: wrap;
+      
+    }
+
+    .data {
+      margin: auto;
+      margin-left: 7%;
+      text-align: center;
+     
+    }
+
+    .container p {
+      margin: auto;
+      text-align: center;
+    }
+
+    h4 {
+      margin: 10px 0 0 10px;
+    }
+
+    .nav-link {
+      color: black;
+    }
+
+    i {
+      color: white;
+      font-size: 1.5rem;
+      margin-top: 2px;
+      margin-right: 10px;
+    }
+
+    body {
+      background: #efefef;
+    }
+
+    .navbar {
+      background: #4070f4;
+      color: white !important;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .p {
+      position: relative;
+      top: 10%;
+      left: 20%;
+    }
+
+    #forgota {
+      position: relative;
+      left: 35%;
+    }
+
+    img {
+      height: 200px;
+      width: 200px;
+
+    }
+
+    img:hover{
+      opacity: 0.4;
+    }
+
+
+    @media (max-width: 768px) {
+      img {
+        height: 100px;
+        width: 100px;
+        margin: auto;
+
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+
+      .data {
+        font-size: 0.8rem;
+      }
+
+      button {
+        font-size: 0.8rem;
+      }
+
+      .login {
+        font-size: 4px;
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+
+      /* .button{
+        width: 50%!important;
+        font-size: 14px !important;
+    } */
+      .p {
+        position: relative;
+        top: -1%;
+        left: 15% !important;
+        font-size: 0.8rem !important;
+      }
+
+      #forgota {
+        font-size: 0.8rem !important;
+        left: 30%;
+        top: -10%;
+      }
+      .success{
+        position: absolute;
+        
+        left:30px !important;
+        font-size: 0.8rem !important;
+        height:40px;
+        padding-top: 0;
+
+       }
+       .btn-close{
+        margin-top: -5px !important;
+       }
+       .deleteFolderConform{
+        left: 6% !important;
+       }
+       
+    }
+
+    a {
+      text-decoration: none !important;
+      color: #4070f4
+    }
+      .h2forfolder{
+    margin-left: 3%;
+    margin-top: 1.6rem;
+      }
+
+      .fa-trash-can{
+        color: rgb(255, 0, 0);
+        font-size: 0.8rem;
+      }
+      
+      .del-mes{
+        width: max-content;
+        padding: 3px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px #4070f4;
+        padding-top: 5px !important;
+        position: fixed !important;
+        left: 25px;
+        background: white;
+        padding-bottom: 8px;
+
+
+        
+
+      }
+      .del-folder{
+          height: auto;
+          width: fit-content !important;
+          padding: 0% !important;
+          padding:2px !important;
+          margin-left: 25px;
+
+      }
+      .cancel{
+        margin-left: 30px;
+      }
+      .deleteFolderConform{
+      
+        box-shadow: 1px 1px 8px grey;
+        background: white;
+        width: max-content;
+        align-content: center;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 10px;
+        left: 40%;
+         
+      }

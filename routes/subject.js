@@ -6,7 +6,7 @@ const Subject = require("../models/subject.js");
 const Schema = mongoose.Schema;
 const Folder = require("../models/folder.js");
 const { isLogggedIn, saveRedirectUrl } = require("../middleware.js");
-
+const cloudinary = require("cloudinary").v2;
 router.post("/create/:id", async (req, res) => {
   try {
     let { id } = req.params;
@@ -32,44 +32,90 @@ router.post("/create/:id", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-
   try {
-      let { id } = req.params;
-  let subject = await Subject.findById(id);
-  await subject.populate("folder");
-  console.log("\n\n\n\n");
-  
-  res.render("./classroom/subject.ejs", { subject });
+    let { id } = req.params;
+    let subject = await Subject.findById(id);
+    await subject.populate("folder");
+    console.log("\n\n\n\n");
+
+    res.render("./classroom/subject.ejs", { subject });
   } catch (e) {
     console.log(e.message);
   }
 });
+async function deleteFolderFiles(id) {
+  try {
+    let folder = await Folder.findById(id).populate("subject");
+    if (!folder) {
+      throw new Error(`Folder with id ${id} not found`);
+    }
+    let subject = await Subject.findById(folder.subject);
+    if (!subject) {
+      throw new Error(`Subject for folder id ${id} not found`);
+    }
+
+    subject.folder = subject.folder.filter((folder) => !folder._id.equals(id));
+
+    await subject.save();
+    console.log("Deleted folder ", id);
+    for (let i of folder.image) {
+      cloudinary.uploader
+        .destroy(i.originalName)
+        .then((result) => console.log(result));
+      await Folder.deleteOne({ _id: id });
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+}
 
 //delete route
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
-  let subject = await Subject.findById(id);
-  let classroom = await Classroom.findById(subject.classroom).populate(
-    "subject"
-  );
-  classroom.subject = classroom.subject.filter(
-    (sub) => sub._id.toString() !== id
-  );
-  await classroom.save();
-  await Subject.deleteOne({ _id: id });
-  req.session.classData = classroom;
+  let { name } = req.body;
+  let subject = await Subject.findById(id).populate("folder");
+  try {
+    if (!subject) {
+      req.flash("error", "Subject not found!");
+      return res.redirect("/classroom");
+    }
 
-  // Redirect to another route
-  res.redirect("/classroom/enter");
+    if (name !== subject.username) {
+      req.flash("error", `Incorrect Name !`);
+      return res.redirect(`/subject/${id}`);
+    }
+    for (let i of subject.folder) {
+      await deleteFolderFiles(i._id);
+    }
+
+    let classroom = await Classroom.findById(subject.classroom).populate(
+      "subject"
+    );
+    classroom.subject = classroom.subject.filter(
+      (sub) => sub._id.toString() !== id
+    );
+
+    await classroom.save();
+    await Subject.deleteOne({ _id: id });
+    req.session.classData = classroom;
+    req.flash("success", "Subject and its folders deleted successfully!");
+    res.redirect("/classroom/enter");
+  } catch (e) {
+    console.log(e.message);
+    req.flash("error", "An error occurred while deleting the subject.");
+    res.redirect("/classroom");
+  }
 });
 
-//Back route 
-router.get("/back/:id",async (req, res) => {
+//bulk delete of folders
+
+//Back route
+router.get("/back/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
   let subject = await Subject.findById(id).populate("classroom");
   let classroom = await Classroom.findById(subject.classroom._id);
-    req.session.classData = req.session.home;
+  req.session.classData = req.session.home;
 
-    res.redirect("/classroom/enter");
+  res.redirect("/classroom/enter");
 });
 module.exports = router;
