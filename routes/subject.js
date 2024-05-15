@@ -98,12 +98,14 @@ router.delete("/delete/:id", isLogggedIn, async (req, res) => {
     await classroom.save();
     await Subject.deleteOne({ _id: id });
     req.session.classData = classroom;
+
     req.flash("success", "Subject and its folders deleted successfully!");
+
     res.redirect("/classroom/enter");
   } catch (e) {
     console.log(e.message);
     req.flash("error", "An error occurred while deleting the subject.");
-    res.redirect("/classroom");
+    res.redirect("/classroom/enter");
   }
 });
 
@@ -113,8 +115,9 @@ router.delete("/delete/:id", isLogggedIn, async (req, res) => {
 router.get("/back/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
   let subject = await Subject.findById(id).populate("classroom");
-  let classroom = await Classroom.findById(subject.classroom._id);
-  req.session.classData = req.session.home;
+  let classroom = await Classroom.findById(subject.classroom._id).populate("subject");
+  console.log(classroom);
+  req.session.classData = classroom;
 
   res.redirect("/classroom/enter");
 });

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const wrapasync = require("../utils/wrapAsync.js");
-const classroom = require("../models/classroom.js");
 const passport = require("passport");
+const Subject = require("../models/subject.js");
 const { isLogggedIn, saveRedirectUrl } = require("../middleware.js");
+const Classroom = require("../models/classroom.js");
 router.get("/", isLogggedIn, function (req, res) {
   res.render("./classroom/enterClassroom.ejs");
 });
@@ -22,8 +23,8 @@ router.post(
   wrapasync(async (req, res, next) => {
     let { username, password } = req.body;
     try {
-      let classroomData = await new classroom({ username });
-      let registeredClassroom = await classroom.register(
+      let classroomData = await new Classroom({ username });
+      let registeredClassroom = await Classroom.register(
         classroomData,
         password
       );
@@ -44,7 +45,7 @@ router.post(
   isLogggedIn,
   wrapasync(async (req, res) => {
     let { username, password } = req.body;
-    let classData = await classroom
+    let classData = await Classroom
       .findOne({ username: username })
       .populate("subject")
       .populate("student");
@@ -89,9 +90,13 @@ router.get("/enter", isLogggedIn, (req, res) => {
   res.render("./classroom/home.ejs");
 });
 
-router.get("/enter/subject", (req, res) => {
-  req.session.classData = req.session.home;
+router.get("/enter/:id",isLogggedIn, async(req, res) => {
+  let { id } = req.params;
+  let subject = await Subject.findById(id).populate("classroom");
+  let classData = await Classroom.findById(subject.classroom._id).populate("subject");
+   res.locals.classData = classData;
 
-  res.redirect("/classroom/enter");
+  res.render("./classroom/home.ejs");
+  
 });
 module.exports = router;
