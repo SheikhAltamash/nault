@@ -47,15 +47,16 @@
             <% } %>
 
 
-   <%if(classData){%>
+   <%if(classData&&classData.subject){%>
     <%for(let i of classData.subject){%>
 
         <form action="/subject/<%=i._id%>"> <div class="folder1">  <button class="sub"> <%=i.username%>  </button> </div></form>
 
         <%}%>
         <%}%>
-        <%if(!classData.subject.length){%>
-              <h6 >There is no subject here. <br>Create a subject by clicking on the 'Create Subject' button in nav bar.  </h6>
+
+        <%if(classData&&!classData.subject.length){%>
+              <h6 >Subject Needed<br>Click 'Create Subject' button in navbar  </h6>
 
           <% } %>
  

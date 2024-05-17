@@ -30,10 +30,11 @@ router.post(
     failureFlash: true,
   }),
   (req, res) => {
+    let { username } = req.body;
     req.flash("success", "Welcome to Nault !!!");
     let RedirectURL = res.locals.redirectUrl || "/classroom";
     res.redirect(RedirectURL);
-    console.log("All ok !!!");
+    console.log(`${username} Logged In`);
   }
 );
 
@@ -67,7 +68,7 @@ router.post("/signup", async (req, res, next) => {
         res.redirect("/classroom");
       });
 
-      console.log(username, email);
+      console.log(username, "signup to nault");
     } catch (err) {
       req.flash("error", err.message);
       res.redirect("/login/signup");

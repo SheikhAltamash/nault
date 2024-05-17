@@ -7,37 +7,29 @@ const Schema = mongoose.Schema;
 const Folder = require("../models/folder.js");
 const { isLogggedIn, saveRedirectUrl } = require("../middleware.js");
 const cloudinary = require("cloudinary").v2;
-router.post("/create/:id", async (req, res) => {
+router.post("/create/:id", isLogggedIn,async (req, res) => {
   try {
     let { id } = req.params;
     let { subjectName } = req.body;
     let insertIntoClassroom = await Classroom.findById(id).populate("subject");
-    let classData = insertIntoClassroom;
     let newSubject = new Subject({ username: subjectName, classroom: id });
     insertIntoClassroom.subject.push(newSubject._id);
     newSubject.author = res.locals.currUser.username;
-
     await insertIntoClassroom.save();
     await newSubject.save();
     let updatedClassroom = await Classroom.findById(id).populate("subject");
     req.session.classData = updatedClassroom;
-
-    // Redirect to another route
     res.redirect("/classroom/enter");
   } catch (e) {
     req.flash("error", e.message);
-
-    console.log(e.message);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", isLogggedIn,async (req, res) => {
   try {
     let { id } = req.params;
     let subject = await Subject.findById(id);
     await subject.populate("folder");
-    console.log("\n\n\n\n");
-
     res.render("./classroom/subject.ejs", { subject });
   } catch (e) {
     console.log(e.message);
@@ -57,7 +49,6 @@ async function deleteFolderFiles(id) {
     subject.folder = subject.folder.filter((folder) => !folder._id.equals(id));
 
     await subject.save();
-    console.log("Deleted folder ", id);
     for (let i of folder.image) {
       cloudinary.uploader
         .destroy(i.originalName)
@@ -102,8 +93,8 @@ router.delete("/delete/:id", isLogggedIn, async (req, res) => {
     req.flash("success", "Subject and its folders deleted successfully!");
 
     res.redirect("/classroom/enter");
+    console.log(`Subject ${name} deleted by ${res.locals.currUser.username}`);
   } catch (e) {
-    console.log(e.message);
     req.flash("error", "An error occurred while deleting the subject.");
     res.redirect("/classroom/enter");
   }
@@ -116,7 +107,6 @@ router.get("/back/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
   let subject = await Subject.findById(id).populate("classroom");
   let classroom = await Classroom.findById(subject.classroom._id).populate("subject");
-  console.log(classroom);
   req.session.classData = classroom;
 
   res.redirect("/classroom/enter");

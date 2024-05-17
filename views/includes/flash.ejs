@@ -1,8 +1,8 @@
 <%if(success&&success.length){%>
     <div class="alert alert-success alert-dismissible fade show d-flex align-items-center success col-6 offset-3 mt-4 " role="alert" style="font-size: 0.8rem;width: fit-content;margin: auto;">
- <p class="headFlash"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+ <h6 class="headFlash"> <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
  &nbsp;&nbsp;&nbsp;
-  <%=success%> </p>
+  <%=success%> </h6>
  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <%}%>
@@ -21,18 +21,8 @@
     
     @media  (max-width: 768px) {
         .headFlash{
-            font-size: 0.8rem !important;
+            font-size: 1rem !important;
         }
-        .success{
-            width: fit-content !important;
-        }
-    }
-    .success{
-        position: absolute;
-        left: 30%;
-        height:fit-content !important;
-        padding-top: 3px !important;
-        padding-bottom: 3px !important;
     }
 
 </style>

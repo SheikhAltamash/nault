@@ -33,15 +33,12 @@ router.post(
       let { id } = req.params;
       let author = res.locals.currUser.username;
       let folder = await Folder.findById(id);
-      console.log(req.file);
-      console.log(author);
       let originalName = req.file.filename;
       folder.image.push({ url, filename, author, originalName });
       await folder.save();
       req.flash("success", "File Uploaded Successfully !!!");
       res.redirect(`/folder/enter/${folder._id}`);
     } catch (e) {
-      console.log(e.message);
       req.flash("error", "Faild to upload file !!!");
       res.redirect(`/folder/enter/${folder._id}`);
     }
@@ -57,7 +54,6 @@ router.post("/subject/folder/:id", isLogggedIn, async (req, res) => {
   newFolder.author = res.locals.currUser.username;
   await newFolder.save();
   await subject.save();
-
   res.redirect(`/subject/${subject._id}`);
 });
 router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
@@ -65,22 +61,7 @@ router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
   let folder = await Folder.findById(id);
   res.render("./classroom/folder.ejs", { folder });
 });
-router.delete("folder/enter/folder/delete/:id", async (req, res) => {
-  // let { id } = req.params;
-  // let folder = await Folder.findById(id);
-  // let subject = await Subject.findById(folder.subject);
-  // console.log(folder.subject._id);
-  // // res.redirect(`/subject/${subject.id}`);
-  res.send("hello");
-});
-router.get("/file/:url/:id", isLogggedIn, (req, res) => {
-  let { url, id } = req.params;
-  let arrayUrl = url.split("/");
-  let urlArray = arrayUrl[arrayUrl.length - 1];
-  let imageName = urlArray.split(".")[0];
-  console.log(imageName);
-  res.send("Hello");
-});
+
 router.get("/folder/back/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
   let folder = await Folder.findById(id).populate("subject");
@@ -99,7 +80,6 @@ router.delete("/folder/delete/:id", isLogggedIn, async (req, res) => {
     if (name !== folder.name) {
       req.flash("error", `Incorrect Name !`);
       res.redirect(`/folder/enter/${folder._id}`);
-      console.log(name, folder.name);
     }
     subject.folder = newsubject;
     await subject.save();
@@ -107,11 +87,12 @@ router.delete("/folder/delete/:id", isLogggedIn, async (req, res) => {
     for (let i of folder.image) {
       cloudinary.uploader
         .destroy(i.originalName)
-        .then((result) => console.log(result));
+        .then((result) => console.log(result," Successfully Deleted From Cloudinary !"));
     }
     await Folder.deleteOne({ _id: id });
     req.flash("success", "Folder Deleted Successfully !");
     res.redirect(`/subject/${subject._id}`);
+    console.log(`Folder ${name} deleted by ${res.locals.currUser.username}`)
   } catch (e) {
     console.log(e.message);
   }
@@ -121,22 +102,19 @@ router.get(
   isLogggedIn,
   async (req, res) => {
     let { delId, id } = req.params;
-    console.log(delId);
     cloudinary.uploader
       .destroy(`nault_dev/${delId}`)
       .then((result) => console.log(result));
     try {
       let folder = await Folder.findById(id).populate("subject");
-      let deleted = folder.image.filter(
-        (image) => image.originalName !== `nault_dev/${delId}`
-      );
+      let deleted = folder.image.filter((image) => image.originalName !== `nault_dev/${delId}`);
       folder.image = deleted;
 
       await folder.save();
       req.flash("success", "File Deleted Successfully!!");
       res.redirect(`/folder/enter/${id}`);
+      console.log("One file is Deleted by ", res.locals.currUser.username, " of folder ", folder.name);
     } catch (err) {
-      console.error(err.message);
       req.flash("error", "Failed to delete image.");
       res.redirect(`/folder/enter/${id}`);
     }

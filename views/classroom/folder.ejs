@@ -13,7 +13,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/subject">Home</a>
+            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/folder/<%=folder._id%>">Home</a>
             <a class="nav-link subject_enter create" style="color: white;" href="#">Add file</a>
             <a class="nav-link contacts" style="color: white;">Contacts</a>
             <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
@@ -74,8 +74,9 @@
       </div>
       <% } %>
         <%-include("../includes/flash.ejs")%>
-      <% if (folder.image){%>
         <div class="arrow"> <a href="/folder/back/<%=folder._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
+
+      <% if (folder.image.length>0){%>
           <h3 class="h2forfolder" style="color: blue;">
             <%= folder.name %>
           </h3>
@@ -101,7 +102,7 @@
           </div>
           <% } else { %>
             <br>
-            <h5>There is no folder here.<br>Create a folder by clicking on the 'Add Folder' button in the nav bar.</h5>
+              <h6>Files Needed<br>Click 'Add Files' button in navbar  </h6>
             <% } %>
 
 

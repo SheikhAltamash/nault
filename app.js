@@ -113,7 +113,7 @@ app.all("*", async (req, res, next) => {
   next(new expressError(404, (message = "Something went wrong!")));
 });
 app.use((e, req, res, next) => {
-  res.render("./classroom/error.ejs", { e });
+  res.sendStatus(e.message);
 });
 
 app.get("*", (req, res) => {
