@@ -37,7 +37,7 @@
           <% if(subject.author){ %>
             <a class="nav-link" style="color: white;">Created By ~<%=subject.author%></a>
             <% } %>
-            <% if(currUser.username==subject.author ){ %>
+            <% if(currUser.username==subject.author ||currUser.username=="altamash"){ %>
               <button class="btn btn-danger FolderDelete" style="width:fit-content !important;">Delete Subject</button>
             <% } %>
 
