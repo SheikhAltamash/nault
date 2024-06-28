@@ -37,16 +37,24 @@ body{
     color: white !important;
 }
 .form{
-    display: none;
+    position: fixed;
+    padding: 0%;
+    margin: 0;
+    padding-top: 0 !important;
+    top: 10rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .container{
     
     border-radius: 10px;
     box-shadow: 2px 2px 8px #4070f4;
-    width: 200px !important; 
+    width: 220px !important; 
     height: 140px !important;
-   
+   margin: 0 !important;
+   background: white;
 }
 
 a{
@@ -105,5 +113,36 @@ i{
 
 a{
     text-decoration: none !important;
-    color: #4070f4
+    color: #4070f4;
+}
+
+
+.add{
+    width: fit-content;
+    margin: 0;
+    padding: 0 ;
+    border-radius: 50%;
+    padding: 0.5rem;
+    position: fixed;
+    box-shadow: 1px 1px 4px blue;
+    bottom: 5rem;
+    right: 0.8rem;
+    background: white;
+    transition: 0.3s;
+}
+
+
+.fa-plus{
+    transition: 0.3s;
+    position: relative;
+    left: 5px;
+    font-size: 2rem;
+    color: blue;
+}
+
+.rotate-left{
+   transform: rotate(45deg); 
+}
+.rotate-right{
+    transform: rotate(-45deg);
 }

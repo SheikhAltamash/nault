@@ -10,11 +10,7 @@
                <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link enter create" style="color: white;" href="#">Create Subject</a>
-       
-        </div>
-      <div class="navbar-nav ms-auto ">
+         <div class="navbar-nav ms-auto ">
         <% if(!currUser){%>
         <a  class="nav-link" href="/signup">Signup</a>
         <a  class="nav-link" href="/login" style="color: white;">Login</a>
@@ -28,11 +24,10 @@
 </nav>
         <%-include("../includes/flash.ejs")%>
 
-<div class="bg">
       <%if(classData){%>
-     <div class="form">
+     <div class="form" style="display: none;">
 <form action="/subject/create/<%=classData._id%>" class="needs-validation" novalidate method="post">
-<div class="container col-9 mt-5"> <br>
+<div class="container one col-9 mt-5"> <br>
 <input required type="text" class="form-control"name="subjectName" placeholder="Subject Name">
 <div class="invalid-feedback">Enter Classroom ID</div><br>
 <div class="d-grid"> <button class="btn btn-success d-grid col-8 mx-auto button">Create</button></div>
@@ -46,7 +41,10 @@
 <a href="/classroom"><button class="btn btn-success buttons">Home</button></a>
             <% } %>
 
+<div class="add">
+  <i class="fa-solid fa-plus"></i>
 
+</div>
    <%if(classData&&classData.subject){%>
     <%for(let i of classData.subject){%>
 
@@ -56,31 +54,38 @@
         <%}%>
 
         <%if(classData&&!classData.subject.length){%>
-              <h6 >Subject Needed<br>Click 'Create Subject' button in navbar  </h6>
+              <h6 >Subject Needed<br>Click '+' button to add subject  </h6>
 
           <% } %>
+
+
+
  
    
 
 <script>
-    let button = document.querySelector(".enter");
+    let button = document.querySelector(".add");
     let form= document.querySelector(".form");
     let span=document.querySelector(".navbar-toggler-icon");
-
+    let icon = document.querySelector(".fa-plus");
     let check=true;
     button.addEventListener("click",()=>{
         if(check){
-        form.style.display="inline";
-        check=false
-        button.style.color="black";
-        button.style.background="#4070f4";
+        form.style.display="flex";
+        check=false;
+        icon.style.color="white";
+        button.style.background="blue";
+        icon.classList.add("rotate-left");
+        
 
 }
     else if(check==false){
         form.style.display="none";
         check=true;
-        button.style.color="white";
-        button.style.background="#4070f4";
+        icon.style.color="blue";
+        button.style.background="white";
+        icon.classList.remove("rotate-left");
+
     }
     });
 

@@ -9,6 +9,7 @@
             box-shadow: 2px 2px 8px #4070f4;
             width: 280px !important;
             padding-bottom: 5%;
+            margin-bottom: 2rem;
         }
 
         * {
@@ -36,6 +37,8 @@
        
 
         .head {
+            position: sticky !important;
+
             display: flex;
             padding-left: 5%;
             padding-top: 3%;
@@ -43,6 +46,9 @@
             background: #4070f4;
             color: white;
             font-family: 'Poppins';
+        }
+        h2{
+            font-family: "Poppins";
         }
 
         i {
@@ -63,15 +69,15 @@
             width: 250px;
             border-radius: 10px;
             color: #4070f4;
-            box-shadow: 1px 1px 5px blue;
-            border: 1px solid blue;
+            box-shadow: 1px 1px 5px  #4070f4;
+            border: 1px solid  #4070f4;
             font-family: "roboto";
             margin-top: 10%;
         }
 
         .create:hover {
             color: white;
-            background: blue;
+            background:  #4070f4;
         }
 
         .b1 {

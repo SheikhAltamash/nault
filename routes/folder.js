@@ -10,17 +10,18 @@ const { route } = require("./subject.js");
 const multer = require("multer");
 const { cloudinary, storage } = require("../cloudImage.js");
 const upload = multer({ storage });
-
+const { imagekit } = require("../imageKit.js")
 router.get("/", function (req, res) {
   res.render("./classroom/folder.ejs");
 });
-
+var fs = require("fs");
 router.post(
   "/upload/:id",
   isLogggedIn,
   upload.single("image"),
   async (req, res) => {
     try {
+    
       let url = req.file.path;
       let { name } = req.body;
       let filename;
@@ -40,7 +41,7 @@ router.post(
       res.redirect(`/folder/enter/${folder._id}`);
     } catch (e) {
       req.flash("error", "Faild to upload file !!!");
-      res.redirect(`/folder/enter/${folder._id}`);
+      console.log(e.message);
     }
   }
 );
@@ -59,6 +60,13 @@ router.post("/subject/folder/:id", isLogggedIn, async (req, res) => {
 router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
   let { id } = req.params;
   let folder = await Folder.findById(id);
+  folder.image.forEach(i => {
+    if (i.url.endsWith(".pdf")) {
+      i.url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png';
+    }
+  });
+   folder.image.reverse();
+
   res.render("./classroom/folder.ejs", { folder });
 });
 

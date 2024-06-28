@@ -28,14 +28,13 @@
             aria-current="page"
             href="/classroom/enter/<%=subject._id%>"
             style="color: white;"
-            >Home</a
+            ><i class="fa-solid fa-house"></i> Home</a
           >
-          <a class="nav-link subject_enter create" href="#"  style="color: white;">Add Folder</a>
-          <a class="nav-link contacts" style="color: white;">Contacts</a>
+          <a class="nav-link contacts" style="color: white;"> <i class="fa-solid fa-envelope"></i> Contacts</a>
         <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
           
           <% if(subject.author){ %>
-            <a class="nav-link" style="color: white;">Created By ~<%=subject.author%></a>
+            <a class="nav-link" style="color: white;"><i class="fa-solid fa-pen"></i> Created By ~<%=subject.author%></a>
             <% } %>
             <% if(currUser.username==subject.author ||currUser.username=="altamash"){ %>
               <button class="btn btn-danger FolderDelete" style="width:fit-content !important;">Delete Subject</button>
@@ -46,14 +45,14 @@
       </div>
     </div>
   </nav>
-  <div class="subject_form">
+  <div class="subject_form ">
     <form
       action="/subject/folder/<% if(subject){ %><%=subject._id%><% } %>"
       class="needs-validation"
       novalidate
       method="post"
     >
-      <div class="container col-9 mt-5">
+      <div class="contain">
         <br />
         <input
           required
@@ -65,7 +64,7 @@
         <div class="invalid-feedback">Enter Valid Name</div>
         <br />
         <div class="d-grid">
-          <button class="btn btn-success d-grid col-8 mx-auto button">
+          <button class="btn btn-success col-5 mx-auto">
             Add
           </button>
         </div>
@@ -73,8 +72,9 @@
       <br />
     </form>
   </div>
-  <div class="deleteFolderConform" style=" display: none; position: absolute;">
-        <p class="warning-p"><span style="color: red; font-size: 1rem !important;">  Warning </span>  <br>Deleting this subject will also delete all its folders <br> and files. <br> This action is irreversible. <br> Proceed ?</p>
+  <div class="deleteFolderConform" >
+    <div class="under">
+       <p class="warning-p"><span style="color: red; font-size: 1rem !important;">  Warning </span>  <br>Deleting this subject will also delete all its folders <br> and files. <br> This action is irreversible. <br> Proceed ?</p>
         <form action="/subject/delete/<%=subject._id%>?_method=DELETE" method="post" style="display: inline;">
 
         <input type="text" class="form-control mx auto "name="name" placeholder="Enter subject name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
@@ -82,9 +82,15 @@
         <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
        
        
-      </div>
+      
+    </div>
+       </div>
                                   
                <%-include("../includes/flash.ejs")%>
+         <div class="add">
+  <i class="fa-solid fa-plus upload_icon button_icon"></i>
+
+</div>      
 
   <% if(subject) {%>
   <div class="folder">
@@ -98,7 +104,7 @@
      <% } %>
     <% }else{ %>
       <br>
-              <h6>Folder Needed<br>Click 'Add Folder' button in navbar  </h6>
+              <h6>Folder Needed<br>Click '+' button to add folder  </h6>
     <% } %>
   </div>
 
@@ -119,6 +125,8 @@
   folderDeleteCancel.addEventListener("click",()=>{
     folderDeleteForm.style.display="none";
   });
+
+
 </script> 
 <style>
  

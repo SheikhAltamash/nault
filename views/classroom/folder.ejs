@@ -13,14 +13,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/folder/<%=folder._id%>">Home</a>
-            <a class="nav-link subject_enter create" style="color: white;" href="#">Add file</a>
-            <a class="nav-link contacts" style="color: white;">Contacts</a>
-            <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
+            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/folder/<%=folder._id%>"> <i class="fa-solid fa-house"></i> Home</a>
+            <a class="nav-link contacts_file" style="color: white;"><i class="fa-solid fa-envelope"></i> Contacts</a>
+            <a class="nav-link collapse-contacts_file" style="color: white;display:none;">nault.org@gmail.com</a>
             
 
               <% if(folder.author){ %>
-            <a class="nav-link" style="color: white;">Created By ~<%=folder.author%></a>
+            <a class="nav-link" style="color: white;"> <i class="fa-solid fa-pen"></i> Created By ~<%=folder.author%></a>
             <% } %>
           </div>
           <% if(currUser.username==folder.author ){ %>
@@ -46,9 +45,9 @@
 
 
     <% if(folder) {%>
-      <div class="subject_form">
+      <div class="subject_form_upload" style="display: none;">
         <form enctype="multipart/form-data" action="/upload/<%=folder._id%>" class="needs-validation" method="post">
-          <div class="container col-9 mt-5">
+          <div class="file_upload_under">
             <p>Files with a size less than 10 Mb are preferred. <br> If your file is greater than 10 Mb, then <a
                 href="https://www.ilovepdf.com/compress_pdf"> click here. </a></p> <br />
             <input type="text" class="form-control mx-auto" name="name" placeholder="Name (Optional)"><br>
@@ -63,23 +62,32 @@
         </form>
       </div>
       <div class="deleteFolderConform" style=" display: none; position: absolute;">
+        <div class="under_deletefolder">
+
+       
         <p class="warning-p"><span style="color: red; font-size: 1rem !important;">Warning </span> <br>Deleting this folder will also delete all files. <br> This action is irreversible. <br>Proceed ?</p>
          <form action="/folder/delete/<%=folder._id%>?_method=DELETE" method="post" style="display: inline;">
 
         <input type="text" class="form-control mx w auto "name="name" placeholder="Enter folder name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
          <button class="btn btn-danger" style="margin-left: 20px;">delete</button> </form>
         <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
-       
+        </div>
        
       </div>
       <% } %>
         <%-include("../includes/flash.ejs")%>
+        <div class="add_upload">
+
+<i class="fa-solid  fa-cloud-arrow-up upload_icon " id="fa-cloud-arrow-up upload_icon" ></i>
+<i class="fa-solid fa-xmark upload_icon " id="fa-xmark upload_icon" style="display: none;"></i>
+</div>
         <div class="arrow"> <a href="/folder/back/<%=folder._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
 
-      <% if (folder.image.length>0){%>
           <h3 class="h2forfolder" style="color: blue;">
             <%= folder.name %>
           </h3>
+      <% if (folder.image.length>0){%>
+          
          
         <div class="del-mes" style="display: none;margin: auto !important;">
         <h6>Are you sure you want to delete ?</h6>
@@ -90,11 +98,15 @@
             <% for (i of folder.image) { %>
               <div class="data">
                 <a href="<%= i.url %>" class="data">
+
                   <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"
-                    alt=""></a>
+                    src="<%=i.url%>"
+                    alt="" class="img_file">
+                  
+                   
+                  </a>
                   <p>
-                  <span style="color: blue;"> <%= (i.filename) %></span> <br>
+                  <span style="color: blue;"> <%= (i.filename.slice(0,12)) %>...</span><br>
                   <span class="username" style="color: black;" >~<%=i.author %></span>   &nbsp;<%if(i.author==currUser.username) {%> <i class="fa-solid fa-trash-can" onclick="deleteimage('<%= i.originalName %>')"></i><% } %>
                   </p>
               </div>
@@ -102,14 +114,55 @@
           </div>
           <% } else { %>
             <br>
-              <h6>Files Needed<br>Click 'Add Files' button in navbar  </h6>
             <% } %>
 
 
   </body>
 
- 
+ </html>
 <script>
+ 
+  let contact = document.querySelector(".contacts_file");
+  let collapse = document.querySelector(".collapse-contacts_file");
+  let col = true;
+  contact.addEventListener("click", () => {
+    if (col) {
+      collapse.style.display = "inline";
+      col = false;
+    } else {
+      collapse.style.display = "none";
+      col = true;
+    }
+  });
+
+
+  let formn=document.querySelector(".subject_form_upload")
+  let icon2 = document.querySelector(".add_upload");
+  let close_icon = document.querySelector(".fa-xmark");
+  let cloud_icon=document.querySelector(".fa-cloud-arrow-up")
+  let show = true;
+  icon2.addEventListener("click",()=>{
+    if(show){
+      show=false;
+      formn.style.display="block";
+      cloud_icon.style.display="none";
+      close_icon.style.display="block";
+      close_icon.style.color="white";
+      icon2.style.background="blue";
+
+
+    }
+    else{
+       show=true;
+      formn.style.display="none";
+      cloud_icon.style.display="block";
+      close_icon.style.display="none";
+      cloud_icon.style.color="blue";
+      icon2.style.background="white";
+
+    }
+
+  }) 
   let delteIlcon=document.querySelectorAll(".fa-trash-can");
   let delMes=document.querySelector(".del-mes"); 
 
@@ -159,8 +212,8 @@ deleteLink.href = `/folder/delete/${deleteID}/${folderId}`;
 
 
 
-</script> </html>
-  <script src="/public/js/script.js"></script>
+</script> 
+
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');

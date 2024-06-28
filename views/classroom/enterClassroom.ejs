@@ -1,9 +1,9 @@
 <% layout("./layouts/boilerplate.ejs")%>
 <link rel="stylesheet" href="/CSS/enterClassroom.css">
-
+<script src="https://cdn.tailwindcss.com"></script>
     <body class="login">
-        <div class="head"><i class="fa-brands fa-neos"></i>
-            <h2>Nault</h2>
+        <div class="head" style="position: sticky;"><i class="fa-brands fa-neos "></i>
+            <h2 class="text-2xl">Nault</h2>
         </div>
         <%-include("../includes/flash.ejs")%>
     <div class="select">
@@ -11,7 +11,7 @@
         <div class="bg b1"><a href="/classroom/create"><div class="create">Create Classroom</div></a></div>
      <% } %>
         <div class="bg">
-            <div class="enter create" >Enter Classroom</div>
+            <div class="enter create " >Enter Classroom</div>
         </div>
         <div class="form">
             <form action="/classroom/enter" class="needs-validation" novalidate method="post">
@@ -45,13 +45,13 @@
                 form.style.display = "inline";
                 check = false
                 button.style.color = "white";
-                button.style.background = "blue";
+                button.style.background = " #4070f4";
 
             }
             else if (check == false) {
                 form.style.display = "none";
                 check = true;
-                button.style.color = "blue";
+                button.style.color = "#4070f4";
                 button.style.background = "white";
             }
         });

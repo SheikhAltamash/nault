@@ -14,20 +14,7 @@ h4 {
 .nav-link {
   color: black;
 }
-.subject_form {
-  width: 400px;
-  margin: auto;
-  margin-top: -20px;
-  display: none;
-}
-.button {
-  width: 150px !important;
-  margin: auto;
-}
-.subject_name {
-  width: 200px !important;
-  margin: auto;
-}
+
 .subject_head {
   display: flex;
   padding-left: 3%;
@@ -77,5 +64,36 @@ h4 {
   top: -3px;
   left:5px;
  }
+ .add{
+    width: fit-content;
+    margin: 0;
+    padding: 0 ;
+    border-radius: 50%;
+    padding: 0.5rem;
+    position: fixed;
+    box-shadow: 1px 1px 4px blue;
+    bottom: 5rem;
+    right: 0.8rem;
+    background: white;
+    transition: 0.3s;
+}
+
+
+.fa-plus{
+    position: relative;
+    left: 5px;
+    font-size: 2rem;
+    color: blue;
+    transition: 0.3s;
+}
 
  
+.rotate-left{
+   transform: rotate(45deg); 
+}
+.rotate-right{
+    transform: rotate(-45deg);
+}
+.fa-pen , .fa-envelope ,.fa-house{
+  font-size: 0.9rem !important;
+}
