@@ -10,7 +10,6 @@ const { route } = require("./subject.js");
 const multer = require("multer");
 const { cloudinary, storage } = require("../cloudImage.js");
 const upload = multer({ storage });
-const { imagekit } = require("../imageKit.js")
 router.get("/", function (req, res) {
   res.render("./classroom/folder.ejs");
 });
