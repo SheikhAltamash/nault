@@ -11,7 +11,7 @@ const path = require("path");
 const passport = require("passport");
 const passportLocal = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
-const ejs = require("ejs");
+const ejs = require("ejs"); 
 const port = 8080;
 const routerUser = require("./routes/user.js");
 const flash = require("express-flash");
@@ -54,7 +54,7 @@ const sessionOption = {
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge:190* 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
 };
