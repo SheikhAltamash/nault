@@ -36,6 +36,7 @@ a{
         top:10%;
        
         width: 300px !important;
+        text-align: center;
        
     }
     .button{
@@ -65,11 +66,24 @@ a{
 
 h4{
     font-family: 'Poppins', sans-serif;
+ margin: auto;
+ text-align: center;
+    width: 100% !important;
   
 }
 .otp{
     margin-top: 1rem !important;
     margin-bottom: 0.5rem !important;
+}
+button{
+    margin-top: 1rem  !important;
+
+}
+p{
+    font-size: 0.8rem;
+    display: block;
+    margin-top:1.3rem;
+    text-decoration: underline;
 }
 
 </style>
@@ -77,32 +91,12 @@ h4{
 <body class="login">
       <%-include("../includes/flash.ejs")%>
 <div class="container col-9 mt-5"> <br>
-    <h4 class="mt-3 col-3  mx-auto hide">Signup</h4><br>
-    <form action="/login/signup" class="needs-validation hide" method="post" novalidate>
-        <div class="row">
-                <div class="col-10 offset-1">
-            <div class=" mt-3">
-               
-                <input required type="text" class="form-control"name="username" placeholder="Username">
-                  <div class="invalid-feedback">Enter Username</div></div><br><br>
-            <div class="mt-2">
-               
-                <input required type="Email"class="form-control" name="email" placeholder="Email">
-              <div class="invalid-feedback">Enter Email</div></div>
-                 <div class=" mt-3">
-               
-                <input required type="text" class="form-control"name="password" placeholder="Password">
-                  <div class="invalid-feedback">Enter Password</div></div><br><br>
-        </div>
-        </div>
-        <div class="d-grid"> <button class="btn btn-primary d-grid col-8 mx-auto button_hide ">Signup</button></div>
-       
-    </form> <br>
-
-    
-
-    <hr><br>
-    <p class="col 8 mx-auto p hide">Already have an account ? <a href="/login">Login</a></p>
+    <h4 class="mt-3 col-3  mx-auto hide">OTP Verification</h4><br>
+ <form action="/login/verify-otp/forgot" class="needs-validate" method="post" class="show" novalidate>
+ 
+  <input type="text" id="otp"class="form-control otp" name="otp" required placeholder="Enter OTP">
+  <button type="submit" class="btn btn-outline-success">Verify OTP</button>
+</form>
 </div>
 <script src="/js/validate.js">
 

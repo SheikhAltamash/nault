@@ -14,6 +14,11 @@ router.get("/", function (req, res) {
   res.render("./classroom/folder.ejs");
 });
 var fs = require("fs");
+router.post("/getdata", (req, res) => {
+  let { data }=req.body;
+  console.log("Data comes to server");
+  console.log(data);
+});
 router.post(
   "/upload/:id",
   isLogggedIn,

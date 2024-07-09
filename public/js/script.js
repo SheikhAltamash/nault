@@ -30,4 +30,7 @@ let check = true;
       check1 = true;
     }
   });
+
+let alert = document.querySelector(".alert-dismissible");
+setTimeout(() => {alert.style.display="none"},3000)
  
