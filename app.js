@@ -54,7 +54,7 @@ const sessionOption = {
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: 190 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
 };
@@ -63,9 +63,9 @@ async function main() {
   await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 3000 });
 }
 
-// async function main() {
-//   await mongoose.connect("mongodb://localhost:27017/nault");
-// }
+async function main() {
+  await mongoose.connect("mongodb://localhost:27017/nault");
+};
 main()
   .then((res) => {
     console.log("Connection Sucessfull !");
