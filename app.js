@@ -63,9 +63,9 @@ async function main() {
   await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 3000 });
 }
 
-async function main() {
-  await mongoose.connect("mongodb://localhost:27017/nault");
-};
+// async function main() {
+//   await mongoose.connect("mongodb://localhost:27017/nault");
+// };
 main()
   .then((res) => {
     console.log("Connection Sucessfull !");
