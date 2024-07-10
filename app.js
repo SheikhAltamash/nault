@@ -63,7 +63,7 @@ async function main() {
   await mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-g serverSelectionTimeoutMS: 3000 });
+ serverSelectionTimeoutMS: 3000 });
 }
 
 // async function main(){
