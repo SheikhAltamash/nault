@@ -81,16 +81,29 @@ router.post("/subject/folder/:id", isLogggedIn, async (req, res) => {
   res.redirect(`/subject/${subject._id}`);
 });
 router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
-  let { id } = req.params;
-  let folder = await Folder.findById(id);
-  folder.image.forEach(i => {
-    if (i.url.endsWith(".pdf")) {
-      i.url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png';
-    }
-  });
-   folder.image.reverse();
+  try {
+    let { id } = req.params;
+    let folder = await Folder.findById(id);
 
-  res.render("./classroom/folder.ejs", { folder });
+    if (!folder) {
+      req.flash("error", "Folder not found.");
+      return res.redirect("back");
+    }
+
+    folder.image.forEach((i) => {
+      if (i.url.endsWith(".pdf")) {
+        i.url =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png";
+      }
+    });
+    folder.image.reverse();
+
+    res.render("./classroom/folder.ejs", { folder });
+  } catch (e) {
+    req.flash("error", "Failed to retrieve folder.");
+    res.redirect(`/folder/enter/${id}`);
+    console.log(e.message);
+  }
 });
 
 router.get("/folder/back/:id", isLogggedIn, async (req, res) => {
@@ -110,7 +123,7 @@ router.delete("/folder/delete/:id", isLogggedIn, async (req, res) => {
     let newsubject = subject.folder.filter((folder) => !folder._id.equals(id));
     if (name !== folder.name) {
       req.flash("error", `Incorrect Name !`);
-      res.redirect(`/folder/enter/${folder._id}`);
+      return res.redirect(`/folder/enter/${folder._id}`);
     }
     subject.folder = newsubject;
     await subject.save();

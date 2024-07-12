@@ -61,8 +61,6 @@ const sessionOption = {
 
 async function main() {
   await mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
  serverSelectionTimeoutMS: 3000 });
 }
 
