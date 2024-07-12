@@ -272,3 +272,8 @@ height: 100%;
 .fa-pen , .fa-envelope ,.fa-house{
   font-size: 0.9rem !important;
 }
+.h2_folder{
+  margin-left: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: -1rem;
+}

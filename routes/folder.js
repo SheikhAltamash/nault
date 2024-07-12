@@ -83,7 +83,7 @@ router.post("/subject/folder/:id", isLogggedIn, async (req, res) => {
 router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
   try {
     let { id } = req.params;
-    let folder = await Folder.findById(id);
+    let folder = await Folder.findById(id).populate("subject");
 
     if (!folder) {
       req.flash("error", "Folder not found.");

@@ -61,7 +61,8 @@ const sessionOption = {
 
 async function main() {
   await mongoose.connect(mongoUrl, {
- serverSelectionTimeoutMS: 3000 });
+    serverSelectionTimeoutMS: 3000
+  }); 
 }
 
 // async function main(){
