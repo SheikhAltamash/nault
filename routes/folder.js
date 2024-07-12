@@ -10,10 +10,12 @@ const { route } = require("./subject.js");
 const multer = require("multer");
 const { cloudinary, storage } = require("../cloudImage.js");
 const upload = multer({ storage });
+const {notify}=require("../public/js/mail.js")
 router.get("/", function (req, res) {
   res.render("./classroom/folder.ejs");
 });
 var fs = require("fs");
+const subject = require("../models/subject.js");
 router.post("/getdata", (req, res) => {
   let { data }=req.body;
   console.log("Data comes to server");
@@ -43,6 +45,23 @@ router.post(
       await folder.save();
       req.flash("success", "File Uploaded Successfully !!!");
       res.redirect(`/folder/enter/${folder._id}`);
+
+      let subject = await Subject.findById(folder.subject);
+      let classroom = await Classroom.findById(subject.classroom).populate("student");
+      for (let n of classroom.student) {
+       if (res.locals.currUser.username !== n.username) {
+         notify(
+           res.locals.currUser.username,
+           classroom.username,
+           n.email,
+           filename,
+           folder.name,
+           subject.username,
+           folder._id
+         );
+         console.log("email send to ", n.email);
+       }
+      }
     } catch (e) {
       req.flash("error", "Faild to upload file !!!");
       console.log(e.message);

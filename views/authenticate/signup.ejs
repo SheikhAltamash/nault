@@ -34,7 +34,7 @@ font-weight: 600 !important;
 .login_label{
     font-size: 1rem !important;
     margin-bottom: 0.5rem;
-    margin-left: 1rem;
+    margin-left:-1rem;
     font-family: "roboto";
    
 }
@@ -78,7 +78,12 @@ p{
     text-align: center;
 }
 
+.contain{
 
+    width: fit-content;
+    margin:auto;
+    
+}
 </style>
 
 <body class="login">
@@ -86,7 +91,7 @@ p{
           <h2>Nault</h2>
         </div>
       <%-include("../includes/flash.ejs")%>
-<div class=""> <br>
+<div class="contain"> <br>
     <h4 class="hide">Signup</h4><br>
     <form action="/login/signup" class="needs-validation hide" method="post" novalidate>
         <div class="">
