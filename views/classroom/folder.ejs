@@ -99,10 +99,15 @@
           <div class="box">
             <% for (i of folder.image) { %>
               <div class="data">
+                <% let fileUrl = i.url; %>
+      <% if (fileUrl.includes('.pdf')) { %>
+        <% fileUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"; %>
+      <% } %>
                 <a href="<%= i.url %>" class="data">
 
                   <img
-                    src="<%=i.url%>"
+
+                    src="<%=fileUrl%>"
                     alt="" class="img_file">
                   
                    

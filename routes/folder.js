@@ -50,16 +50,17 @@ router.post(
       let classroom = await Classroom.findById(subject.classroom).populate("student");
       for (let n of classroom.student) {
        if (res.locals.currUser.username !== n.username) {
-         notify(
+       await  notify(
            res.locals.currUser.username,
            classroom.username,
            n.email,
            filename,
            folder.name,
            subject.username,
-           folder._id
+         folder._id,
+           n.username
          );
-         console.log("email send to ", n.email);
+       
        }
       }
     } catch (e) {

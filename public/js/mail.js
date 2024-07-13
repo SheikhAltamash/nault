@@ -88,7 +88,7 @@ nault.onrender.com
   };
   sendMail(transporter, mailOptions);
 };
-const notify = async (uploader,classname, address, filename,folder,subject,folderId) => {
+const notify = async (uploader,classname, address, filename,folder,subject,folderId,username) => {
   const mailOptions = {
     from: {
       name: "Nault",
@@ -111,7 +111,7 @@ The Nault Team
   const sendMail = async (transporter, mailOptions) => {
     try {
       await transporter.sendMail(mailOptions);
-      console.log("mail has been send successfully refree");
+      console.log("Notification mail has been send successfully to ",username);
     } catch (e) {
       console.log(e.message);
     }
