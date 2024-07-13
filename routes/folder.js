@@ -27,7 +27,7 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-    
+   
       let url = req.file.path;
       let { name } = req.body;
       let filename;
@@ -89,13 +89,6 @@ router.get("/folder/enter/:id", isLogggedIn, async (req, res) => {
       req.flash("error", "Folder not found.");
       return res.redirect("back");
     }
-
-    folder.image.forEach((i) => {
-      if (i.url.endsWith(".pdf")) {
-        i.url =
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png";
-      }
-    });
     folder.image.reverse();
 
     res.render("./classroom/folder.ejs", { folder });
