@@ -7,7 +7,7 @@
         </div>
         <%-include("../includes/flash.ejs")%>
     <div class="select">
-     <% if(currUser.username=="altamash") {%>
+     <% if(currUser.username!=="altamash") {%>
         <div class="bg b1"><a href="/classroom/create"><div class="create">Create Classroom</div></a></div>
      <% } %>
         <div class="bg">
