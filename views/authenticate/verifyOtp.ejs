@@ -88,6 +88,15 @@ p{
     margin-top: 2rem;
     
 }
+.i_fgt{
+    color: black;
+   font-size: 0.9rem;
+}
+.p_fgt{
+    font-size: 0.8rem !important;
+    margin: auto;
+    margin-bottom: 1rem;
+}
 </style>
 
 <body class="login">
@@ -97,6 +106,8 @@ p{
       <%-include("../includes/flash.ejs")%>
 <div class="contain"> <br>
     <h4 class="">OTP Verification</h4><br>
+    <p class="p_fgt">OTP has been successfully send to your email <br>
+        <i class="i_fgt"><%=email%></i></p>
  <form action="/login/verify-otp" class="needs-validate" method="post" class="show" novalidate>
  
   <input type="text" id="otp"class="form-control otp" name="otp" required placeholder="Enter OTP">

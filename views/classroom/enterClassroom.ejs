@@ -2,12 +2,14 @@
 <link rel="stylesheet" href="/CSS/enterClassroom.css">
 <script src="https://cdn.tailwindcss.com"></script>
     <body class="login">
-        <div class="head" style="position: sticky;"><i class="fa-brands fa-neos "></i>
-            <h2 class="text-2xl">Nault</h2>
+            <div class="login_logo"><i class="fa-brands fa-neos logo_icon"></i>
+          <h2 class="h2_enter">Nault</h2>
         </div>
+       
+     
         <%-include("../includes/flash.ejs")%>
     <div class="select">
-     <% if(currUser.username=="altamash") {%>
+     <% if(currUser.username!=="altamash") {%>
         <div class="bg b1"><a href="/classroom/create"><div class="create">Create Classroom</div></a></div>
      <% } %>
         <div class="bg">

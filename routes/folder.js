@@ -27,15 +27,9 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-   
       let url = req.file.path;
       let { name } = req.body;
-      let filename;
-      if (name) {
-        filename = name;
-      } else {
-        filename = req.file.originalname;
-      }
+      let filename = name || req.file.originalname;
 
       let { id } = req.params;
       let author = res.locals.currUser.username;
@@ -47,24 +41,27 @@ router.post(
       res.redirect(`/folder/enter/${folder._id}`);
 
       let subject = await Subject.findById(folder.subject);
-      let classroom = await Classroom.findById(subject.classroom).populate("student");
-      for (let n of classroom.student) {
-       if (res.locals.currUser.username !== n.username) {
-       await  notify(
-           res.locals.currUser.username,
-           classroom.username,
-           n.email,
-           filename,
-           folder.name,
-           subject.username,
-         folder._id,
-           n.username
-         );
-       
-       }
-      }
+      let classroom = await Classroom.findById(subject.classroom).populate(
+        "student"
+      );
+
+      // Extract all student emails
+      let emailAddresses = classroom.student
+        .filter((student) => res.locals.currUser.username !== student.username)
+        .map((student) => student.email)
+        .join(",");
+
+      await notify(
+        res.locals.currUser.username,
+        classroom.username, // assuming classroom has a 'name' property
+        emailAddresses,
+        filename,
+        folder.name,
+        subject.username,
+        folder._id
+      );
     } catch (e) {
-      req.flash("error", "Faild to upload file !!!");
+      req.flash("error", "Failed to upload file !!!");
       console.log(e.message);
     }
   }

@@ -88,16 +88,24 @@ nault.onrender.com
   };
   sendMail(transporter, mailOptions);
 };
-const notify = async (uploader,classname, address, filename,folder,subject,folderId,username) => {
+const notify = async (
+  uploader,
+  classname,
+  addresses,
+  filename,
+  folder,
+  subject,
+  folderId
+) => {
   const mailOptions = {
     from: {
       name: "Nault",
-      adderess: process.env.USER,
+      address: process.env.USER,
     },
-    to: address,
+    to: addresses, // Multiple recipients
     subject: `New Notes Uploaded by ${uploader} on Nault`,
     text: `Hi ${classname} Students,
-      ${uploader} has just uploaded new notes for "${subject}" in the folder "${folder}" .
+      ${uploader} has just uploaded new notes for "${subject}" in the folder "${folder}".
 You can access the file "${filename}" directly through the link below:
 
 https://nault.onrender.com/folder/enter/${folderId}
@@ -108,14 +116,16 @@ Best regards,
 The Nault Team
 `,
   };
+
   const sendMail = async (transporter, mailOptions) => {
     try {
       await transporter.sendMail(mailOptions);
-      console.log("Notification mail has been send successfully to ",username);
+      console.log("Notification mail has been sent successfully.");
     } catch (e) {
       console.log(e.message);
     }
   };
+
   sendMail(transporter, mailOptions);
 };
 module.exports = { otpSender, resetOtpsender, generateOTP,notify };

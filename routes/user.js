@@ -35,6 +35,11 @@ router.get("/forgotpassword", (req, res) => {
 router.get("/verifyOtpforgot", (req, res) => {
   res.render("./authenticate/verifyOtpforgot.ejs")
 })
+router.post("/nault", (req, res) => {
+  let { data } = req.body;
+  console.log(data)
+  console.log("come to server");
+})
 router.post(
   "/log",
   saveRedirectUrl,
@@ -76,7 +81,7 @@ router.post("/signup", async (req, res, next) => {
       req.session.username=username
       await otpSender(username, email, otp);
       req.flash("success", "OTP has been send to your email")
-      res.redirect("/login/verify-otp")
+     res.render("./authenticate/verifyOtp.ejs" ,{email});
       console.log(username, "signup to nault");
     } catch (err) {
       req.flash("error", err.message);
@@ -156,7 +161,7 @@ router.post("/forgot", async (req, res) => {
       req.session.username = data.username;
        await resetOtpsender(data.username, email, otp);
       req.flash("success", "OTP has been send to your email");
-      res.redirect("/login/verifyOtpforgot");
+      res.render("./authenticate/verifyOtpforgot.ejs",{email});
     } catch (e){
       console.log(e.message);
       req.flash("error", "Something went wrong !");
