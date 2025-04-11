@@ -40,7 +40,7 @@ async function sendReq() {
   );
   console.log(data.data);
 }
-setInterval(()=>{sendReq()},2000)
+setInterval(()=>{sendReq()},20000)
 
 app.listen(port, (req, res) => {
   console.log("listening on port " + port);
