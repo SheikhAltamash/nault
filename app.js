@@ -12,7 +12,7 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
 const ejs = require("ejs"); 
-const port = 8080;
+const port = 8081;
 const routerUser = require("./routes/user.js");
 const flash = require("express-flash");
 const User = require("./models/user.js");
@@ -23,17 +23,28 @@ const routerSubject = require("./routes/subject.js");
 const routerFolder = require("./routes/folder.js");
 const mongoUrl = process.env.MONGO_URL;
 const mongoStore = require("connect-mongo");
-const cors = require("cors")
+const cors = require("cors");
+const axios = require("axios")
+const { send } = require("vite");
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
-
 app.use(cors());
-
 app.use(express.json());
+async function sendReq() {
+  let data = await axios.get(
+    "https://social-insights-backend.onrender.com/alive"
+  );
+  console.log(data.data);
+}
+setInterval(()=>{sendReq()},2000)
+
+app.listen(port, (req, res) => {
+  console.log("listening on port " + port);
+});
 
 if (!mongoUrl) {
   console.error("MongoDB connection URL is not provided.");
@@ -62,13 +73,11 @@ const sessionOption = {
     httpOnly: true,
   },
 };
-
 async function main() {
-  await mongoose.connect(mongoUrl, {
+   mongoose.connect(mongoUrl, {
     serverSelectionTimeoutMS: 3000
   }); 
 }
-
 // async function main(){
 //   await mongoose.connect("mongodb://localhost:27017/nault");
 // };
@@ -79,50 +88,36 @@ main()
   .catch((err) => {
     console.log(err);
   });
-
 app.get("/", (req, res, next) => {
   res.redirect("/classroom/enter");
 });
 
-app.use(session(sessionOption)); //This middleware is for session management
-
-//Authenntication Middlewares
+app.use(flash());
+app.use(session(sessionOption)); 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-//flashing middlewares
-app.use(flash());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
   res.locals.deleteID;
-  res.locals.showform=false;
+  res.locals.showform = false;
   next();
-});
-
-app.listen(port, (req, res) => {
-  console.log("listening on port " + port);
-});
-app.get("/", (req, res) => {
-  res.send("All OK");
 });
 app.use("/login", routerUser);
 app.use("/classroom", routerClassroom);
 app.use("/subject", routerSubject);
 app.use("/", routerFolder);
 
-//Error Handling middleware
 app.all("*", async (req, res, next) => {
   next(new expressError(404, (message = "Something went wrong!")));
 });
 app.use((e, req, res, next) => {
   res.sendStatus(e.message);
 });
-
 app.get("*", (req, res) => {
   res.send("Page Not Found !!");
 });
