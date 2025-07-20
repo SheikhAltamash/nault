@@ -1,66 +1,377 @@
 <% layout("./layouts/boilerplate.ejs")%>
-<link rel="stylesheet" href="/CSS/enterClassroom.css">
 <script src="https://cdn.tailwindcss.com"></script>
-    <body class="login">
-            <div class="login_logo"><i class="fa-brands fa-neos logo_icon"></i>
-          <h2 class="h2_enter">Nault</h2>
-        </div>
-       
-     
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body.login {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.login_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    color: #4070f4;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}
+
+.logo_icon {
+    font-size: 1.7rem;
+    margin-right: 0.5rem;
+    position: relative;
+    top: -0.3rem;
+    color: #4070f4;
+}
+
+.h2_enter {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4070f4;
+    margin: 0;
+}
+
+.main_container {
+    background: white;
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.bg {
+    background: white;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg:hover {
+    border-color: #4070f4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(64, 112, 244, 0.15);
+}
+
+.bg.b1 {
+    background: linear-gradient(135deg, #4070f4 0%, #5b8def 100%);
+    border-color: transparent;
+}
+
+.bg.b1:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(64, 112, 244, 0.3);
+}
+
+.bg.b1 a {
+    text-decoration: none;
+}
+
+.create {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.bg.b1 .create {
+    color: white;
+}
+
+.bg:hover .create {
+    color: #4070f4;
+}
+
+.bg.b1:hover .create {
+    color: white;
+}
+
+.form {
+    display: none;
+    animation: slideIn 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4070f4;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(64, 112, 244, 0.1);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+    font-weight: 400;
+}
+
+.button {
+    width: 100% !important;
+    padding: 0.9rem !important;
+    background: linear-gradient(135deg, #4070f4 0%, #5b8def 100%) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: white !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    margin-top: 1rem !important;
+    font-family: "Poppins", sans-serif !important;
+}
+
+.button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(64, 112, 244, 0.3) !important;
+    background: linear-gradient(135deg, #2c5aa0 0%, #4070f4 100%) !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    text-align: left;
+    display: none;
+}
+
+.form-control.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+.container {
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Active state for Enter Classroom button */
+.enter.active {
+    background: #4070f4 !important;
+    color: white !important;
+    border-color: #4070f4 !important;
+}
+
+@media (max-width: 480px) {
+    body.login {
+        padding: 1rem;
+    }
+    
+    .main_container {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .login_logo {
+        margin-bottom: 2rem;
+    }
+    
+    .h2_enter {
+        font-size: 1.7rem;
+    }/* Enhanced button states */
+.bg {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+}
+
+.bg:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 0 0 1px rgba(64, 112, 244, 0.1);
+}
+
+/* Better active state for Enter Classroom button */
+.bg.enter-active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 4px 12px rgba(64, 112, 244, 0.2);
+}
+
+.bg.enter-active .create {
+    color: white !important;
+    font-weight: 600;
+}
+
+.bg.enter-active:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), 0 6px 20px rgba(64, 112, 244, 0.25);
+}
+
+/* Smooth transitions for state changes */
+.bg.enter-active {
+    animation: activateButton 0.3s ease-out;
+}
+
+@keyframes activateButton {
+    0% {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+}
+</style>
+
+<body class="login">
+    <div class="login_logo">
+        <i class="fa-brands fa-neos logo_icon"></i>
+        <h2 class="h2_enter">Nault</h2>
+    </div>
+
+    <div class="main_container">
         <%-include("../includes/flash.ejs")%>
-    <div class="select">
-     <% if(currUser.username!=="altamash") {%>
-        <div class="bg b1"><a href="/classroom/create"><div class="create">Create Classroom</div></a></div>
-     <% } %>
-        <div class="bg">
-            <div class="enter create " >Enter Classroom</div>
+        
+        <div class="select">
+            <% if(currUser.username !== "altamash") { %>
+            <div class="bg b1">
+                <a href="/classroom/create">
+                    <div class="create">Create Classroom</div>
+                </a>
+            </div>
+            <% } %>
+            
+            <div class="bg">
+                <div class="enter create">Enter Classroom</div>
+            </div>
         </div>
+
         <div class="form">
             <form action="/classroom/enter" class="needs-validation" novalidate method="post">
-                <div class="container col-9 mt-5"> <br>
-                    <div class="row">
-                        <div class="col-10 offset-1">
-                            
-                            <div class=" mt-3">
-                                <input required type="text" class="form-control" name="username"
-                                            placeholder="Classroom ID">
-                                        <div class="invalid-feedback">Enter Classroom ID</div>
-
-                            </div><br>
-                            <div class="mb-2">
-                                <div class=" mt-3">
-                                    <input type="text" class="form-control" name="password" placeholder="Password" required>
-                                            <div class="invalid-feedback">Enter Password</div>
-                                </div><br>
-                            </div>
-                        </div>
-                                <div class="d-grid"> <button class="btn btn-success d-grid col-8 mx-auto button">Enter Classroom</button></div>
-                    </form>
-
+                <div class="form_group">
+                    <input required type="text" class="form-control" name="username" placeholder="Classroom ID">
+                    <div class="invalid-feedback">Enter Classroom ID</div>
                 </div>
-            </div>
-    </body>
-    <script>
-        let button = document.querySelector(".enter");
-        let form = document.querySelector(".form");
-        let check = true;
-        button.addEventListener("click", () => {
-            if (check) {
-                form.style.display = "inline";
-                check = false
-                button.style.color = "white";
-                button.style.background = " #4070f4";
+                
+                <div class="form_group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <div class="invalid-feedback">Enter Password</div>
+                </div>
+                
+                <button type="submit" class="btn btn-success button">Enter Classroom</button>
+            </form>
+        </div>
+    </div>
 
-            }
-            else if (check == false) {
-                form.style.display = "none";
-                check = true;
-                button.style.color = "#4070f4";
-                button.style.background = "white";
-            }
-        });
+    <script>
+       const button = document.querySelector(".enter");
+const form = document.querySelector(".form");
+const submitBtn = document.getElementById("submit-btn");
+const classroomForm = document.getElementById("classroom-form");
+let isFormVisible = false;
+
+button.addEventListener("click", () => {
+    if (!isFormVisible) {
+        // Show form and activate button
+        form.style.display = "block";
+        isFormVisible = true;
+        
+        // Use CSS class instead of inline styles
+        button.closest('.bg').classList.add("enter-active");
+        
+        // Focus on first input after animation
+        setTimeout(() => {
+            form.querySelector('input').focus();
+        }, 100);
+    } else {
+        // Hide form and deactivate button
+        form.style.display = "none";
+        isFormVisible = false;
+        
+        // Remove active class
+        button.closest('.bg').classList.remove("enter-active");
+    }
+});
+
+// Enhanced form submission with loading state
+classroomForm.addEventListener("submit", function(e) {
+    submitBtn.classList.add("loading");
+    submitBtn.textContent = "";
+});
+
+// Keyboard accessibility
+button.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        button.click();
+    }
+});
+
+// Better visual feedback on button press
+button.addEventListener("mousedown", () => {
+    button.closest('.bg').style.transform = "translateY(0px)";
+});
+
+button.addEventListener("mouseup", () => {
+    if (isFormVisible) {
+        button.closest('.bg').style.transform = "translateY(-1px)";
+    } else {
+        button.closest('.bg').style.transform = "";
+    }
+});
 
     </script>
-<style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
-    </style>
+</body>

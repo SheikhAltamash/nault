@@ -1,113 +1,207 @@
 <% layout("./layouts/boilerplate.ejs")%>
 <style>
-    *{
-    margin: 0;
-    padding: 0%;
-     font-family: 'Poppins', sans-serif; 
-}
-.login{
-    background:whitesmoke;
-}
-a{
-    text-decoration: none;
-    font-family: "roboto";
-    font-weight: 400;
- 
-    
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
+    body.login {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-.login_logo{
-    display: flex;color: #4070f4;
-font-family: "poppins" !important;
-font-weight: 600 !important;
-    width: 100%;
-    margin-top: 1rem;
-    padding-left: 1rem;
+    .forgot_container {
+        background: white;
+        padding: 3rem 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        margin: 2rem 1rem;
+    }
 
-}
+    .login_logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        color: #4070f4;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+    }
 
-.logo_icon{
-    color: #4070f4;
+    .logo_icon {
+        font-size: 1.7rem;
+        margin-right: 0.5rem;
+        position: relative;
+        top: -0.3rem;
+        color: #4070f4;
+    }
 
-}
-.login_label{
-    font-size: 1rem !important;
-    margin-bottom: 0.5rem;
-    margin-left:-1rem;
-    font-family: "poppins";
-   
-}
-.login_a{
-    border: 1px solid black;
-    display: block;
-    width: fit-content;
-    margin: auto;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    margin-top: 2rem !important;
-color: black;}
-.under_login{
-    
-    width: 100% !important;
-    margin: auto !important;
-    
-    width: fit-content !important;
+    .logo_text {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #4070f4;
+    }
 
-}
-.button{
-width: 300px;
-border-radius: 20px;
+    .form_title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1rem;
+        font-family: "Poppins", sans-serif;
+    }
 
+    .form_description {
+        text-align: center;
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+        line-height: 1.5;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+    }
 
-display: block;
-margin: auto;
-margin-top: -1rem;
-margin-bottom: 2rem;
-}
-.form-control{
-    width: 300px;
-    margin: auto;
+    .form_group {
+        margin-bottom: 1.5rem;
+    }
 
-  border-radius: 10px;
-}
-h4{
-    text-align: center;
-    font-family: "roboto";
-}
-p{
-    text-align: center;
-}
+    .form_label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 0.5rem;
+        font-family: "Poppins", sans-serif;
+    }
 
-.contain{
+    .form-control {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+        font-family: "Poppins", sans-serif;
+    }
 
-    width: fit-content;
-    margin:auto;
-   
-    margin-top: 2rem;
-    
-}
+    .form-control:focus {
+        outline: none;
+        border-color: #4070f4;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(64, 112, 244, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+    }
+
+    .send_button {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, #4070f4 0%, #5b8def 100%);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 1rem 0;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .send_button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(64, 112, 244, 0.3);
+    }
+
+    .form_footer {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .form_footer p {
+        color: #6c757d;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+    }
+
+    .form_footer a {
+        color: #4070f4;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .form_footer a:hover {
+        color: #2c5aa0;
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: none;
+    }
+
+    .form-control.is-invalid + .invalid-feedback {
+        display: block;
+    }
+
+    @media (max-width: 480px) {
+        .forgot_container {
+            margin: 1rem;
+            padding: 2rem 1.5rem;
+        }
+        
+        .login_logo {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form_title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
 </style>
-<body class="login">
-      <div class="login_logo"><i class="fa-brands fa-neos logo_icon"></i>
-          <h2>Nault</h2>
-        </div>
-      <%-include("../includes/flash.ejs")%>
-      <script src="/js/validate.js"></script>
 
-<div class="contain"> <br>
-    <h4 class="">Forgot Password </h4><br>
-    <form action="/login/forgot"  method="post" class="needs-validation" novalidate>
-        <div class="row">
-                <div class="">
-            <div class="">
-                <input required type="text" class="form-control"name="email" placeholder="Enter your registered email">
-                  <div class="invalid-feedback">Enter Email !</div></div><br><br>
-          
+<body class="login">
+    <div class="forgot_container">
+        <div class="login_logo">
+            <i class="fa-brands fa-neos logo_icon"></i>
+            <h2 class="logo_text">Nault</h2>
         </div>
+
+        <%-include("../includes/flash.ejs")%>
+
+        <h4 class="form_title">Forgot Password</h4>
+        <p class="form_description">Enter your registered email address and we'll send you an OTP to reset your password</p>
+
+        <form action="/login/forgot" method="post" class="needs-validation" novalidate>
+            <div class="form_group">
+                <label for="email" class="form_label">Email</label>
+                <input type="email" class="form-control" name="email" id="email"
+                       placeholder="Enter your registered email" required>
+                <div class="invalid-feedback">Enter Email!</div>
+            </div>
+
+            <button type="submit" class="send_button">Send OTP</button>
+        </form>
+
+        <div class="form_footer">
+            <p>Remember your password?<br> <a href="/login">Back to Login</a></p>
         </div>
-        <div class=""> <button class="btn btn-success button">Send Otp</button></div>
-       
-    </form> 
-</div>
+    </div>
+
+    <script src="/js/validate.js"></script>
 </body>

@@ -1,227 +1,2145 @@
 <% layout("./layouts/boilerplate.ejs")%>
-<link rel="stylesheet" href="/CSS/folder.css">
-  <body>
-    <nav class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom">
-      <div class="container-fluid">
-        <div class="subject_head"><i class="fa-brands fa-neos"></i>
-          <h2>Nault</h2>
-        </div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link " style="color: white;" aria-current="page" href="/classroom/enter/folder/<%=folder._id%>"> <i class="fa-solid fa-house"></i> Home</a>
-            <a class="nav-link contacts_file" style="color: white;"><i class="fa-solid fa-envelope"></i> Contacts</a>
-            <a class="nav-link collapse-contacts_file" style="color: white;display:none;">nault.org@gmail.com</a>
-            
-
-              <% if(folder.author){ %>
-            <a class="nav-link" style="color: white;"> <i class="fa-solid fa-pen"></i> Created By ~<%=folder.author%></a>
-            <% } %>
-          </div>
-          <% if(currUser.username==folder.author ){ %>
-              <button class="btn btn-danger FolderDelete">Delete Folder</button>
-            
-          <% } %>
-
-          <div class="navbar-nav ms-auto " style="display: none">
-            <% if(!currUser){%>
-              <a class="nav-link" href="/signup">Signup</a>
-              <a class="nav-link" href="/login">Login</a>
-              <%}%>
-                <%if(currUser){%>
-                  <a class="nav-link" href="/logout">Logout</a>
-                  <%}%>
-            
-          </div>
-        </div>
-      </div>
-
-    </nav>
-
-
-
-    <% if(folder) {%>
-      <div class="subject_form_upload" style="display: none;">
-        <form enctype="multipart/form-data" action="/upload/<%=folder._id%>" class="needs-validation" method="post">
-          <div class="file_upload_under">
-            <p>Files with a size less than 10 Mb are preferred. <br> If your file is greater than 10 Mb, then <a
-                href="https://www.ilovepdf.com/compress_pdf"> click here. </a></p> <br />
-            <input type="text" class="form-control mx-auto" name="name" placeholder="Name (Optional)"><br>
-            <input required type="file" class="form-control subject_name" name="image" />
-            <div class="invalid-feedback">Enter Valid File</div>
-            <br />
-            <div class="d-grid">
-              <button class="btn btn-success mx-auto button">Add</button>
-            </div>
-          </div>
-          <br/>
-        </form>
-      </div>
-      <div class="deleteFolderConform" style=" display: none; position: absolute;">
-        <div class="under_deletefolder">
-
-       
-        <p class="warning-p"><span style="color: red; font-size: 1rem !important;">Warning </span> <br>Deleting this folder will also delete all files. <br> This action is irreversible. <br>Proceed ?</p>
-         <form action="/folder/delete/<%=folder._id%>?_method=DELETE" method="post" style="display: inline;">
-
-        <input type="text" class="form-control mx w auto "name="name" placeholder="Enter folder name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
-         <button class="btn btn-danger" style="margin-left: 20px;">delete</button> </form>
-        <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
-        </div>
-       
-      </div>
-      <% } %>
-        <%-include("../includes/flash.ejs")%>
-        <div class="add_upload">
-
-<i class="fa-solid  fa-cloud-arrow-up upload_icon " id="fa-cloud-arrow-up upload_icon" ></i>
-<i class="fa-solid fa-xmark upload_icon " id="fa-xmark upload_icon" style="display: none;"></i>
-</div>
-        <div class="arrow"> <a href="/folder/back/<%=folder._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
-      <h2 class="h2_folder">
-        <%=folder.subject.username %>
-      </h2>
-          <h3 class="h2forfolder" style="color: blue;">
-            <%= folder.name %>
-          </h3>
-      <% if (folder.image.length>0){%>
-          
-         
-        <div class="del-mes" style="display: none;margin: auto !important;">
-        <h6>Are you sure you want to delete ?</h6>
-          <button class="btn btn-primary del-folder cancel">cancle</button> 
-          <a id="deleteLink" href=""><button class="btn btn-danger del-folder">delete</button></a>
-        </div>
-          <div class="box">
-            <% for (i of folder.image) { %>
-              <div class="data">
-                <% let fileUrl = i.url; %>
-      <% if (fileUrl.includes('.pdf')) { %>
-        <% fileUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/182px-PDF_file_icon.svg.png"; %>
-      <% } %>
-                <a href="<%= i.url %>" class="data">
-
-                  <img
-
-                    src="<%=fileUrl%>"
-                    alt="" class="img_file">
-                  
-                   
-                  </a>
-                  <p>
-                  <span style="color: blue;"> <%= (i.filename.slice(0,12)) %>...</span><br>
-                  <span class="username" style="color: black;" >~<%=i.author %></span>   &nbsp;<%if(i.author==currUser.username) {%> <i class="fa-solid fa-trash-can" onclick="deleteimage('<%= i.originalName %>')"></i><% } %>
-                  </p>
-              </div>
-            <% } %>
-          </div>
-          <% } else { %>
-            <br>
-            <% } %>
-
-
-  </body>
-
- </html>
-<script>
- 
-  let contact = document.querySelector(".contacts_file");
-  let collapse = document.querySelector(".collapse-contacts_file");
-  let col = true;
-  contact.addEventListener("click", () => {
-    if (col) {
-      collapse.style.display = "inline";
-      col = false;
-    } else {
-      collapse.style.display = "none";
-      col = true;
-    }
-  });
-
-
-  let formn=document.querySelector(".subject_form_upload")
-  let icon2 = document.querySelector(".add_upload");
-  let close_icon = document.querySelector(".fa-xmark");
-  let cloud_icon=document.querySelector(".fa-cloud-arrow-up")
-  let show = true;
-  icon2.addEventListener("click",()=>{
-    if(show){
-      show=false;
-      formn.style.display="block";
-      cloud_icon.style.display="none";
-      close_icon.style.display="block";
-      close_icon.style.color="white";
-      icon2.style.background="blue";
-
-
-    }
-    else{
-       show=true;
-      formn.style.display="none";
-      cloud_icon.style.display="block";
-      close_icon.style.display="none";
-      cloud_icon.style.color="blue";
-      icon2.style.background="white";
-
-    }
-
-  }) 
-  let delteIlcon=document.querySelectorAll(".fa-trash-can");
-  let delMes=document.querySelector(".del-mes"); 
-
-  let cancelButton=document.querySelector(".cancel")
-  let folderDeleteButton=document.querySelector(".FolderDelete");
-  let folderDeleteForm = document.querySelector(".deleteFolderConform");
- let folderDeleteCancel=document.querySelector(".deleteFolderCancel");
-  folderDeleteButton.addEventListener("click",()=>{
-  folderDeleteForm.style.display="inline-block";
-  });
-
-  folderDeleteCancel.addEventListener("click",()=>{
-    folderDeleteForm.style.display="none";
-  });
-
-
-
-  delteIlcon.forEach(icon=>{
-  icon.addEventListener("click",()=>{
-    if(delMes.style.display="none"){
-      delMes.style.display="inline-block";
-      delMes.style.margin="auto";
-     
-    }
-    else if(delMes.style.display="inline-block"){
-      delMes.style.display="none";
+:root {
+    --primary-color: #4285f4;
+    --primary-dark: #1a73e8;
+    --secondary-color: #5b8def;
+    --success-color: #4caf50;
+    --success-dark: #388e3c;
+    --danger-color: #ef4444;
+    --danger-dark: #dc2626;
+    --warning-color: #f59e0b;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+:root {
+    /* Mobile font scales */
+    --mobile-title-size: 1.8rem;
+    --mobile-subtitle-size: 1.2rem;
+    --mobile-body-size: 0.9rem;
+    --mobile-small-size: 0.8rem;
     
-    }
-  });});
+    /* Mobile spacing */
+    --mobile-padding: 1rem;
+    --mobile-margin: 0.75rem;
+    --mobile-gap: 0.75rem;
+    
+    /* Mobile component sizes */
+    --mobile-navbar-height: 60px;
+    --mobile-button-height: 44px;
+    --mobile-card-height: 120px;
+}
 
-cancelButton.addEventListener("click",()=>{
-  deleteID="";
-  delMes.style.display="none";
-  console.log(deleteID);
-})
-function deleteimage(data){
-deleteID=data;
-console.log(deleteID);
-let deleteLink = document.getElementById("deleteLink");
-let folderId = "<%= folder._id %>";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Poppins', sans-serif;
+}
 
-// Assuming delID is defined elsewhere in your code
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+/* .fa-solid{
+  color: #1a73e8;
+} */
 
-deleteLink.href = `/folder/delete/${deleteID}/${folderId}`;
+/* Professional Blue Navbar */
+/* .navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-lg);
+    border: none !important;
+    padding: 0.75rem 0 !important;
+    height: 70px !important;
+} */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-md);
+    border: none !important;
+    padding: 0.75rem 0 !important;
+    min-height: auto !important;
+}
+.container-fluid {
+    padding: 0 2rem !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.subject_head {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+}
+
+.subject_head i {
+    font-size: 1.8rem;
+    margin-right: 0.75rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.subject_head h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.025em;
+}
+
+.navbar-nav {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    margin: 0;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+.navbar-nav .nav-link[style*="white"] {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link i {
+    font-size: 0.85rem ;
+}
+
+.FolderDelete {
+    background: var(--danger-color) !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+    font-size: 0.9rem !important;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.FolderDelete:hover {
+    background: var(--danger-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 70px);
+}
+
+/* Back Arrow */
+.arrow {
+    margin-bottom: 2rem;
+}
+
+.arrow a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    font-size: 1.1rem;
+}
+
+.arrow a:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Headers */
+.h2_folder {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    text-align: center;
+    letter-spacing: -0.025em;
+}
+
+.h2forfolder {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--primary-color) !important;
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.h2forfolder::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Fixed Upload Modal */
+.subject_form_upload {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.file_upload_under {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    animation: slideInScale 0.3s ease;
 }
 
 
 
+.upload-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-</script> 
+.upload-header h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.upload-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.upload-header p a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.upload-header p a:hover {
+    text-decoration: underline;
+}
+
+/* Form Close Button */
+.form-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: var(--bg-tertiary);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.form-close:hover {
+    background: var(--danger-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Form Controls */
+.file_upload_under input[type="text"],
+.subject_name {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: "Inter", sans-serif;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.file_upload_under input[type="text"]:focus,
+.subject_name:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.file_upload_under input[type="text"]::placeholder,
+.subject_name::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Professional File Grid */
+.box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+    margin-top: 2rem;
+}
+
+.data {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.data::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.data:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.img_file {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 0;
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+    border: none;
+    display: block;
+}
+
+.data:hover .img_file {
+    transform: scale(1.02);
+}
+
+/* PDF Styling */
+.data .img_file[src*="PDF_file_icon"] {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    height: 140px;
+}
+
+/* File Information */
+.data p {
+    padding: 1rem;
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.data p span:first-child {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.3;
+    margin-bottom: 0.75rem !important;
+    display: block;
+    word-break: break-word;
+}
+
+.file-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--bg-secondary);
+}
+
+.username {
+    color: var(--text-secondary) !important;
+    font-size: 0.8rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.username::before {
+    content: '👤';
+    font-size: 0.7rem;
+}
+
+.fa-trash-can {
+    color: var(--text-secondary) !important;
+    font-size: 1rem !important;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.data:hover .fa-trash-can {
+    opacity: 1;
+}
+
+.fa-trash-can:hover {
+    background: var(--danger-color);
+    color: white !important;
+    transform: scale(1.1);
+}
+
+/* Enhanced Floating Upload Button */
+.add_upload {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 1020;
+    border: 4px solid white;
+}
+
+.add_upload:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(66, 133, 244, 0.4);
+}
+
+.add_upload.active {
+    background: linear-gradient(135deg, var(--danger-color) 0%, var(--danger-dark) 100%);
+}
+
+.upload_icon {
+    font-size: 1.6rem !important;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.add_upload.active .fa-cloud-arrow-up {
+    display: none !important;
+}
+
+.add_upload.active .fa-xmark {
+    display: block !important;
+    transform: rotate(180deg);
+}
+
+/* Delete Modals */
+.del-mes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    z-index: 1100;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    display: none;
+    max-width: 400px;
+    width: 90%;
+}
+
+.del-mes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--danger-color);
+    border-radius: 16px 16px 0 0;
+}
+
+.deleteFolderConform {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    padding: 1rem;
+}
+
+.under_deletefolder {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* .under_deletefolder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--danger-color);
+    border-radius: 20px 20px 0 0;
+} */
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    background: white;
+    padding: 4rem 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    margin: 3rem auto;
+    border: 2px dashed var(--border-color);
+    max-width: 600px;
+}
+
+.empty-folder-icon {
+    font-size: 5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    display: block;
+    opacity: 0.6;
+}
+.fa-cloud-arrow-up{
+  color: #1a73e8;
+  /* background-color: blue; */
+}
+
+/* Button Styles */
+.btn {
+    padding: 1rem 2rem !important;
+    border-radius: 12px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    font-family: "Inter", sans-serif !important;
+    border: none !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color) 0%, var(--success-dark) 100%) !important;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .container-fluid {
+        padding: 0 1rem !important;
+    }
+    
+  .navbar-nav {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        gap: 0.25rem;
+        padding: 1rem 0;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem !important;
+        width: auto;
+    }
+    
+    .main-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .box {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
+    
+    .img_file {
+        height: 120px;
+    }
+    
+    .add_upload {
+        width: 56px;
+        height: 56px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .upload_icon {
+        font-size: 1.4rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .img_file {
+        height: 100px;
+    }
+}/* Mobile-specific CSS variables */
+
+/* Mobile Navbar Enhancements */
+@media (max-width: 768px) {
+    /* .navbar {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+        height: var(--mobile-navbar-height) !important;
+        padding: 0.5rem 0 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    } */
+    
+    .container-fluid {
+        padding: 0 1rem !important;
+    }
+    
+    .subject_head {
+        flex: 1;
+    }
+    
+    .subject_head h2 {
+        font-size: 1.4rem !important;
+        font-weight: 600;
+    }
+    
+    .subject_head i {
+        font-size: 1.3rem !important;
+        margin-right: 0.5rem;
+    }
+    
+    /* Mobile navigation collapse */
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-radius: 0 0 12px 12px;
+        margin-top: 0.5rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 0.5rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Override ms-auto for mobile */
+    .navbar-nav.ms-auto {
+        margin-left: 0 !important;
+    }
+    
+       /* Mobile navigation links styling */
+    .navbar-nav .nav-link {
+        color: var(--text-primary) !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 8px !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+        text-align: left !important;
+        background: white !important;
+        margin-bottom: 0.25rem !important;
+        border: 1px solid var(--border-color) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background: var(--primary-color) !important;
+        color: white !important;
+        border-color: var(--primary-color) !important;
+        transform: translateX(4px) !important;
+    }
+    
+    /* Mobile navigation icons */
+    .navbar-nav .nav-link i {
+        font-size: 1rem !important;
+        width: 20px !important;
+        text-align: center !important;
+    }
+    .FolderDelete {
+        margin-top: 0.5rem;
+        width: 100%;
+        font-size: var(--mobile-body-size) !important;
+        padding: 0.75rem !important;
+    } .navbar-toggler {
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+    
+    .navbar-toggler-icon {
+        width: 20px;
+        height: 20px;
+        background-size: 100% 100%;
+    }
+}/* Professional Mobile Typography */
+@media (max-width: 768px) {
+    .h2_folder {
+        font-size: var(--mobile-title-size) !important;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-weight: 700;
+    }
+    
+    .h2forfolder {
+        font-size: var(--mobile-subtitle-size) !important;
+        margin-bottom: 2rem;
+        font-weight: 600;
+    }
+    
+    .h2forfolder::after {
+        width: 60px;
+        height: 3px;
+        bottom: -0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .h2_folder {
+        font-size: 1.6rem !important;
+    }
+    
+    .h2forfolder {
+        font-size: 1.1rem !important;
+    }
+}
+/* Mobile File Grid Optimization */
+@media (max-width: 768px) {
+    .main-container {
+        padding: var(--mobile-padding) 0.5rem;
+    }
+    
+    .box {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--mobile-gap);
+        padding: 0 0.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    .data {
+        border-radius: 12px;
+        min-height: var(--mobile-card-height);
+    }
+    
+    .img_file {
+        height: 80px !important;
+        border-radius: 8px;
+    }
+    
+    .data[data-type="pdf"] .img_file {
+        font-size: 2rem !important;
+        height: 80px !important;
+    }
+    
+    .data p {
+        padding: 0.75rem;
+    }
+    
+    .data p span:first-child {
+        font-size: var(--mobile-small-size) !important;
+        line-height: 1.2;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .username {
+        font-size: 0.7rem !important;
+    }
+    
+    .fa-trash-can {
+        font-size: 0.9rem !important;
+        padding: 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .img_file {
+        height: 70px !important;
+    }
+    
+    .data[data-type="pdf"] .img_file {
+        font-size: 1.5rem !important;
+        height: 70px !important;
+    }
+}
+/* Professional Mobile Modals */
+@media (max-width: 768px) {
+    .subject_form_upload {
+        padding: 1rem 0.5rem;
+    }
+    
+    .file_upload_under {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        margin: 0;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .upload-header h3 {
+        font-size: 1.3rem !important;
+        margin-bottom: 0.75rem;
+    }
+    
+    .upload-header p {
+        font-size: var(--mobile-small-size);
+        line-height: 1.4;
+    }
+    
+    .file_upload_under input[type="text"],
+    .subject_name {
+        font-size: var(--mobile-body-size);
+        padding: 0.875rem 1rem;
+    }
+    
+    .btn {
+        font-size: var(--mobile-body-size) !important;
+        padding: 0.875rem 1.5rem !important;
+    }
+    
+    /* Delete Modal Mobile */
+    .del-mes {
+        width: 90%;
+        max-width: 320px;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .del-mes h6 {
+        font-size: var(--mobile-body-size);
+        margin-bottom: 1rem;
+    }
+    
+    .deleteFolderConform {
+        padding: 1rem 0.5rem;
+    }
+    
+    .under_deletefolder {
+        padding: 2rem 1.5rem;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+    
+    .warning-p {
+        font-size: var(--mobile-body-size) !important;
+        line-height: 1.4;
+        margin-bottom: 1.5rem;
+    }
+    
+    .under_deletefolder input {
+        width: 100% !important;
+        margin: 1rem 0 !important;
+        font-size: var(--mobile-body-size);
+        padding: 0.75rem;
+    }
+    
+    .under_deletefolder button {
+        font-size: var(--mobile-small-size) !important;
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem !important;
+        width: 45%;
+        display: inline-block;
+    }
+}
+/* Mobile Interactive Elements */
+@media (max-width: 768px) {
+    .arrow {
+        margin-bottom: 1.5rem;
+        text-align: left;
+        padding-left: 0.5rem;
+    }
+    
+    .arrow a {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .add_upload {
+        width: 56px;
+        height: 56px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        border: 3px solid white;
+    }
+    
+    .upload_icon {
+        font-size: 1.3rem !important;
+    }
+    
+    .form-close {
+        width: 32px;
+        height: 32px;
+        top: 0.75rem;
+        right: 0.75rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .add_upload {
+        width: 52px;
+        height: 52px;
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .upload_icon {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* Mobile Empty State */
+@media (max-width: 768px) {
+    .empty-state {
+        padding: 2.5rem 1.5rem;
+        margin: 2rem 0.5rem;
+        border-radius: 16px;
+    }
+    
+    .empty-folder-icon {
+        font-size: 3.5rem !important;
+        margin-bottom: 1rem;
+    }
+    
+    .empty-state h6 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    .empty-state p {
+        font-size: var(--mobile-small-size) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .empty-state {
+        padding: 2rem 1rem;
+    }
+    
+    .empty-folder-icon {
+        font-size: 3rem !important;
+    }
+}
+/* Touch-Friendly Mobile Interactions */
+@media (max-width: 768px) {
+    /* Ensure all interactive elements are touch-friendly */
+    .data,
+    .btn,
+    .nav-link,
+    .fa-trash-can,
+    .arrow a,
+    .add_upload {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+    
+    /* Better tap targets */
+    .fa-trash-can {
+        padding: 0.5rem;
+        margin: -0.25rem;
+    }
+    
+    /* Improved hover states for touch */
+    .data:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    .btn:active {
+        transform: scale(0.98);
+    }
+    
+    /* Prevent text selection on interactive elements */
+    .data,
+    .btn,
+    .add_upload {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+/* Mobile Utility Classes */
+@media (max-width: 768px) {
+    .mobile-hidden {
+        display: none !important;
+    }
+    
+    .mobile-only {
+        display: block !important;
+    }
+    
+    .mobile-text-sm {
+        font-size: var(--mobile-small-size) !important;
+    }
+    
+    .mobile-text-xs {
+        font-size: 0.75rem !important;
+    }
+    
+    .mobile-p-sm {
+        padding: 0.5rem !important;
+    }
+    
+    .mobile-m-sm {
+        margin: 0.5rem !important;
+    }
+}
+
+/* Hide desktop-only elements on mobile */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+}
+.subject_hea{
+display: flex;
+}
+.subject_hea h2{
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+/* Enhanced Mobile Responsive Design for Navbar */
+@media (max-width: 768px) {
+    .navbar {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+        height: var(--mobile-navbar-height) !important;
+        padding: 0.5rem 0 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .container-fluid {
+        padding: 0 1rem !important;
+    }
+    
+    .subject_hea {
+        flex: 1;
+        color: white;
+    }
+    
+    .subject_hea h2 {
+        font-size: 1.4rem !important;
+        font-weight: 600;
+        color: white !important;
+    }
+    
+    .subject_hea i {
+        font-size: 1.3rem !important;
+        margin-right: 0.5rem;
+        color: white !important;
+    }
+    
+    /* Mobile navigation collapse - Left aligned */
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        border-radius: 0 0 12px 12px;
+        margin-top: 0.5rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Left-aligned mobile navigation */
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 0.5rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Override any ms-auto classes for mobile */
+    .navbar-nav.ms-auto {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Mobile navigation links styling */
+    .navbar-nav .nav-link {
+        color: var(--text-primary) !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 8px !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+        text-align: left !important;
+        background: white !important;
+        margin-bottom: 0.25rem !important;
+        border: 1px solid var(--border-color) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background: var(--primary-color) !important;
+        color: white !important;
+        border-color: var(--primary-color) !important;
+        transform: translateX(4px) !important;
+        box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2);
+    }
+    
+    /* Mobile navigation icons */
+    .navbar-nav .nav-link i {
+        font-size: 1rem !important;
+        width: 20px !important;
+        text-align: center !important;
+        color: var(--primary-color) !important;
+    }
+    
+    .navbar-nav .nav-link:hover i {
+        color: white !important;
+    }
+    
+    /* Mobile delete button */
+    .FolderDelete {
+        width: 100% !important;
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1rem !important;
+        margin-left: 0 !important;
+        margin-top: 0.5rem !important;
+        text-align: left !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        background: var(--danger-color) !important;
+        border: 1px solid var(--danger-color) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .FolderDelete::before {
+        content: '🗑️';
+        font-size: 1rem;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .FolderDelete:hover {
+        background: var(--danger-dark) !important;
+        border-color: var(--danger-dark) !important;
+        transform: translateX(4px) !important;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    }
+    
+    /* Mobile navbar toggler */
+    .navbar-toggler {
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+    
+    .navbar-toggler-icon {
+        width: 20px;
+        height: 20px;
+        background-size: 100% 100%;
+        filter: invert(1);
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .subject_hea h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    .subject_hea i {
+        font-size: 1.2rem !important;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.85rem !important;
+        padding: 0.6rem 0.8rem !important;
+    }
+    
+    .navbar-nav .nav-link i {
+        font-size: 0.9rem !important;
+        width: 18px !important;
+    }
+    
+    .FolderDelete {
+        font-size: 0.85rem !important;
+        padding: 0.6rem 0.8rem !important;
+    }
+    
+    .container-fluid {
+        padding: 0 0.75rem !important;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .navbar-collapse {
+        max-height: 60vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    .FolderDelete {
+        padding: 0.5rem 1rem !important;
+    }
+}
+
+/* Enhanced touch interactions */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link,
+    .FolderDelete {
+        min-height: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .navbar-nav .nav-link:active,
+    .FolderDelete:active {
+        transform: scale(0.98) translateX(2px);
+    }
+}
+.arrow{
+  background-color: transparent !important; 
+  
+}
+.arrow a i{
+  border-radius: 50%;
+  margin: 0 !important;
+  border: 1px solid #1a73e8;
+  padding: 0.5rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+.arrow a{
+  border: none;
+  border-radius: 10%;
+  padding: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}.add_upload{
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 !important;
+  background-color: white !important;
+  padding: 0.5rem !important;
+}
+.upload_icon {
+  padding: 0 !important;
+  border: none;
+  padding: 0.5rem !important; 
+}
+.add_upload .fa-solid{
+  padding: 0 !important;
+
+}/* Fix the navbar class name consistency */
+.subject_head {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+}
+
+.subject_head i {
+    font-size: 1.8rem;
+    margin-right: 0.75rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.subject_head h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.025em;
+}
+
+/* Remove the conflicting .subject_hea styles and use consistent .subject_head */
+/* .subject_hea{
+display: flex;
+}
+.subject_hea h2{
+  font-size: 1.5rem;
+  font-weight: 700;
+} */
+
+/* Update mobile navbar styles to use consistent class */
+@media (max-width: 768px) {
+    .subject_head {
+        flex: 1;
+        color: white;
+    }
+    
+    .subject_head h2 {
+        font-size: 1.4rem !important;
+        font-weight: 600;
+        color: white !important;
+    }
+    
+    .subject_head i {
+        font-size: 1.3rem !important;
+        margin-right: 0.5rem;
+        color: white !important;
+    }
+    .nav-link span{
+      color: #1a73e8 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .subject_head h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    .subject_head i {
+        font-size: 1.2rem !important;
+    }.nav-link{
+      color: #1a73e8 !important;
+    }
+}
+/* Professional File Grid System */
+.box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+    padding: 0 1rem;
+    margin-top: 2rem;
+}
+
+/* Professional File Cards */
+.data {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+}
+
+.data::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.data:hover::before {
+    opacity: 1;
+}
+
+.data:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+}
+
+/* Enhanced Image Display */
+.img_file {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.data:hover .img_file {
+    transform: scale(1.02);
+}
+
+/* Professional PDF Styling */
+.pdf-file {
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+.pdf-file::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%);
+    background-size: 20px 20px;
+    opacity: 0.3;
+}
+
+.pdf-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    z-index: 1;
+}
+
+.pdf-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Professional File Information Section */
+.file-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+}
+
+.file-name {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.3;
+    margin-bottom: 0.75rem !important;
+    display: block;
+    word-break: break-word;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.file-link:hover .file-name {
+    color: var(--primary-color) !important;
+}
+
+/* Enhanced File Metadata */
+.file-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--bg-secondary);
+}
+
+.file-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary) !important;
+    font-size: 0.8rem !important;
+    font-weight: 500;
+}
+
+.author-avatar {
+    width: 24px;
+    height: 24px;
+    background: var(--success-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* Professional Delete Button */
+.file-delete {
+    color: var(--text-secondary) !important;
+    font-size: 1rem !important;
+    cursor: pointer;
+    padding: 0.375rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.data:hover .file-delete {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.file-delete:hover {
+    background: var(--danger-color);
+    color: white !important;
+    transform: scale(1.1);
+}
+
+/* File Type Badges */
+.file-type-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.data:hover .file-type-badge {
+    opacity: 1;
+}
+
+/* File Size Indicator */
+.file-size {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    opacity: 0.8;
+}
+
+/* Loading State */
+.data.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.data.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Enhanced Empty State */
+.empty-state {
+    text-align: center;
+    background: white;
+    padding: 4rem 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    margin: 3rem auto;
+    border: 2px dashed var(--border-color);
+    max-width: 600px;
+    position: relative;
+}
+
+.empty-state::before {
+    content: '📁';
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+}
+
+.empty-state h6 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .box {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .data {
+        min-height: 200px;
+    }
+    
+    .img_file,
+    .pdf-file {
+        height: 100px;
+    }
+    
+    .file-info {
+        padding: 1rem;
+    }
+    
+    .file-name {
+        font-size: 0.85rem !important;
+    }
+    
+    .file-author {
+        font-size: 0.75rem !important;
+    }
+    
+    .author-avatar {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .data {
+        min-height: 180px;
+    }
+    
+    .img_file,
+    .pdf-file {
+        height: 120px;
+    }
+}
+.delete_not{
+  display: block !important;
+}
+.fa-trash-can {
+    color: var(--text-secondary) !important;
+    font-size: 1rem !important;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 1; /* Always visible */
+}
+
+.fa-trash-can:hover {
+    background: var(--danger-color);
+    color: white !important;
+    transform: scale(1.1);
+}
+
+.fa-trash-can {
+    color: var(--danger-color) !important;
+    font-size: 0.9rem !important;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    opacity: 1;
+    background: rgba(239, 68, 68, 0.1); /* Subtle background */
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.fa-trash-can:hover {
+    background: var(--danger-color);
+    color: white !important;
+    transform: scale(1.05);
+    border-color: var(--danger-color);
+}
+</style>
+
+<body>
+<nav class="navbar navbar-expand-md sticky-top navbar-light">
+    <div class="container-fluid">
+        <div class="subject_head">
+            <i class="fa-brands fa-neos"></i>
+            <h2>Nault</h2>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" style="color: white;" aria-current="page" href="/classroom/enter/folder/<%=folder._id%>">
+                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                </a>
+                <a class="nav-link contacts_file" style="color: white;">
+                    <i class="fa-solid fa-envelope"></i> <span>Contacts</span>
+                </a>
+                <a class="nav-link collapse-contacts_file" style="color: white;display:none;">
+                  <span> nault.org@gmail.com </span> 
+                </a>
+                
+                <% if(folder.author){ %>
+                <a class="nav-link" style="color: white;">
+                    <i class="fa-solid fa-pen"></i><span> Created By ~<%=folder.author%></span>
+                </a>
+                <% } %>
+                
+                <% if(currUser.username==folder.author ){ %>
+                <button class="btn FolderDelete">Delete Folder</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
 
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
-  </style>
+
+<div class="main-container">
+    <%-include("../includes/flash.ejs")%>
+
+    <% if(folder) {%>
+    <!-- Enhanced Upload Modal -->
+    <div class="subject_form_upload">
+        <div class="file_upload_under">
+            <!-- <button type="button" class="form-close" id="close-upload">
+                <i class="fa-solid fa-times"></i>
+            </button>
+             -->
+            <div class="upload-header">
+                <h3><i class="fa-solid fa-cloud-arrow-up"></i> Upload File</h3>
+                <p>Files with a size less than 10 MB are preferred.<br>
+                For larger files, please <a href="https://www.ilovepdf.com/compress_pdf" target="_blank">compress them here</a>.</p>
+            </div>
+            
+            <form enctype="multipart/form-data" action="/upload/<%=folder._id%>" class="needs-validation" method="post" id="upload-form">
+                <input type="text" class="form-control" name="name" placeholder="📝 File name (Optional)" id="file-name">
+                
+                <input required type="file" class="form-control subject_name" name="image" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx" />
+                <div class="invalid-feedback" style="color: #ef4444; font-size: 0.875rem; display: none;">Please select a file</div>
+                
+                <div class="d-grid">
+                    <button class="btn btn-success mx-auto" type="submit" id="submit-btn">
+                        <i class="fa-solid fa-upload"></i> Upload File
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Folder Modal -->
+    <div class="deleteFolderConform">
+        <div class="under_deletefolder">
+            <p class="warning-p" style="color: var(--text-secondary); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem;">
+                <span style="color: var(--danger-color) !important; font-weight: 700 !important; font-size: 1.1rem !important;">⚠️ Warning</span><br>
+                Deleting this folder will permanently remove all files.<br>
+                This action cannot be undone.<br>
+                Are you sure you want to proceed?
+            </p>
+            <form action="/folder/delete/<%=folder._id%>?_method=DELETE" method="post" style="display: inline;">
+                <input type="text" class="form-control mx-auto" name="name" placeholder="Type folder name to confirm" style="width: max-content; margin: auto !important; margin-top: 15px !important; padding: 0.75rem 1rem; border: 2px solid var(--border-color); border-radius: 8px;">
+                <br>
+                <button class="btn btn-danger" style="margin: 10px; background: var(--danger-color) !important;">🗑️ Delete Forever</button>
+                <button type="button" class="btn btn-primary deleteFolderCancel" style="margin: 10px; background: var(--primary-color) !important;">❌ Cancel</button>
+            </form>
+        </div>
+    </div>
+    <% } %>
+
+    <!-- File Delete Modal -->
+    <div class="del-mes">
+        <h6 style="color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 500;">🗑️ Delete this file permanently?</h6>
+        <button class="btn btn-primary cancel" style="padding: 0.75rem 1.5rem !important; margin: 0 0.5rem !important; background: var(--primary-color) !important;">❌ Cancel</button> 
+        <a id="deleteLink" href="">
+            <button class="btn btn-danger" style="padding: 0.75rem 1.5rem !important; margin: 0 0.5rem !important; background: var(--danger-color) !important;">🗑️ Delete</button>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="arrow">
+        <a href="/folder/back/<%=folder._id%>">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </div>
+    
+    <h2 class="h2_folder"><%=folder.subject.username%></h2>
+    <h3 class="h2forfolder">📁 <%=folder.name%></h3>
+
+    <% if (folder.image && folder.image.length > 0) { %>
+<div class="box">
+    <% for (i of folder.image) { %>
+    <div class="data" data-type="<%= i.url.includes('.pdf') ? 'pdf' : 'image' %>">
+        <!-- File Type Badge -->
+        <div class="file-type-badge">
+            <%= i.url.includes('.pdf') ? 'PDF' : 'IMG' %>
+        </div>
+        
+        <% if (i.url.includes('.pdf')) { %>
+            <!-- Enhanced PDF Display -->
+            <a href="<%= i.url %>" target="_blank" class="file-link">
+                <div class="pdf-file">
+                    <i class="fa-solid fa-file-pdf pdf-icon"></i>
+                    <span class="pdf-label">PDF Document</span>
+                </div>
+            </a>
+        <% } else { %>
+            <!-- Enhanced Image Display -->
+            <a href="<%= i.url %>" target="_blank" class="file-link">
+                <img src="<%= i.url %>" alt="<%= i.filename %>" class="img_file" loading="lazy">
+            </a>
+        <% } %>
+        
+        <div class="file-info">
+            <span class="file-name">
+                <%= (i.filename.slice(0,20)) %><%= i.filename.length > 20 ? '...' : '' %>
+            </span>
+            
+            <div class="file-meta">
+                <div class="file-author">
+                    <div class="author-avatar">
+                        <%= i.author.charAt(0).toUpperCase() %>
+                    </div>
+                    <span><%= i.author %></span>
+                </div>
+                
+                <% if(i.author == currUser.username) { %>
+                    <i class="fa-solid fa-trash-can file-delete delete_not" 
+                       onclick="deleteimage('<%= i.originalName %>')" 
+                       title="Delete file"></i>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+<% } else { %>
+<div class="empty-state">
+    <h6>No files uploaded yet</h6>
+    <p>Click the upload button to add your first file</p>
+</div>
+<% } %>
+</div>
+
+<!-- Enhanced Floating Upload Button -->
+<div class="add_upload" style="background-color: transparent !important;">
+    <i class="fa-solid fa-cloud-arrow-up upload_icon"></i>
+</div>
+
+<script>
+// Fixed Upload Functionality
+let contact = document.querySelector(".contacts_file");
+let collapse = document.querySelector(".collapse-contacts_file");
+let col = true;
+
+if (contact && collapse) {
+    contact.addEventListener("click", () => {
+        if (col) {
+            collapse.style.display = "inline";
+            col = false;
+        } else {
+            collapse.style.display = "none";
+            col = true;
+        }
+    });
+}
+
+// Upload Modal Controls
+let uploadForm = document.querySelector(".subject_form_upload");
+let uploadButton = document.querySelector(".add_upload");
+let closeUploadBtn = document.getElementById("close-upload");
+let show = true;
+
+function showUploadForm() {
+    uploadForm.style.display = "flex";
+    show = false;
+    // uploadButton.classList.add("active");
+    document.body.style.overflow = "hidden";
+    
+    setTimeout(() => {
+        let fileNameInput = document.getElementById("file-name");
+        if (fileNameInput) fileNameInput.focus();
+    }, 300);
+}
+
+function hideUploadForm() {
+    uploadForm.style.display = "none";
+    show = true;
+    uploadButton.classList.remove("active");
+    document.body.style.overflow = "";
+    
+    // Reset form without affecting the selected file
+    let form = document.getElementById("upload-form");
+    let fileInput = document.getElementById("file-input");
+    let nameInput = document.getElementById("file-name");
+    
+    if (nameInput) nameInput.value = "";
+    
+    // Only clear invalid feedback, not the file selection
+    let invalidFeedback = document.querySelector(".invalid-feedback");
+    if (invalidFeedback) {
+        invalidFeedback.style.display = "none";
+    }
+}
+
+// Upload button click handler
+if (uploadButton) {
+    uploadButton.addEventListener("click", () => {
+        if (show) {
+            showUploadForm();
+        } else {
+            hideUploadForm();
+        }
+    });
+}
+
+// Close button handler
+if (closeUploadBtn) {
+    closeUploadBtn.addEventListener("click", hideUploadForm);
+}
+
+// Close on backdrop click
+if (uploadForm) {
+    uploadForm.addEventListener("click", (e) => {
+        if (e.target === uploadForm) {
+            hideUploadForm();
+        }
+    });
+}
+
+// Form submission handler with loading state
+let form = document.getElementById("upload-form");
+let submitBtn = document.getElementById("submit-btn");
+
+if (form && submitBtn) {
+    form.addEventListener("submit", function(e) {
+        let fileInput = document.getElementById("file-input");
+        let invalidFeedback = document.querySelector(".invalid-feedback");
+        
+        if (!fileInput.files.length) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (invalidFeedback) {
+                invalidFeedback.style.display = "block";
+            }
+            return false;
+        }
+        
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+        submitBtn.disabled = true;
+        
+        // Hide invalid feedback
+        if (invalidFeedback) {
+            invalidFeedback.style.display = "none";
+        }
+    });
+}
+
+// Delete functionality
+let delMes = document.querySelector(".del-mes");
+let cancelButton = document.querySelector(".cancel");
+let folderDeleteButton = document.querySelector(".FolderDelete");
+let folderDeleteForm = document.querySelector(".deleteFolderConform");
+let folderDeleteCancel = document.querySelector(".deleteFolderCancel");
+
+if (folderDeleteButton && folderDeleteForm) {
+    folderDeleteButton.addEventListener("click", () => {
+        folderDeleteForm.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+}
+
+if (folderDeleteCancel && folderDeleteForm) {
+    folderDeleteCancel.addEventListener("click", () => {
+        folderDeleteForm.style.display = "none";
+        document.body.style.overflow = "";
+    });
+}
+
+if (cancelButton && delMes) {
+    cancelButton.addEventListener("click", () => {
+        delMes.style.display = "none";
+    });
+}
+
+function deleteimage(data) {
+    if (delMes) {
+        delMes.style.display = "block";
+        let deleteLink = document.getElementById("deleteLink");
+        let folderId = "<%= folder._id %>";
+        if (deleteLink) {
+            deleteLink.href = `/folder/delete/${data}/${folderId}`;
+        }
+    }
+}
+
+// Keyboard shortcuts
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        if (!show && uploadForm) {
+            hideUploadForm();
+        }
+        
+        if (delMes && delMes.style.display !== "none") {
+            delMes.style.display = "none";
+        }
+        
+        if (folderDeleteForm && folderDeleteForm.style.display !== "none") {
+            folderDeleteForm.style.display = "none";
+            document.body.style.overflow = "";
+        }
+    }
+});
+
+// File input change handler for better UX
+let fileInput = document.getElementById("file-input");
+if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+        let invalidFeedback = document.querySelector(".invalid-feedback");
+        if (e.target.files.length > 0 && invalidFeedback) {
+            invalidFeedback.style.display = "none";
+        }
+    });
+}
+</script>
+</body>

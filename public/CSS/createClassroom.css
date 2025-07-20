@@ -1,7 +1,7 @@
-.container{
+/* .container{
     padding-bottom: 4%;
     border-radius: 10px;
-    /* box-shadow: 2px 2px 8px #4070f4; */
+    /* box-shadow: 2px 2px 8px #4070f4; 
     width: 280px !important; 
     padding-bottom: 5%;
     margin-top: -1px !important;
@@ -29,7 +29,7 @@ a{
          display: flex;
         justify-content: center !important;
         align-items: center !important;
-    } */
+    } 
     .button{
         width: 50%!important;
         margin-top: 3%;
@@ -73,4 +73,4 @@ h6{
 }
 form{
     font-size: 0.5rem;
-}
+} */

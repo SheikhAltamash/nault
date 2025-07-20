@@ -1,101 +1,962 @@
 <% layout("./layouts/boilerplate.ejs")%>
-<link rel="stylesheet" href="/CSS/home.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #4285f4;
+    --primary-dark: #1a73e8;
+    --secondary-color: #5b8def;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Poppins', sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+/* Blue Professional Navbar */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-md);
+    border: none !important;
+    padding: 1rem 0;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+}
+
+.head i {
+    font-size: 1.7rem;
+    margin-right: 0.75rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.head h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.025em;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white !important;
+}
+
+.navbar-nav .nav-link[style*="white"] {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* User Avatar */
+.user-avatar {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    z-index: 1001;
+}
+
+/* Main Content Container */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 80px);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Modal Overlay Form */
+.form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.form-content {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    border: 1px solid var(--border-color);
+    animation: slideInScale 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Close button */
+.form-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f1f5f9;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-close:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.form h3 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    background: var(--bg-primary);
+    margin-bottom: 0.5rem;
+    font-family: "Inter", sans-serif;
+    color: var(--text-primary);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.form-control.is-invalid {
+    border-color: #ef4444;
+}
+
+.button {
+    width: 100% !important;
+    padding: 0.875rem 1.5rem !important;
+    background: var(--primary-color) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    margin-top: 1rem !important;
+    font-family: "Inter", sans-serif !important;
+    text-transform: none !important;
+    letter-spacing: 0.025em !important;
+}
+
+.button:hover {
+    background: var(--primary-dark) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Subjects Grid */
+.subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.folder1 {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.folder1:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.sub {
+    width: 100%;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+}
+
+.sub:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Enhanced Add Button */
+.add {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.add:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    background: var(--primary-dark);
+}
+
+.add i {
+    font-size: 1.5rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.add.active {
+    background: #ef4444;
+}
+
+.add.active:hover {
+    background: #dc2626;
+}
+
+.add.active i {
+    transform: rotate(45deg);
+}
+
+/* Error/Empty State */
+.empty-state {
+    text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    margin: 2rem auto;
+    border: 1px solid var(--border-color);
+    max-width: 500px;
+}
+
+.empty-state h6 {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.empty-state h5 {
+    color: #ef4444;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.buttons {
+    padding: 0.75rem 2rem !important;
+    background: var(--primary-color) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+}
+
+.buttons:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md) !important;
+    background: var(--primary-dark) !important;
+}
+
+/* Form validation */
+.invalid-feedback {
+    color: #ef4444;
+    font-size: 0.825rem;
+    margin-top: 0.25rem;
+    display: none;
+    font-weight: 400;
+}
+
+.form-control.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+/* Loading state */
+.button.loading {
+    pointer-events: none;
+    opacity: 0.8;
+    position: relative;
+}
+
+.button.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .add {
+        bottom: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .add i {
+        font-size: 1.2rem;
+    }
+    
+    .form-content {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+    
+    .empty-state {
+        margin: 2rem 0.5rem;
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+    
+    .form-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .empty-state {
+        padding: 1.5rem 1rem;
+    }
+}/* Mobile-specific improvements */
+@media (max-width: 768px) {
+    /* Navbar mobile optimization */
+    .navbar {
+        padding: 0.75rem 0 !important;
+    }
+    
+    .head {
+        padding: 0 1rem;
+    }
+    
+    .head h2 {
+        font-size: 1.5rem;
+    }
+    
+    .head i {
+        font-size: 1.4rem;
+    }
+    
+    /* User avatar mobile positioning */
+    .user-avatar {
+        top: 0.75rem;
+        right: 4rem; /* Move left to avoid hamburger menu */
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    /* Main container mobile adjustments */
+    .main-container {
+        padding: 1rem 1rem;
+        max-width: 100%;
+    }
+    
+    /* Page header mobile styling */
+    .page-header {
+        margin-bottom: 2rem;
+        padding: 0 0.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Subject cards mobile optimization */
+    .subjects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .folder1 {
+        padding: 1.25rem;
+        border-radius: 12px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .sub {
+        padding: 1rem;
+        font-size: 1rem;
+        min-height: 48px; /* Better touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Enhanced floating button for mobile */
+    .add {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 52px;
+        height: 52px;
+        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+    }
+    
+    .add i {
+        font-size: 1.3rem;
+    }
+    
+    /* Modal form mobile optimization */
+    .form-content {
+        width: 95%;
+        max-width: 340px;
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        border-radius: 12px;
+    }
+    
+    .form h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-control {
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+    
+    .form-close {
+        width: 36px;
+        height: 36px;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+    
+    /* Empty state mobile */
+    .empty-state {
+        margin: 1rem 0.5rem;
+        padding: 2rem 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .empty-state h6 {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small mobile devices */
+    .main-container {
+        padding: 0.75rem 0.75rem;
+    }
+    
+    .page-header {
+        padding: 0 0.25rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.6rem;
+    }
+    
+    .page-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .subjects-grid {
+        padding: 0 0.25rem;
+        gap: 0.75rem;
+    }
+    
+    .folder1 {
+        padding: 1rem;
+    }
+    
+    .add {
+        bottom: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .add i {
+        font-size: 1.2rem;
+    }
+    
+    .user-avatar {
+        right: 3.5rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .form-content {
+        padding: 1.5rem 1.25rem;
+        margin: 0.5rem;
+    }
+    
+    .form h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .main-container {
+        padding: 1rem;
+    }
+    
+    .page-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.6rem;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Touch improvements for mobile */
+@media (max-width: 768px) {
+    /* Better touch targets */
+    .sub, .button, .buttons, .nav-link {
+        min-height: 44px;
+    }
+    
+    /* Improved spacing for fat fingers */
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem;
+    }
+    
+    /* Prevent zoom on input focus */
+    .form-control {
+        font-size: 16px;
+    }
+    
+    /* Better modal backdrop for mobile */
+    .form {
+        padding: 1rem;
+    }
+    
+    /* Enhanced scroll behavior */
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Better button hover states for touch */
+    .sub:active, .button:active, .add:active {
+        transform: scale(0.98);
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-appearance: none) {
+    @media (max-width: 768px) {
+        .form-control {
+            -webkit-appearance: none;
+            border-radius: 8px;
+        }
+        
+        .button {
+            -webkit-appearance: none;
+        }
+    }
+}
+/* ---------- Subject Card (no logo) ---------- */
+.subject-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.subject-btn {
+  width: 100%;
+  padding: 1.25rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+}
+
+.subject-title {
+  font-size: 1.10rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: .25rem;
+}
+
+.subject-caption {
+  font-size: .9rem;
+  color: var(--text-secondary);
+}
+
+.subject-btn:hover .subject-title,
+.subject-btn:hover .subject-caption {
+  color: var(--primary-color);
+}
+
+</style>
 
 <body>
-<nav class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom">
-  <div class="container-fluid">
-       <div class="head"><i class="fa-brands fa-neos"></i><h2>Nault</h2></div>
+<!-- User Avatar -->
+<div class="user-avatar">M</div>
 
-    <button class="navbar-toggler"   type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-         <div class="navbar-nav ms-auto ">
-        <% if(!currUser){%>
-        <a  class="nav-link" href="/signup">Signup</a>
-        <a  class="nav-link" href="/login" style="color: white;">Login</a>
-        <%}%>
-        <%if(currUser){%>
-        <a class="nav-link" href="/login/logout" style="color: white;">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-        <%}%>
-      </div>
+<nav class="navbar navbar-expand-md sticky-top navbar-light">
+    <div class="container-fluid">
+        <div class="head">
+            <i class="fa-brands fa-neos"></i>
+            <h2>Nault</h2>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <% if(!currUser){%>
+                <a class="nav-link" href="/signup">Signup</a>
+                <a class="nav-link" href="/login" style="color: white;">Login</a>
+                <%}%>
+                <%if(currUser){%>
+                <a class="nav-link" href="/login/logout" style="color: white;">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                <%}%>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
-        <%-include("../includes/flash.ejs")%>
 
-      <%if(classData){%>
-     <div class="form" style="display: none;">
-<form action="/subject/create/<%=classData._id%>" class="needs-validation" novalidate method="post">
-<div class="container one col-9 mt-5"> <br>
-<input required type="text" class="form-control"name="subjectName" placeholder="Subject Name">
-<div class="invalid-feedback">Enter Classroom ID</div><br>
-<div class="d-grid"> <button class="btn btn-success d-grid col-8 mx-auto button">Create</button></div>
-</div><br>
-</form>
+<div class="main-container">
+    <%-include("../includes/flash.ejs")%>
+
+    <% if(classData){%>
+    <div class="page-header">
+        <h1 class="page-title">Classroom</h1>
+        <p class="page-subtitle">Manage your subjects and materials</p>
+    </div>
+
+    <!-- Modal Form -->
+    <div class="form">
+        <div class="form-content">
+            <button type="button" class="form-close" id="close-form">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            
+            <form action="/subject/create/<%=classData._id%>" class="needs-validation" novalidate method="post" id="subject-form">
+                <h3>Create New Subject</h3>
+                <input required 
+                       type="text" 
+                       class="form-control" 
+                       name="subjectName" 
+                       placeholder="Enter subject name" 
+                       id="subject-name">
+                <div class="invalid-feedback">Please enter a subject name</div>
+                <button type="submit" class="btn btn-success button" id="create-btn">
+                    Create Subject
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Subjects Grid -->
+<!-- Enhanced Subjects Grid -->
+<% if (classData && classData.subject && classData.subject.length) { %>
+  <div class="subjects-grid">
+    <% for (let sub of classData.subject) { %>
+      <form action="/subject/<%= sub._id %>">
+        <div class="subject-card">
+          <button class="subject-btn">
+            <span class="subject-title"><%= sub.username %></span>
+            <span class="subject-caption">Tap to explore</span>
+          </button>
+        </div>
+      </form>
+    <% } %>
+  </div>
+<% } else { %>
+  <div class="empty-state">
+    <h6>No subjects found<br>Click “+” to add your first subject</h6>
+  </div>
+<% } %>
+
+
+    <%} else {%>
+    <div class="empty-state">
+        <h5>Classroom not found</h5>
+        <a href="/classroom">
+            <button class="btn btn-success buttons">Go to Home</button>
+        </a>
+    </div>
+    <% } %>
 </div>
-      
-        <%} else {%>
-           
-<h5 style="color: black; margin:10px 0px 10px 10px;">Classroom not found</h5>
-<a href="/classroom"><button class="btn btn-success buttons">Home</button></a>
-            <% } %>
 
+<!-- Floating Add Button -->
 <div class="add">
-  <i class="fa-solid fa-plus"></i>
-
+    <i class="fa-solid fa-plus"></i>
 </div>
-   <%if(classData&&classData.subject){%>
-    <%for(let i of classData.subject){%>
-
-        <form action="/subject/<%=i._id%>"> <div class="folder1">  <button class="sub"> <%=i.username%>  </button> </div></form>
-
-        <%}%>
-        <%}%>
-
-        <%if(classData&&!classData.subject.length){%>
-              <h6 >Subject Needed<br>Click '+' button to add subject  </h6>
-
-          <% } %>
-
-
-
- 
-   
 
 <script>
-    let button = document.querySelector(".add");
-    let form= document.querySelector(".form");
-    let span=document.querySelector(".navbar-toggler-icon");
-    let icon = document.querySelector(".fa-plus");
-    let check=true;
-    button.addEventListener("click",()=>{
-        if(check){
-        form.style.display="flex";
-        check=false;
-        icon.style.color="white";
-        button.style.background="blue";
-        icon.classList.add("rotate-left");
-        
+const addButton = document.querySelector(".add");
+const form = document.querySelector(".form");
+const icon = document.querySelector(".fa-plus");
+const closeBtn = document.getElementById("close-form");
+const subjectForm = document.getElementById("subject-form");
+const createBtn = document.getElementById("create-btn");
+let isFormVisible = false;
 
+function showForm() {
+    form.style.display = "flex";
+    isFormVisible = true;
+    addButton.classList.add("active");
+    document.body.style.overflow = "hidden"; // Prevent background scroll
+    
+    // Focus on input after animation
+    setTimeout(() => {
+        document.getElementById("subject-name").focus();
+    }, 300);
 }
-    else if(check==false){
-        form.style.display="none";
-        check=true;
-        icon.style.color="blue";
-        button.style.background="white";
-        icon.classList.remove("rotate-left");
 
+function hideForm() {
+    form.style.display = "none";
+    isFormVisible = false;
+    addButton.classList.remove("active");
+    document.body.style.overflow = ""; // Restore scroll
+    
+    // Clear form data
+    if (subjectForm) {
+        subjectForm.reset();
+        document.getElementById("subject-name").classList.remove("is-invalid");
     }
+}
+
+// Show/hide form on add button click
+addButton.addEventListener("click", () => {
+    if (!isFormVisible) {
+        showForm();
+    } else {
+        hideForm();
+    }
+});
+
+// Close form on close button click
+closeBtn.addEventListener("click", hideForm);
+
+// Close form on backdrop click
+form.addEventListener("click", (e) => {
+    if (e.target === form) {
+        hideForm();
+    }
+});
+
+// Close form on Escape key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isFormVisible) {
+        hideForm();
+    }
+});
+
+// Enhanced form submission
+if (subjectForm) {
+    subjectForm.addEventListener("submit", function(e) {
+        const subjectInput = document.getElementById("subject-name");
+        
+        if (!subjectInput.value.trim()) {
+            e.preventDefault();
+            e.stopPropagation();
+            subjectInput.classList.add("is-invalid");
+        } else {
+            createBtn.classList.add("loading");
+            createBtn.textContent = "";
+        }
     });
 
+    // Real-time validation
+    const subjectInput = document.getElementById("subject-name");
+    subjectInput.addEventListener("blur", () => {
+        if (!subjectInput.value.trim()) {
+            subjectInput.classList.add("is-invalid");
+        } else {
+            subjectInput.classList.remove("is-invalid");
+        }
+    });
 
-
-
+    subjectInput.addEventListener("input", () => {
+        if (subjectInput.value.trim()) {
+            subjectInput.classList.remove("is-invalid");
+        }
+    });
+}
 </script>
-
-
 </body>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap');
-</style>

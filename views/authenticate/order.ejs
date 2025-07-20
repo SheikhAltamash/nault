@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+        table { border-collapse: collapse !important; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #f2f2f2; }
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+        /* ANDROID CENTER FIX */
+        div[style*="margin: 16px 0;"] { margin: 0 !important; }
+
+        /* Custom Order Styles adapted for Coastok look */
+        .order-content-area {
+            font-family: 'Amazon Ember', Arial, sans-serif !important;
+            font-size: 11pt !important; /* Match Coastok text size */
+            line-height: 1.4 !important; /* Slightly adjusted line height for readability */
+            color: #111; /* Match Coastok text color */
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .order-content-area h1, .order-content-area h2, .order-content-area h3 {
+            font-family: 'Amazon Ember', Arial, sans-serif !important;
+            color: #111;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+         .order-content-area h1 {
+             font-size: 16pt; /* Slightly larger for main title */
+             font-weight: bold;
+             text-align: center; /* Center the main title */
+             margin-bottom: 15px;
+         }
+        .order-content-area h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .order-content-area h3 {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        .order-content-area p {
+             margin-bottom: 10px;
+        }
+        .order-content-area table {
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 10pt; /* Slightly smaller for table data */
+        }
+        .order-content-area th, .order-content-area td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            font-family: 'Amazon Ember', Arial, sans-serif !important; /* Ensure font in tables */
+        }
+        .order-content-area th {
+            background-color: #f2f2f2; /* Match body background for header */
+            font-weight: bold;
+        }
+        .item-image {
+            max-width: 50px; /* Slightly smaller for 375px width */
+            height: auto;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+         .customization-details img {
+             max-width: 40px; /* Smaller */
+             max-height: 40px;
+             display: block;
+             margin-top: 5px;
+        }
+        .price-summary {
+            /* width: 60%; Make it wider for narrow layout */
+            width: 100%; /* Take full width in this layout */
+            margin-left: 0; /* No need to align right */
+            margin-top: 15px;
+        }
+        .price-summary td {
+             border: none; /* Keep cleaner look */
+             padding: 4px 0; /* Reduce padding */
+        }
+        .price-summary .label {
+            text-align: right;
+            padding-right: 10px;
+            font-weight: normal;
+        }
+        .price-summary .value {
+            text-align: right;
+            font-weight: bold;
+        }
+         .price-summary .grand-total td {
+             border-top: 1px solid #ccc;
+             padding-top: 8px;
+             font-size: 11pt; /* Slightly larger for total */
+         }
+        .address-section {
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #f9f9f9; /* Lighter shade */
+            border: 1px solid #eeeeee;
+            border-radius: 3px; /* Match Coastok button radius */
+        }
+        .address-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            font-size: 11pt; /* Smaller heading for sections */
+        }
+        .footer-text {
+             font-family: 'Amazon Ember', Arial, sans-serif !important;
+             font-size: 10pt !important;
+             color: #565656; /* Footer text color */
+             text-align: center;
+             padding-top: 15px;
+        }
+        .footer-text a {
+             color: #f39400; /* Coastok Orange for links */
+             text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body style="margin:0; padding:0; background-color:#f2f2f2;">
+    <center>
+        <div style="background-color:#ffffff; max-width: 375px; margin:auto;">
+            <!--[if mso]>
+            <table role="presentation" width="375" cellspacing="0" cellpadding="0" border="0" align="center">
+               <tr>
+                  <td>
+            <![endif]-->
+            <table cellspacing="0" cellpadding="0" align="center" style="width:375px; border-top:10px solid #f39400">
+                <tr>
+                    <td align="center" style="vertical-align:middle;">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center" style="width:100%;" bgcolor="#fff">
+                            <!-- Spacing -->
+                            <tr>
+                                <td align="center" style="vertical-align:middle; height:20px;" bgcolor="#ffffff"></td>
+                            </tr>
+                            <!-- Logo -->
+                            <tr>
+                                <td align="left" style="vertical-align:middle; padding-left:10px;" bgcolor="#ffffff">
+                                    <%# Make sure YOUR_LOGO_URL is defined or passed in %>
+                                    <a href="https://crazyjump.in/" target="_blank">
+                                        <img src="./crazyjump_logo.png" alt="Crazy Jump" style="max-height: 60px; display: block;">
+                                    </a>
+                                </td>
+                            </tr>
+                             <!-- Spacing -->
+                             <tr>
+                                <td align="center" style="vertical-align:middle; height:10px;" bgcolor="#ffffff"></td>
+                            </tr>
+
+                            <!-- Main Content Area START -->
+                            <tr>
+                                <td class="order-content-area" style="vertical-align:middle;" bgcolor="#ffffff">
+
+                                    <h1>Order Confirmation</h1>
+
+                                    <%# --- Data required: order object --- %>
+                                    <%# --- ASSUMPTION: 'order' object (with nested 'user', 'cart_items', 'product', 'productImages', 'delivery_address', 'billing_address') is passed in notificationData --- %>
+                                    <!-- <% const localWebsiteBaseUrl = typeof websiteBaseUrl !== 'undefined' ? websiteBaseUrl : "https://your-default-website.com"; %> -->
+                                    <% if (typeof order !== 'undefined' && order) { %>
+
+                                        <%# --- Greeting --- %>
+                                        <% if (order.user && order.user.name) { %>
+                                          <p>Hi <%= order.user.name %>,</p>
+                                        <% } else { %>
+                                          <p>Hi Customer,</p>
+                                        <% } %>
+                                        <p>Thank you for your order! We've received it and the details are below.</p>
+
+                                        <h2>Order Summary (ID: #<%= order.id %>)</h2>
+                                        <p><strong>Order Date:</strong> <%= new Date(order.createdAt).toLocaleDateString() %></p>
+                                        <p><strong>Order Status:</strong> <%= order.status %></p>
+                                        <p><strong>Payment Status:</strong> <%= order.payment_status %></p>
+                                         <% if (order.phonepe_order_id) { %>
+                                            <p><strong>Ref ID:</strong> <%= order.phonepe_order_id %></p>
+                                        <% } %>
+                                        <% if (order.payment_id) { %>
+                                            <p><strong>Payment ID:</strong> <%= order.payment_id %></p>
+                                        <% } %>
+
+                                        <h3>Order Items:</h3>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Customization</th>
+                                                    <th>Qty</th> <%# Abbreviated for space %>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% let calculatedSubtotal = 0; %>
+                                                <% if (order.cart_items && order.cart_items.length > 0) { %>
+                                                    <% order.cart_items.forEach(item => { %>
+                                                        <% const itemUnitPrice = parseFloat(item.product?.price_inr || 0); %> <%# Added safe navigation %>
+                                                        <% const itemTotal = item.quantity * itemUnitPrice; %>
+                                                        <% calculatedSubtotal += itemTotal; %>
+                                                        <tr>
+                                                            <td>
+                                                                <% if (item.product && item.product.productImages && item.product.productImages.length > 0 && item.product.productImages[0].image_url) { %>
+                                                                    <!-- <img src="<%= localWebsiteBaseUrl + item.product.productImages[0].image_url %>" ... >                                                                <% } %> -->
+                                                                <%= item.product ? item.product.title : 'N/A' %>
+                                                            </td>
+                                                            <td class="customization-details">
+                                                                <% if (item.customized_name || item.customized_image) { %>
+                                                                    <% if (item.customized_name) { %>
+                                                                        Name: <%= item.customized_name %><br>
+                                                                    <% } %>
+                                                                    <% if (item.customized_image && item.customized_image !== 'image_url') { %>
+                                                                        Image: <img src="<%= item.customized_image.startsWith('http') ? item.customized_image : websiteBaseUrl + item.customized_image %>" alt="Customization"> <%# Handle relative/absolute %>
+                                                                    <% } %>
+                                                                <% } else { %>
+                                                                    N/A
+                                                                <% } %>
+                                                            </td>
+                                                            <td style="text-align: center;"><%= item.quantity %></td> <%# Center quantity %>
+                                                            <td>₹<%= itemUnitPrice.toFixed(2) %></td>
+                                                            <td>₹<%= itemTotal.toFixed(2) %></td>
+                                                        </tr>
+                                                    <% }); %>
+                                                <% } else { %>
+                                                   <tr><td colspan="5" style="text-align: center;">No items found.</td></tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+
+                                        <h3>Price Details:</h3>
+                                         <table class="price-summary">
+                                             <tbody>
+                                                 <tr>
+                                                     <td class="label">Subtotal:</td>
+                                                     <td class="value">₹<%= calculatedSubtotal.toFixed(2) %></td>
+                                                 </tr>
+                                                 <% if (order.coupon && order.cj_total_after_discount != null && order.cj_total_price != null && order.cj_total_after_discount < order.cj_total_price) { %>
+                                                    <% const discountAmount = order.cj_total_price - order.cj_total_after_discount; %>
+                                                     <tr>
+                                                         <td class="label">Discount (<%= order.coupon %>):</td>
+                                                         <td class="value">- ₹<%= discountAmount.toFixed(2) %></td>
+                                                     </tr>
+                                                 <% } %>
+                                                 <% if (order.gst_amount != null && order.gst_amount > 0) { %> <%# Also check > 0 %>
+                                                     <tr>
+                                                         <td class="label">GST:</td>
+                                                         <td class="value">₹<%= parseFloat(order.gst_amount).toFixed(2) %></td> <%# Ensure float %>
+                                                     </tr>
+                                                 <% } %>
+                                                 <% if (order.delivery_fee != null && order.delivery_fee > 0) { %> <%# Also check > 0 %>
+                                                     <tr>
+                                                         <td class="label">Delivery Fee:</td>
+                                                         <td class="value">₹<%= parseFloat(order.delivery_fee).toFixed(2) %></td> <%# Ensure float %>
+                                                     </tr>
+                                                 <% } %>
+                                                 <tr class="grand-total">
+                                                     <td class="label"><strong>Grand Total:</strong></td>
+                                                     <td class="value"><strong>₹<%= parseFloat(order.inr_total_price || 0).toFixed(2) %></strong></td> <%# Ensure float %>
+                                                 </tr>
+                                             </tbody>
+                                         </table>
+
+                                        <%# Ensure addresses exist before trying to access properties %>
+                                        <% if (order.delivery_address) { %>
+                                            <div class="address-section">
+                                                <h3>Shipping Address:</h3>
+                                                <p>
+                                                    <% if (order.delivery_address.receiver_name) { %>
+                                                        <strong><%= order.delivery_address.receiver_name %></strong><br>
+                                                    <% } %>
+                                                    <%= order.delivery_address.address_line1 || '' %><br> <%# Add fallback for missing fields %>
+                                                    <% if (order.delivery_address.address_line2) { %>
+                                                        <%= order.delivery_address.address_line2 %><br>
+                                                    <% } %>
+                                                    <%= order.delivery_address.city || '' %>, <%= order.delivery_address.state || '' %> <%= order.delivery_address.postal_code || '' %><br>
+                                                    <%= order.delivery_address.country || '' %><br>
+                                                    <% if (order.delivery_address.receiver_phone) { %>
+                                                       Phone: <%= order.delivery_address.receiver_phone %>
+                                                    <% } %>
+                                                </p>
+                                            </div>
+                                        <% } %>
+
+                                         <% if (order.billing_address) { %>
+                                            <div class="address-section">
+                                                <h3>Billing Address:</h3>
+                                                 <p>
+                                                      <% if (order.billing_address.receiver_name) { %>
+                                                        <strong><%= order.billing_address.receiver_name %></strong><br>
+                                                    <% } %>
+                                                    <%= order.billing_address.address_line1 || '' %><br> <%# Add fallback for missing fields %>
+                                                    <% if (order.billing_address.address_line2) { %>
+                                                        <%= order.billing_address.address_line2 %><br>
+                                                    <% } %>
+                                                    <%= order.billing_address.city || '' %>, <%= order.billing_address.state || '' %> <%= order.billing_address.postal_code || '' %><br>
+                                                    <%= order.billing_address.country || '' %><br>
+                                                    <% if (order.billing_address.receiver_phone) { %>
+                                                       Phone: <%= order.billing_address.receiver_phone %>
+                                                    <% } %>
+                                                </p>
+                                            </div>
+                                         <% } %>
+
+                                        <p>If you have any questions, please contact support at [Your Support Email] or call [Your Phone Number].</p>
+                                        <% if (order.status === 'ORDERED' || order.status === 'SHIPPED') { %>
+                                             <p>We'll notify you again with tracking information when your order ships.</p>
+                                        <% } %>
+                                        <p>Thanks again for shopping with us!</p>
+
+                                    <% } else { %>
+                                        <p style="color: red; text-align: center;">Error: Order details could not be loaded.</p>
+                                    <% } %>
+
+                                </td>
+                            </tr>
+                            <!-- Main Content Area END -->
+
+                             <!-- Spacing -->
+                            <tr>
+                                <td align="center" style="vertical-align:middle; height:20px;" bgcolor="#ffffff"></td>
+                            </tr>
+
+                             <!-- Footer Text -->
+                            <tr>
+                                 <td class="footer-text" style="vertical-align:middle;" bgcolor="#ffffff">
+                                     <p>© <%= new Date().getFullYear() %> Crazy Jump. All rights reserved.<br>
+                                     Your Company Address</p>
+                                     <!-- <p><a href="<%= localWebsiteBaseUrl %>/orders">View Your Orders Online</a></p>                                 </td> -->
+                            </tr>
+
+                             <!-- Bottom Spacing -->
+                             <tr>
+                                <td align="center" style="vertical-align:middle; height:30px;" bgcolor="#ffffff"></td>
+                             </tr>
+
+                        </table><!-- End Main Content Table -->
+                    </td>
+                </tr>
+            </table><!-- End Top Border Table -->
+            <!--[if mso]>
+                  </td>
+               </tr>
+            </table>
+            <![endif]-->
+        </div><!-- End Max Width Wrapper -->
+    </center>
+</body>
+</html>

@@ -1,135 +1,1107 @@
 <% layout("./layouts/boilerplate.ejs")%>
-<link rel="stylesheet" href="/CSS/subject.css">
-<body>
-  <nav
-    class="navbar navbar-expand-md sticky-top navbar-light bg-body-light border-bottom"
-  >
-    <div class="container-fluid">
-      <div class="subject_head">
-        <i class="fa-brands fa-neos"></i>
-        <h2>Nault</h2>
-      </div>
-
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a
-            class="nav-link"
-            aria-current="page"
-            href="/classroom/enter/<%=subject._id%>"
-            style="color: white;"
-            ><i class="fa-solid fa-house"></i> Home</a
-          >
-          <a class="nav-link contacts" style="color: white;"> <i class="fa-solid fa-envelope"></i> Contacts</a>
-        <a class="nav-link collapse-contacts" style="color: white;display:none;">nault.org@gmail.com</a>
-          
-          <% if(subject.author){ %>
-            <a class="nav-link" style="color: white;"><i class="fa-solid fa-pen"></i> Created By ~<%=subject.author%></a>
-            <% } %>
-            <% if(currUser.username==subject.author ||currUser.username=="altamash"){ %>
-              <button class="btn btn-danger FolderDelete" style="width:fit-content !important;">Delete Subject</button>
-            <% } %>
-
-        </div>
-       
-      </div>
-    </div>
-  </nav>
-  <div class="subject_form ">
-    <form
-      action="/subject/folder/<% if(subject){ %><%=subject._id%><% } %>"
-      class="needs-validation"
-      novalidate
-      method="post"
-    >
-      <div class="contain">
-        <br />
-        <input
-          required
-          type="text"
-          class="form-control subject_name"
-          name="name"
-          placeholder="Name"
-        />
-        <div class="invalid-feedback">Enter Valid Name</div>
-        <br />
-        <div class="d-grid">
-          <button class="btn btn-success col-5 mx-auto">
-            Add
-          </button>
-        </div>
-      </div>
-      <br />
-    </form>
-  </div>
-  <div class="deleteFolderConform" >
-    <div class="under">
-       <p class="warning-p"><span style="color: red; font-size: 1rem !important;">  Warning </span>  <br>Deleting this subject will also delete all its folders <br> and files. <br> This action is irreversible. <br> Proceed ?</p>
-        <form action="/subject/delete/<%=subject._id%>?_method=DELETE" method="post" style="display: inline;">
-
-        <input type="text" class="form-control mx auto "name="name" placeholder="Enter subject name " style="width: max-content; margin: auto !important;margin-top: 15px !important;"><br>
-         <button class="btn btn-danger" style="margin-left: 20px;">delete</button> </form>
-        <button class="btn btn-dark deleteFolderCancel" style="margin-left: 40px;margin-right: 10px; background: grey; border: none; display:inline !important">cancle</button>
-       
-       
-      
-    </div>
-       </div>
-                                  
-               <%-include("../includes/flash.ejs")%>
-         <div class="add">
-  <i class="fa-solid fa-plus upload_icon button_icon"></i>
-
-</div>      
-
-  <% if(subject) {%>
-  <div class="folder">
-         <div class="arrow"> <a href="/subject/back/<%=subject._id%>"><i class="fa-solid fa-arrow-left" style="color: white;font-size: 0.8rem;"></i></a></div> 
-      <br>
-    <h2 class=" h2forfolder"><%=subject.username%></h2>
-    <% if(subject.folder.length>0){ %>
-        <h3 class="folderHeading">Folders</h3>
-        <% for(sub of subject.folder){ %>
-    <form action="/folder/enter/<%=sub._id%>"> <div class="folder1">  <button class="btn  btnF btn-success"> <%=sub.name%>  </button> </div></form>
-     <% } %>
-    <% }else{ %>
-      <br>
-              <h6>Folder Needed<br>Click '+' button to add folder  </h6>
-    <% } %>
-  </div>
-
-  <% }else{ %>
-  <h3>No Subject Found!</h3>
-  <p><a href="/classroom">Go to home</a></p>
-  <% } %>
-</body>
-<script src="/public/js/script.js"></script>
-<script>
-  let folderDeleteButton=document.querySelector(".FolderDelete");
-  let folderDeleteForm = document.querySelector(".deleteFolderConform");
- let folderDeleteCancel=document.querySelector(".deleteFolderCancel");
-  folderDeleteButton.addEventListener("click",()=>{
-  folderDeleteForm.style.display="inline-block";
-  });
-
-  folderDeleteCancel.addEventListener("click",()=>{
-    folderDeleteForm.style.display="none";
-  });
-
-
-</script> 
 <style>
- 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap");
+:root {
+    --primary-color: #4285f4;
+    --primary-dark: #1a73e8;
+    --secondary-color: #5b8def;
+    --success-color: #4caf50;
+    --success-dark: #388e3c;
+    --danger-color: #ef4444;
+    --danger-dark: #dc2626;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Poppins', sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+/* Fixed and Enhanced Navbar */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-md);
+    border: none !important;
+    padding: 0.75rem 0 !important;
+    min-height: auto !important;
+}
+
+.container-fluid {
+    padding: 0 1.5rem !important;
+}
+
+/* Fixed Logo Styling */
+.subject_head {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.subject_head i {
+    font-size: 1.6rem;
+    margin-right: 0.5rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.subject_head h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.025em;
+    background: none !important;
+}
+
+/* Enhanced Right-Aligned Navbar Links */
+.navbar-nav {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    margin: 0;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+.navbar-nav .nav-link[style*="white"] {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link i {
+    font-size: 0.85rem;
+}
+
+/* Delete Subject Button in Navbar */
+.FolderDelete {
+    background: var(--danger-color) !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+    font-size: 0.9rem !important;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.FolderDelete:hover {
+    background: var(--danger-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* User Avatar */
+.user-avatar {
+    position: fixed;
+    top: 0.75rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    background: var(--success-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    z-index: 1001;
+    box-shadow: var(--shadow-md);
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    min-height: calc(100vh - 70px);
+}
+
+/* Back Arrow */
+.arrow {
+    margin-bottom: 1.5rem;
+}
+
+.arrow a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.arrow a:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Subject Header */
+.h2forfolder {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+    text-align: center;
+}
+
+.folderHeading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 1.5rem 0 1rem;
+    text-align: center;
+}
+
+/* Fixed Modal Form Positioning */
+.subject_form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    animation: fadeIn 0.3s ease;
+    padding: 1rem;
+}
+
+.contain {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    border: 1px solid var(--border-color);
+    animation: slideInScale 0.3s ease;
+    margin: auto;
+    transform: translateY(0);
+}
+
+.contain h3 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.subject_name {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: var(--bg-primary);
+    margin-bottom: 0.5rem;
+    font-family: "Inter", sans-serif;
+    color: var(--text-primary);
+}
+
+.subject_name:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+.subject_name::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Form Close Button */
+.form-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #f1f5f9;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.form-close:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* Enhanced Folders Grid */
+.folders-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+}
+
+.folder1 {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.folder1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--success-color), #66bb6a);
+}
+
+.folder1:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btnF {
+    width: 100%;
+    padding: 1rem 1rem !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-primary) !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    text-align: left !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+.btnF::before {
+    content: '📁';
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+    color: var(--success-color);
+}
+
+.btnF:hover {
+    background: var(--bg-secondary) !important;
+    color: var(--primary-color) !important;
+}
+
+/* Floating Add Button */
+.add {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 52px;
+    height: 52px;
+    background: var(--success-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.add:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    background: var(--success-dark);
+}
+
+.add i {
+    font-size: 1.3rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.add.active {
+    background: var(--danger-color);
+}
+
+.add.active:hover {
+    background: var(--danger-dark);
+}
+
+.add.active i {
+    transform: rotate(45deg);
+}
+
+/* Fixed Delete Confirmation Modal */
+.deleteFolderConform {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    padding: 1rem;
+}
+
+.under {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.warning-p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.warning-p span {
+    color: var(--danger-color) !important;
+    font-weight: 600 !important;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    margin: 2rem auto;
+    border: 1px solid var(--border-color);
+    max-width: 500px;
+}
+
+.empty-state h6 {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Form Validation */
+.invalid-feedback {
+    color: var(--danger-color);
+    font-size: 0.825rem;
+    margin-top: 0.25rem;
+    display: none;
+    font-weight: 400;
+}
+
+.form-control.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    font-family: "Inter", sans-serif !important;
+}
+
+.btn-success {
+    background: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+}
+
+.btn-success:hover {
+    background: var(--success-dark) !important;
+    border-color: var(--success-dark) !important;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: var(--danger-color) !important;
+    border-color: var(--danger-color) !important;
+}
+
+.btn-danger:hover {
+    background: var(--danger-dark) !important;
+    border-color: var(--danger-dark) !important;
+}
+
+.btn-secondary {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Enhanced Mobile Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .container-fluid {
+        padding: 0 1rem !important;
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        gap: 0.25rem;
+        padding: 1rem 0;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem !important;
+        width: auto;
+    }
+    
+    .FolderDelete {
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0.75rem !important;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+    
+    .user-avatar {
+        top: 0.5rem;
+        right: 4rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .main-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .h2forfolder {
+        font-size: 1.8rem;
+    }
+    
+    .folders-container {
+        grid-template-columns: 1fr;
+        padding: 0 0.5rem;
+    }
+    
+    .add {
+        bottom: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .add i {
+        font-size: 1.1rem;
+    }
+    
+    .contain {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+    
+    .subject_form {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .subject_head h2 {
+        font-size: 1.4rem;
+    }
+    
+    .subject_head i {
+        font-size: 1.4rem;
+    }
+    
+    .h2forfolder {
+        font-size: 1.6rem;
+    }
+    
+    .user-avatar {
+        right: 3.5rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Navbar toggle improvements */
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}/* Enhanced Mobile Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .container-fluid {
+        padding: 0 1rem !important;
+    }
+    
+    /* Mobile navbar collapse styling */
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-radius: 0 0 12px 12px;
+        margin-top: 0.5rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Left-aligned mobile navigation */
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        gap: 0.5rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Override ms-auto for mobile */
+    .navbar-nav.ms-auto {
+        margin-left: 0 !important;
+    }
+    
+    /* Mobile navigation links styling */
+    .navbar-nav .nav-link {
+        color: var(--text-primary) !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 8px !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+        text-align: left !important;
+        background: white !important;
+        margin-bottom: 0.25rem !important;
+        border: 1px solid var(--border-color) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background: var(--primary-color) !important;
+        color: white !important;
+        border-color: var(--primary-color) !important;
+        transform: translateX(4px) !important;
+    }
+    
+    /* Mobile navigation icons */
+    .navbar-nav .nav-link i {
+        font-size: 1rem !important;
+        width: 20px !important;
+        text-align: center !important;
+    }
+    
+    /* Mobile delete button */
+    .FolderDelete {
+        width: 100% !important;
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1rem !important;
+        margin-left: 0 !important;
+        margin-top: 0.5rem !important;
+        text-align: left !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        background: var(--danger-color) !important;
+        border: 1px solid var(--danger-color) !important;
+        border-radius: 8px !important;
+    }
+    
+    .FolderDelete::before {
+        content: '🗑️';
+        font-size: 1rem;
+    }
+    
+    .FolderDelete:hover {
+        background: var(--danger-dark) !important;
+        border-color: var(--danger-dark) !important;
+        transform: translateX(4px) !important;
+    }
+    
+    /* Mobile user avatar positioning */
+    .user-avatar {
+        top: 0.5rem;
+        right: 4.5rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+        z-index: 1002;
+    }
+    
+    /* Mobile navbar toggler */
+    .navbar-toggler {
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+    
+    .navbar-toggler-icon {
+        width: 20px;
+        height: 20px;
+        background-size: 100% 100%;
+    }
+    
+    /* Adjust main content for mobile */
+    .main-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .h2forfolder {
+        font-size: 1.8rem;
+    }
+    
+    .folders-container {
+        grid-template-columns: 1fr;
+        padding: 0 0.5rem;
+    }
+    
+    .add {
+        bottom: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .add i {
+        font-size: 1.1rem;
+    }
+    
+    .contain {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+    
+    .subject_form {
+        padding: 0.5rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .subject_head h2 {
+        font-size: 1.3rem;
+    }
+    
+    .subject_head i {
+        font-size: 1.3rem;
+    }
+    
+    .h2forfolder {
+        font-size: 1.6rem;
+    }
+    
+    .user-avatar {
+        right: 4rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.85rem !important;
+        padding: 0.6rem 0.8rem !important;
+    }
+    
+    .navbar-nav .nav-link i {
+        font-size: 0.9rem !important;
+    }
+    
+    .FolderDelete {
+        font-size: 0.85rem !important;
+        padding: 0.6rem 0.8rem !important;
+    }
+     .nav-link span{
+        color: #1a73e8 !important;
+    }
+    .nav-link i{
+        color: #1a73e8 !important;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    .navbar-collapse {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    .main-container {
+        padding: 0.75rem 0.5rem;
+    }
+   
+}
+.arrow{
+  background-color: transparent !important; 
+  
+}
+.arrow a i{
+  border-radius: 50%;
+  margin: 0 !important;
+  border: 1px solid #1a73e8;
+  padding: 0.5rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  color: #1a73e8 !important;
+}
+.arrow a{
+  border: none;
+  border-radius: 10%;
+  padding: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}.add_upload{
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 !important;
+  background-color: white !important;
+  padding: 0.5rem !important;
+}
+.upload_icon {
+  padding: 0 !important;
+  border: none;
+  padding: 0.5rem !important; 
+}
+.add_upload .fa-solid{
+  padding: 0 !important;
+
+}
 </style>
+
+<body>
+<!-- User Avatar -->
+<nav class="navbar navbar-expand-md sticky-top navbar-light">
+    <div class="container-fluid">
+        <div class="subject_head">
+            <i class="fa-brands fa-neos"></i>
+            <h2>Nault</h2>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" aria-current="page" href="/classroom/enter/<%=subject._id%>" style="color: white;">
+                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                </a>
+                <a class="nav-link contacts" style="color: white;">
+                    <i class="fa-solid fa-envelope"></i> <span>Contacts</span>
+                </a>
+                <a class="nav-link collapse-contacts" style="color: white;display:none;">
+                    <i class="fa-solid fa-at"></i> <span>nault.org@gmail.com</span>
+                </a>
+                
+                <% if(subject.author){ %>
+                <a class="nav-link" style="color: white;">
+                    <i class="fa-solid fa-pen"></i> <span>Created By ~<%=subject.author%></span>
+                </a>
+                <% } %>
+                
+                <% if(currUser.username==subject.author ||currUser.username=="altamash"){ %>
+                <button class="btn FolderDelete">Delete Subject</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="main-container">
+    <%-include("../includes/flash.ejs")%>
+
+    <!-- Fixed Modal Form for Adding Folders -->
+    <div class="subject_form">
+        <div class="contain">
+            <button type="button" class="form-close" id="close-form">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <h3>Create New Folder</h3>
+            <form action="/subject/folder/<% if(subject){ %><%=subject._id%><% } %>" class="needs-validation" novalidate method="post" id="folder-form">
+                <input required type="text" class="form-control subject_name" name="name" placeholder="Enter folder name" id="folder-name">
+                <div class="invalid-feedback">Please enter a folder name</div>
+                <div class="d-grid" style="margin-top: 1.5rem;">
+                    <button class="btn btn-success col-8 mx-auto" type="submit">Add Folder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="deleteFolderConform">
+        <div class="under">
+            <p class="warning-p">
+                <span>Warning</span><br>
+                Deleting this subject will also delete all its folders and files.<br>
+                This action is irreversible.<br>
+                Proceed?
+            </p>
+            <form action="/subject/delete/<%=subject._id%>?_method=DELETE" method="post" style="display: inline;">
+                <input type="text" class="form-control mx-auto" name="name" placeholder="Enter subject name" style="width: max-content; margin: auto !important; margin-top: 15px !important;">
+                <br>
+                <button class="btn btn-danger" style="margin: 10px;">Delete</button>
+                <button type="button" class="btn btn-secondary deleteFolderCancel" style="margin: 10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <% if(subject) {%>
+    <div class="folder">
+        <div class="arrow">
+            <a href="/subject/back/<%=subject._id%>">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        
+        <h2 class="h2forfolder"><%=subject.username%></h2>
+        
+        <% if(subject.folder.length>0){ %>
+        <h3 class="folderHeading">Folders</h3>
+        <div class="folders-container">
+            <% for(sub of subject.folder){ %>
+            <form action="/folder/enter/<%=sub._id%>">
+                <div class="folder1">
+                    <button class="btn btnF"><%=sub.name%></button>
+                </div>
+            </form>
+            <% } %>
+        </div>
+        <% }else{ %>
+        <div class="empty-state">
+            <h6>No folders found<br>Click the '+' button to add your first folder</h6>
+        </div>
+        <% } %>
+    </div>
+    <% }else{ %>
+    <div class="empty-state">
+        <h3>No Subject Found!</h3>
+        <p><a href="/classroom">Go to home</a></p>
+    </div>
+    <% } %>
+</div>
+
+<!-- Floating Add Button -->
+<div class="add">
+    <i class="fa-solid fa-plus upload_icon button_icon"></i>
+</div>
+
+<script>
+// Modal controls
+const addButton = document.querySelector(".add");
+const subjectForm = document.querySelector(".subject_form");
+const folderForm = document.getElementById("folder-form");
+const closeBtn = document.getElementById("close-form");
+let isFormVisible = false;
+
+// Delete modal controls
+const folderDeleteButton = document.querySelector(".FolderDelete");
+const folderDeleteForm = document.querySelector(".deleteFolderConform");
+const folderDeleteCancel = document.querySelector(".deleteFolderCancel");
+
+// Add folder functionality
+function showForm() {
+    subjectForm.style.display = "flex";
+    isFormVisible = true;
+    addButton.classList.add("active");
+    document.body.style.overflow = "hidden";
+    
+    setTimeout(() => {
+        document.getElementById("folder-name").focus();
+    }, 300);
+}
+
+function hideForm() {
+    subjectForm.style.display = "none";
+    isFormVisible = false;
+    addButton.classList.remove("active");
+    document.body.style.overflow = "";
+    
+    if (folderForm) {
+        folderForm.reset();
+        document.getElementById("folder-name").classList.remove("is-invalid");
+    }
+}
+
+addButton.addEventListener("click", () => {
+    if (!isFormVisible) {
+        showForm();
+    } else {
+        hideForm();
+    }
+});
+
+// Close form on close button click
+if (closeBtn) {
+    closeBtn.addEventListener("click", hideForm);
+}
+
+// Close on backdrop click
+subjectForm.addEventListener("click", (e) => {
+    if (e.target === subjectForm) {
+        hideForm();
+    }
+});
+
+// Close on Escape key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isFormVisible) {
+        hideForm();
+    }
+});
+
+// Delete subject functionality
+if (folderDeleteButton) {
+    folderDeleteButton.addEventListener("click", () => {
+        folderDeleteForm.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    });
+}
+
+if (folderDeleteCancel) {
+    folderDeleteCancel.addEventListener("click", () => {
+        folderDeleteForm.style.display = "none";
+        document.body.style.overflow = "";
+    });
+}
+
+// Form validation
+if (folderForm) {
+    const folderInput = document.getElementById("folder-name");
+    
+    folderInput.addEventListener("blur", () => {
+        if (!folderInput.value.trim()) {
+            folderInput.classList.add("is-invalid");
+        } else {
+            folderInput.classList.remove("is-invalid");
+        }
+    });
+
+    folderInput.addEventListener("input", () => {
+        if (folderInput.value.trim()) {
+            folderInput.classList.remove("is-invalid");
+        }
+    });
+}
+
+// Contacts toggle
+const contactsLink = document.querySelector(".contacts");
+const collapseContacts = document.querySelector(".collapse-contacts");
+
+if (contactsLink && collapseContacts) {
+    contactsLink.addEventListener("click", () => {
+        if (collapseContacts.style.display === "none" || !collapseContacts.style.display) {
+            collapseContacts.style.display = "inline";
+        } else {
+            collapseContacts.style.display = "none";
+        }
+    });
+}
+</script>
+</body>
+<!-- //8956488889 -->

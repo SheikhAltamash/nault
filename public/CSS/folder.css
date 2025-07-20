@@ -1,4 +1,4 @@
- 
+/*  
  .container {
       display: block;
       width: fit-content;
@@ -112,7 +112,7 @@
       /* .button{
         width: 50%!important;
         font-size: 14px !important;
-    } */
+    } 
       .p {
         position: relative;
         top: -1%;
@@ -276,4 +276,4 @@ height: 100%;
   margin-left: 1rem;
   margin-top: 1.5rem;
   margin-bottom: -1rem;
-}
+} */
