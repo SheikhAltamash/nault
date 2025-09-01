@@ -200,7 +200,7 @@ async function callEmail() {
     await delay(4000);
   }
 }
-callEmail()                                                                     
+// callEmail()                                                                     
 // console.log("hello");
 module.exports = { otpSender, resetOtpsender, generateOTP,notify };
 // 215309
