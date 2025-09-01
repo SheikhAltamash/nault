@@ -1,6 +1,3 @@
-
-
-
 module.exports = hrData = [
     { "name": "Akanksha Puri", "email": "akanksha.puri@sourcefuse.com" },
     { "name": "Akanksha Sogani", "email": "akanksha.sogani@perennialsys.com" },

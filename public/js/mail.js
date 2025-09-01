@@ -9,14 +9,11 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "nault.org@gmail.com",
-    pass: "jlgheypdfqfbqrzu",
+    user: process.env.USER,
+    pass: process.env.PASSWORD,
   },
 });
-// PASSWORD=jlgheypdfqfbqrzu
-// USER=nault.org@gmail.com
-    // user: "altamashsheikh077@gmail.com",
-    // pass: "xdthwlkwtxaxxfiu",
+
 function generateOTP() {
   return crypto.randomBytes(3).toString("hex"); // Generates a 6-character OTP
 }
@@ -196,14 +193,14 @@ function delay(ms) {
 }
 
 async function callEmail() {
-  for (let i = 1538; i <= 1846; i++) {
+  for (let i = 1647; i <= 1846; i++) {
     const firstName = hrData[i].name.split(" ")[0];
     await sendReferralEmail(firstName, hrData[i].email);
     console.log(`${i + 1}. Email sent to: ${firstName}`);
     await delay(4000);
   }
 }
-// callEmail()                                                                     
-console.log("hello")
+callEmail()                                                                     
+// console.log("hello");
 module.exports = { otpSender, resetOtpsender, generateOTP,notify };
 // 215309
